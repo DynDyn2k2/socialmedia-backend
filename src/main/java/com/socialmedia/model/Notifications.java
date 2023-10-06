@@ -20,9 +20,12 @@ public class Notifications {
     private Users user;
  
     private String title;
-    private String type;
     private String link;
     private Date notification_at;
+    
+    @ManyToOne
+    @JoinColumn(name="typeId")  
+    private Types type;
 
     
 }

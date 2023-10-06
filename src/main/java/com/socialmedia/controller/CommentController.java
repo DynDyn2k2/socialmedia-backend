@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/comments")
 @CrossOrigin
-public class CommentsController {
+public class CommentController {
     @Autowired
     private CommentService service;
 

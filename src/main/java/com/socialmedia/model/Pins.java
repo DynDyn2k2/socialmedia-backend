@@ -26,6 +26,10 @@ public class Pins {
     @ManyToOne
     @JoinColumn(name="boardId")  
     private Boards board;
+    
+    @ManyToOne
+    @JoinColumn(name="typeId")  
+    private Types type;
 
     
 }
