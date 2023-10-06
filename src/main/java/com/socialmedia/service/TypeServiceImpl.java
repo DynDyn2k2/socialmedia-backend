@@ -3,12 +3,12 @@ package com.socialmedia.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.socialmedia.repository.FriendshipRepository;
+import com.socialmedia.repository.TypeRepository;
 
 @Service
-public class FriendshipServiceImpl implements FriendshipService {
+public class TypeServiceImpl implements BoardService {
 
     @Autowired
-    private FriendshipRepository repository;
+    private TypeRepository repository;
 
 }
