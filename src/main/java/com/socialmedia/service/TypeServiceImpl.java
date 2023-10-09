@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import com.socialmedia.repository.TypeRepository;
 
 @Service
-public class TypeServiceImpl implements BoardService {
+public class TypeServiceImpl implements TypeService {
 
     @Autowired
     private TypeRepository repository;

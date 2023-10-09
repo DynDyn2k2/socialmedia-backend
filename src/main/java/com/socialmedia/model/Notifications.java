@@ -21,12 +21,12 @@ public class Notifications {
     private Users user;
 
     private String link;
-    private Date notification_at;
-    private String type;
     private String title;
+    private Date notification_at;
 
-    public Notifications() {
-    }
+    @ManyToOne
+    @JoinColumn(name = "typeId")
+    private Types type;
 
     public int getNotificationId() {
         return notificationId;
@@ -34,14 +34,6 @@ public class Notifications {
 
     public void setNotificationId(int notificationId) {
         this.notificationId = notificationId;
-    }
-
-    public Users getUser() {
-        return user;
-    }
-
-    public void setUser(Users user) {
-        this.user = user;
     }
 
     public String getLink() {
@@ -52,28 +44,20 @@ public class Notifications {
         this.link = link;
     }
 
-    public Date getNotification_at() {
-        return notification_at;
-    }
-
-    public void setNotification_at(Date notification_at) {
-        this.notification_at = notification_at;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Date getNotification_at() {
+        return notification_at;
+    }
+
+    public void setNotification_at(Date notification_at) {
+        this.notification_at = notification_at;
     }
 
 }

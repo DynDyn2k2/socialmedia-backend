@@ -10,7 +10,7 @@ import com.socialmedia.service.CommentService;
 @RestController
 @RequestMapping("/comments")
 @CrossOrigin
-public class CommentsController {
+public class CommentController {
     @Autowired
     private CommentService service;
 

@@ -10,5 +10,4 @@ public interface NotificationService {
 
     public List<Notifications> getAllNotifications();
 
-    public List<Notifications> readNotificationsFromCsv(String csvPart);
 }
