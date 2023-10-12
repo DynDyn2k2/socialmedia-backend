@@ -24,10 +24,6 @@ public class Notifications {
     private String title;
     private Date notification_at;
 
-    @ManyToOne
-    @JoinColumn(name = "typeId")
-    private Types type;
-
     public int getNotificationId() {
         return notificationId;
     }

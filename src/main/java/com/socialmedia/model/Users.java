@@ -1,21 +1,23 @@
 package com.socialmedia.model;
 
 import java.util.Date;
-import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 
 @Entity
 public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userId;
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
     private String username;
     private String password;
     private Date birthdate;
@@ -27,19 +29,18 @@ public class Users {
     private String language;
     private boolean privateBool;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Pins> pins;
+    // @ManyToMany
+    // @JoinTable(name = "userSavePin", joinColumns = @JoinColumn(name = "userId"),
+    // inverseJoinColumns = @JoinColumn(name = "pinId"))
+    // private List<Pins> pins = new ArrayList<>();
 
-    public Users() {
-    }
+    // public List<Pins> getPins() {
+    // return pins;
+    // }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
+    // public void setPins(List<Pins> pins) {
+    // this.pins = pins;
+    // }
 
     public String getUsername() {
         return username;

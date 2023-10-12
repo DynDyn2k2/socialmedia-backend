@@ -13,14 +13,13 @@ public class DetailNotification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int detailNotificationId;
-    
+
     @ManyToOne
-    @JoinColumn(name="notificationId")  
+    @JoinColumn(name = "notificationId")
     private Notifications notification;
- 
+
     @ManyToOne
-    @JoinColumn(name="pinId")  
+    @JoinColumn(name = "pinId")
     private Pins pin;
 
-    
 }

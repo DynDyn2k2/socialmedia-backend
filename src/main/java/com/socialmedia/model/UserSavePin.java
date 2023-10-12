@@ -12,7 +12,11 @@ public class UserSavePin {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userSavePinId;
+    private int id;
+
+    public int getId() {
+        return id;
+    }
 
     @ManyToOne
     @JoinColumn(name = "userId")
@@ -21,5 +25,21 @@ public class UserSavePin {
     @ManyToOne
     @JoinColumn(name = "pinId")
     private Pins pin;
+
+    public Users getUser() {
+        return user;
+    }
+
+    public void setUser(Users user) {
+        this.user = user;
+    }
+
+    public Pins getPin() {
+        return pin;
+    }
+
+    public void setPin(Pins pin) {
+        this.pin = pin;
+    }
 
 }

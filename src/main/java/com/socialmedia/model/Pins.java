@@ -12,18 +12,29 @@ public class Pins {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int pinId;
+    private int id;
 
-    // Khoá ngoại nối vào user để xác định người sở hữu
-    private int userId;
+    public int getId() {
+        return id;
+    }
 
     private String description;
     private String image;
     private String link;
 
-    @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "userId", insertable = false, updatable = false)
-    private Users user;
+    // // Users_Save_Pins
+    // @ManyToMany(mappedBy = "pins")
+    // // mappedBy sẽ nối đến kết quả trả về từ quan hệ
+    // private List<Users> users = new ArrayList<>();
+
+    // public List<Users> getUsers() {
+    // return users;
+    // }
+
+    // public void setUsers(List<Users> users) {
+    // this.users = users;
+    // }
+    /* The end */
 
     @ManyToOne
     @JoinColumn(name = "boardId")
@@ -32,6 +43,19 @@ public class Pins {
     @ManyToOne
     @JoinColumn(name = "typeId")
     private Types type;
+
+    // User_Created_Pin
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private Users userCreated;
+
+    public Users getUserCreated() {
+        return userCreated;
+    }
+
+    public void setUserCreated(Users userCreatedId) {
+        this.userCreated = userCreatedId;
+    }
 
     public String getImage() {
         return image;
@@ -57,14 +81,6 @@ public class Pins {
         this.link = link;
     }
 
-    public int getPinId() {
-        return pinId;
-    }
-
-    public void setPinId(int pinId) {
-        this.pinId = pinId;
-    }
-
     public Boards getBoard() {
         return board;
     }
@@ -79,14 +95,6 @@ public class Pins {
 
     public void setType(Types type) {
         this.type = type;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
 }

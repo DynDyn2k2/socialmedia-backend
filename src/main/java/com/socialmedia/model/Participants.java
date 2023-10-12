@@ -13,15 +13,15 @@ public class Participants {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int participantId;
-    
+
     @ManyToOne
-    @JoinColumn(name="conversationId")  
+    @JoinColumn(name = "conversationId")
     private Conversations conversation;
- 
+
     @ManyToOne
-    @JoinColumn(name="userId")  
+    @JoinColumn(name = "userId")
     private Users user;
 
     private String role;
-    
+
 }
