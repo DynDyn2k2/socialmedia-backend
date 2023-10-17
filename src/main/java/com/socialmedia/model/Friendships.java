@@ -17,24 +17,24 @@ public class Friendships {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int friendshipId;
-    
+
     @ManyToOne
-    @JoinColumn(name="userId1")  
+    @JoinColumn(name = "userId1")
     private Users user1;
-    
+
     @ManyToOne
-    @JoinColumn(name="userId2")  
+    @JoinColumn(name = "userId2")
     private Users user2;
-    
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private FriendshipStatus status;
     private Date created_at;
 
-    
-}
-enum FriendshipStatus {
-    PENDING,
-    ACCEPTED,
-    REJECTED
+    public enum FriendshipStatus {
+        PENDING,
+        ACCEPTED,
+        REJECTED
+    }
+
 }

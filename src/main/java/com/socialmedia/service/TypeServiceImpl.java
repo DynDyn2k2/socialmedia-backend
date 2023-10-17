@@ -6,7 +6,7 @@ import com.socialmedia.model.Types;
 import com.socialmedia.repository.TypeRepository;
 
 @Service
-public class TypeServiceImpl implements BoardService {
+public class TypeServiceImpl implements TypeService {
 
     @Autowired
     private TypeRepository  repository;

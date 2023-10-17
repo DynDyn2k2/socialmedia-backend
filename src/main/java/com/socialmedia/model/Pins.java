@@ -1,6 +1,5 @@
 package com.socialmedia.model;
 
-import java.sql.Date;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,8 +19,9 @@ public class Pins {
     private Users user;
           
     private String image;
+    private String title;
     private String description;
-    private Date link;
+    private String link;
  
     @ManyToOne
     @JoinColumn(name="boardId")  
@@ -30,6 +30,74 @@ public class Pins {
     @ManyToOne
     @JoinColumn(name="typeId")  
     private Types type;
+
+    public Pins() {
+    }
+
+    public int getPinId() {
+        return pinId;
+    }
+
+    public void setPinId(int pinId) {
+        this.pinId = pinId;
+    }
+
+    public Users getUser() {
+        return user;
+    }
+
+    public void setUser(Users user) {
+        this.user = user;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public Boards getBoard() {
+        return board;
+    }
+
+    public void setBoard(Boards board) {
+        this.board = board;
+    }
+
+    public Types getType() {
+        return type;
+    }
+
+    public void setType(Types type) {
+        this.type = type;
+    }
 
     
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.socialmedia.model.Users;
 import com.socialmedia.repository.UserRepository;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -20,7 +21,18 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public List<Users> getAllUser() {
+    public List<Users> getAllUsers() {
        return  repository.findAll();
     }
+
+    @Override
+    public Users getUserByUsername(String username) {
+        return repository.findOneByUsername(username);
+    }
+
+    @Override
+    public Optional<Users> getUserById(int id) {
+       return repository.findById(id);
+    }
+
 }
