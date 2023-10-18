@@ -9,7 +9,11 @@ import com.socialmedia.repository.UserSavePinRepository;
 public class UserSavePinServiceImpl implements UserSavePinService {
 
     @Autowired
-    private UserSavePinRepository  repository;
+    private UserSavePinRepository repository;
 
+    @Override
+    public UserSavePin saveUserSavePin(UserSavePin userSavePin) {
+        return repository.save(userSavePin);
+    }
 
 }

@@ -12,4 +12,10 @@ public class UserSavePinController {
     @Autowired
     private UserSavePinService service;
 
+    @PostMapping("/add")
+    public String savePin(@RequestBody UserSavePin userSavePin) {
+        service.saveUserSavePin(userSavePin);
+        return "Lưu thành công";
+    }
+
 }

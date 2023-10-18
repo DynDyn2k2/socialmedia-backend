@@ -23,4 +23,8 @@ public class UserSavePin {
     @JoinColumn(name = "pinId")
     private Pins pin;
 
+    @ManyToOne
+    @JoinColumn(name = "boardId")
+    private Boards board;
+
 }

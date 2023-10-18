@@ -14,18 +14,13 @@ public class Pins {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int pinId;
-    
+
     @ManyToOne
-    @JoinColumn(name="userId")  
+    @JoinColumn(name = "userId")
     private Users user;
-          
+
     private String image;
     private String description;
     private Date link;
- 
-    @ManyToOne
-    @JoinColumn(name="boardId")  
-    private Boards board;
 
-    
 }
