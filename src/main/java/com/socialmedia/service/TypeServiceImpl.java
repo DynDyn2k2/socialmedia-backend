@@ -11,5 +11,4 @@ public class TypeServiceImpl implements TypeService {
     @Autowired
     private TypeRepository  repository;
 
-
 }

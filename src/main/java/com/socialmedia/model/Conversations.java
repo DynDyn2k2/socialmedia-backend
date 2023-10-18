@@ -13,10 +13,34 @@ public class Conversations {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int conversationId;
+    private int id;
     
     private String name;
-    private String content;
     private Date create_at;   
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Date getCreate_at() {
+        return create_at;
+    }
+
+    public void setCreate_at(Date create_at) {
+        this.create_at = create_at;
+    }
+    
     
 }

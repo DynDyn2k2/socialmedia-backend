@@ -12,7 +12,7 @@ public class DetailNotification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int detailNotificationId;
+    private int id;
     
     @ManyToOne
     @JoinColumn(name="notificationId")  
@@ -21,6 +21,30 @@ public class DetailNotification {
     @ManyToOne
     @JoinColumn(name="pinId")  
     private Pins pin;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Notifications getNotification() {
+        return notification;
+    }
+
+    public void setNotification(Notifications notification) {
+        this.notification = notification;
+    }
+
+    public Pins getPin() {
+        return pin;
+    }
+
+    public void setPin(Pins pin) {
+        this.pin = pin;
+    }
 
     
 }

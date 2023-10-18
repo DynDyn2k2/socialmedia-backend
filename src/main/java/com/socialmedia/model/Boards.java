@@ -1,3 +1,4 @@
+
 package com.socialmedia.model;
 
 import java.sql.Date;
@@ -13,7 +14,7 @@ public class Boards {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int boardId;
+    private int id;
     
     @ManyToOne
     @JoinColumn(name="userId")  
@@ -25,12 +26,12 @@ public class Boards {
     public Boards() {
     }
 
-    public int getBoardId() {
-        return boardId;
+    public int getId() {
+        return id;
     }
 
-    public void setBoardId(int boardId) {
-        this.boardId = boardId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Users getUser() {

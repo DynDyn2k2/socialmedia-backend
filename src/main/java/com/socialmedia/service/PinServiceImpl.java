@@ -7,6 +7,7 @@ import com.socialmedia.model.Pins;
 import com.socialmedia.model.Users;
 import com.socialmedia.repository.PinRepository;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PinServiceImpl implements PinService {
@@ -15,13 +16,27 @@ public class PinServiceImpl implements PinService {
     private PinRepository  repository;
 
     @Override
-    public List<Pins> findByUserOrderByPinIdAsc(Users user) {
-       return repository.findByUserOrderByPinIdAsc(user);
+    public List<Pins> findByUserOrderByIdAsc(Users user) {
+       return repository.findByUserOrderByIdAsc(user);
+    }
+
+//    @Override
+//    public List<Pins> findAllByBoard(Boards board) {
+//        return repository.findAllByBoard(board);
+//    }
+      @Override
+    public List<Pins> getPinsByTypeId(Long typeId) {
+        return repository.findPinsByTypeId(typeId);
     }
 
     @Override
-    public List<Pins> findAllByBoard(Boards board) {
-        return repository.findAllByBoard(board);
+    public List<Pins> getAllPins() {
+        return repository.findAll();
+    }
+
+    @Override
+    public List<Pins> getPinsByUser(Optional<Users> user) {
+        return repository.findByUser(user);
     }
 
 

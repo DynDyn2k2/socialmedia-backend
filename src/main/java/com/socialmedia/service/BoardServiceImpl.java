@@ -15,15 +15,13 @@ public class BoardServiceImpl implements BoardService {
     private BoardRepository  repository;
 
     @Override
-    public List<Boards> findByUserOrderByBoardIdAsc(Users user) {
-        return repository.findByUserOrderByBoardIdAsc(user);
+    public List<Boards> findByUserOrderByIdAsc(Users user) {
+        return repository.findByUserOrderByIdAsc(user);
     }
 
     @Override
     public Optional<Boards> findById(int id) {
         return repository.findById(id);
     }
-
-
-
 }
+

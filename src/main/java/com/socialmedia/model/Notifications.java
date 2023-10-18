@@ -1,6 +1,8 @@
+
 package com.socialmedia.model;
 
 import java.util.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,19 +15,46 @@ public class Notifications {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int notificationId;
-    
-    @ManyToOne
-    @JoinColumn(name="userId")  
-    private Users user;
- 
-    private String title;
-    private String link;
-    private Date notification_at;
-    
-    @ManyToOne
-    @JoinColumn(name="typeId")  
-    private Types type;
+    private int id;
 
-    
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private Users user;
+
+    private String link;
+    private String title;
+    private Date notification_at;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Date getNotification_at() {
+        return notification_at;
+    }
+
+    public void setNotification_at(Date notification_at) {
+        this.notification_at = notification_at;
+    }
+
 }

@@ -21,7 +21,7 @@ public class BoardController {
     @GetMapping("/{username}")
     public List<Boards> findByUserIdOrderByPinIdAsc(@PathVariable("username") String username) {
         Users user = userService.getUserByUsername(username);
-        List<Boards> list = boardService.findByUserOrderByBoardIdAsc(user);
+        List<Boards> list = boardService.findByUserOrderByIdAsc(user);
         
         return list;
     }

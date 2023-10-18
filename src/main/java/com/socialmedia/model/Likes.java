@@ -12,7 +12,7 @@ public class Likes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int likeId;
+    private int id;
     
     @ManyToOne
     @JoinColumn(name="userId")  
@@ -21,6 +21,30 @@ public class Likes {
     @ManyToOne
     @JoinColumn(name="pinId")  
     private Pins pin;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Users getUser() {
+        return user;
+    }
+
+    public void setUser(Users user) {
+        this.user = user;
+    }
+
+    public Pins getPin() {
+        return pin;
+    }
+
+    public void setPin(Pins pin) {
+        this.pin = pin;
+    }
 
     
 }

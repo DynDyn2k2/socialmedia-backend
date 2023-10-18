@@ -16,7 +16,7 @@ public class Friendships {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int friendshipId;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "userId1")
@@ -36,5 +36,47 @@ public class Friendships {
         ACCEPTED,
         REJECTED
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Users getUser1() {
+        return user1;
+    }
+
+    public void setUser1(Users user1) {
+        this.user1 = user1;
+    }
+
+    public Users getUser2() {
+        return user2;
+    }
+
+    public void setUser2(Users user2) {
+        this.user2 = user2;
+    }
+
+    public FriendshipStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(FriendshipStatus status) {
+        this.status = status;
+    }
+
+    public Date getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(Date created_at) {
+        this.created_at = created_at;
+    }
+    
+    
 
 }

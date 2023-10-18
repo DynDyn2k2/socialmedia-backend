@@ -12,7 +12,7 @@ public class Pins {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int pinId;
+    private int id;
     
     @ManyToOne
     @JoinColumn(name="userId")  
@@ -24,22 +24,18 @@ public class Pins {
     private String link;
  
     @ManyToOne
-    @JoinColumn(name="boardId")  
-    private Boards board;
-    
-    @ManyToOne
     @JoinColumn(name="typeId")  
     private Types type;
 
     public Pins() {
     }
 
-    public int getPinId() {
-        return pinId;
+    public int getId() {
+        return id;
     }
 
-    public void setPinId(int pinId) {
-        this.pinId = pinId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Users getUser() {
@@ -83,13 +79,6 @@ public class Pins {
         this.link = link;
     }
 
-    public Boards getBoard() {
-        return board;
-    }
-
-    public void setBoard(Boards board) {
-        this.board = board;
-    }
 
     public Types getType() {
         return type;

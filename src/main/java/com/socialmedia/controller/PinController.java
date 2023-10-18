@@ -29,17 +29,32 @@ public class PinController {
     @GetMapping("/{username}")
     public List<Pins> findByUserIdOrderByPinIdAsc(@PathVariable("username") String username) {
         Users user = userService.getUserByUsername(username);
-        List<Pins> list = pinService.findByUserOrderByPinIdAsc(user);
+        List<Pins> list = pinService.findByUserOrderByIdAsc(user);
 
         return list;
     }
     
-    @GetMapping("/boardId/{id}")
-    public List<Pins> getPinByBoardId(@PathVariable("id") int id) {
-        Optional<Boards> optional = boardService.findById(id);
-        Boards board = optional.get();
-        List<Pins> list = pinService.findAllByBoard(board);
 
-        return list;
+    @GetMapping("/getPinByTypeId/{param}")
+    public List<Pins> getPinsByTypeId(@RequestParam Long param) {
+        return pinService.getPinsByTypeId(param);
+    }
+
+    @GetMapping("/getAll")
+    public List<Pins> getAllPins() {
+        return pinService.getAllPins();
+    }
+
+    @GetMapping("/getPinsByUserCreated")
+    public List<Pins> getPinsByUserCreated(@RequestParam(name = "userId") int userId) {
+        // TODO: process POST request
+        Optional<Users> user = userService.getUserById(userId);
+        if (user != null) {
+            pinService.getPinsByUser(user);
+        } else {
+            System.out.println(userId);
+            return null;
+        }
+        return null;
     }
 }
