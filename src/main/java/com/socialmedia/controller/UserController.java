@@ -26,12 +26,12 @@ public class UserController {
         return service.getAllUsers();
     }
     
-    @GetMapping(value={"/{username}"})
+    @GetMapping(value={"/username/{username}"})
     public Users getUserByUsername(@PathVariable("username") String username){
         return service.getUserByUsername(username);
     }
     
-    @GetMapping(value={"/userId{id}"})
+    @GetMapping(value={"/id/{id}"})
     public Users getUserById(@PathVariable("id") int id){
         Optional<Users> optional = service.getUserById(id);
         return optional.get();

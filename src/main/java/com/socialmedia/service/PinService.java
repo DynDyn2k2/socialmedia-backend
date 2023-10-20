@@ -10,9 +10,9 @@ public interface PinService {
 
     public List<Pins> findByUserOrderByIdAsc(Users user);
 
-//    public List<Pins> findAllByBoard(Boards board);
-
     public List<Pins> getAllPins();
+    
+    public Optional<Pins> getPinById(int id);
 
     public List<Pins> getPinsByTypeId(Long param);
 

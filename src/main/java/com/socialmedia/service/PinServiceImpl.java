@@ -20,10 +20,6 @@ public class PinServiceImpl implements PinService {
        return repository.findByUserOrderByIdAsc(user);
     }
 
-//    @Override
-//    public List<Pins> findAllByBoard(Boards board) {
-//        return repository.findAllByBoard(board);
-//    }
       @Override
     public List<Pins> getPinsByTypeId(Long typeId) {
         return repository.findPinsByTypeId(typeId);
@@ -37,6 +33,11 @@ public class PinServiceImpl implements PinService {
     @Override
     public List<Pins> getPinsByUser(Optional<Users> user) {
         return repository.findByUser(user);
+    }
+
+    @Override
+    public Optional<Pins> getPinById(int id) {
+        return repository.findById(id);
     }
 
 

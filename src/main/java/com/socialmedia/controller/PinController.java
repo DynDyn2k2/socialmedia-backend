@@ -11,7 +11,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-
 @RestController
 @RequestMapping("/pins")
 @CrossOrigin
@@ -22,22 +21,31 @@ public class PinController {
 
     @Autowired
     private UserService userService;
-    
+
     @Autowired
     private BoardService boardService;
 
-    @GetMapping("/{username}")
+    @GetMapping("/username/{username}")
     public List<Pins> findByUserIdOrderByPinIdAsc(@PathVariable("username") String username) {
         Users user = userService.getUserByUsername(username);
         List<Pins> list = pinService.findByUserOrderByIdAsc(user);
 
         return list;
     }
-    
 
     @GetMapping("/getPinByTypeId/{param}")
     public List<Pins> getPinsByTypeId(@RequestParam Long param) {
         return pinService.getPinsByTypeId(param);
+    }
+
+    @GetMapping("/id/{id}")
+    public Pins getPinById(@PathVariable("id") int id) {
+        Optional<Pins> optionalPin = pinService.getPinById(id);
+        Pins pin = new Pins();
+        if (optionalPin.isPresent()) {
+            pin = optionalPin.get();
+        }
+        return pin;
     }
 
     @GetMapping("/getAll")
