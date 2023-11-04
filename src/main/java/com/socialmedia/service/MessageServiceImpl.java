@@ -14,6 +14,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public List<Messages> getAll() {
+//        java.sql.Types.
         return repository.findAll();
     }
 

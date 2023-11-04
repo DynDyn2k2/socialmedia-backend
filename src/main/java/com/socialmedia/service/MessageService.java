@@ -7,4 +7,5 @@ public interface MessageService {
     List<Messages> getAll();
     List<Messages> getAllMessagesByConversationId(int id);
     Messages saveMessage(Messages message);
+//    List<Messages>
 }
