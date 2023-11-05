@@ -28,5 +28,10 @@ public class MessageServiceImpl implements MessageService {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    @Override
+    public Messages getMessageById(int id) {
+        return repository.findById(id).get();
+    }
+
 
 }
