@@ -27,7 +27,6 @@ public class Messages {
     @JoinColumn(name = "conversationId")
     private Conversations conversation;
     
-    
     public int getId() {
         return id;
     }
