@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/boards")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 public class BoardController {
     @Autowired
     private BoardService boardService;
@@ -36,4 +36,11 @@ public class BoardController {
         }
         return board;
     }
+    
+    @PostMapping("/add")
+    public boolean saveBoard(@RequestBody Boards board) {
+        boardService.saveBoard(board);
+        return true;
+    }
 }
+    

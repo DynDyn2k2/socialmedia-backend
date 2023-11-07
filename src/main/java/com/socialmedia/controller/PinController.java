@@ -65,4 +65,10 @@ public class PinController {
         }
         return null;
     }
+    
+    @PostMapping("/add")
+    public boolean savePin(@RequestBody Pins pin){
+        pinService.savePin(pin);
+        return true;
+    }
 }

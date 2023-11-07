@@ -39,6 +39,9 @@ public class PinServiceImpl implements PinService {
     public Optional<Pins> getPinById(int id) {
         return repository.findById(id);
     }
-
+    @Override
+    public Pins savePin(Pins pin) {
+        return repository.save(pin);
+    }
 
 }

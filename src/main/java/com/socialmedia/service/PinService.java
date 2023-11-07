@@ -17,4 +17,6 @@ public interface PinService {
     public List<Pins> getPinsByTypeId(Long param);
 
     public List<Pins> getPinsByUser(Optional<Users> user);
+    
+    public Pins savePin(Pins pin);
 }

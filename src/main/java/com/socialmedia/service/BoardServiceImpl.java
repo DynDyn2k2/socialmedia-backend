@@ -23,5 +23,10 @@ public class BoardServiceImpl implements BoardService {
     public Optional<Boards> findById(int id) {
         return repository.findById(id);
     }
+
+    @Override
+    public Boards saveBoard(Boards board) {
+        return repository.save(board);
+    }
 }
 

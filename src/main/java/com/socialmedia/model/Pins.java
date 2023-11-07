@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import java.sql.Blob;
 
 @Entity
 public class Pins {
@@ -17,7 +18,11 @@ public class Pins {
     @ManyToOne
     @JoinColumn(name="userId")  
     private Users user;
-          
+
+   
+    @ManyToOne
+    @JoinColumn(name="boardId")  
+    private Boards board;
     private String image;
     private String title;
     private String description;
@@ -29,7 +34,6 @@ public class Pins {
 
     public Pins() {
     }
-
     public int getId() {
         return id;
     }
@@ -38,20 +42,28 @@ public class Pins {
         this.id = id;
     }
 
+    public String getImage() {
+           return image;
+       }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+    
+    public Boards getBoard() {
+        return board;
+    }
+
+    public void setBoard(Boards board) {
+        this.board = board;
+    }
+    
     public Users getUser() {
         return user;
     }
 
     public void setUser(Users user) {
         this.user = user;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public String getTitle() {

@@ -7,9 +7,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.socialmedia.service.CommentService;
 
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.stereotype.Controller;
+
 @RestController
 @RequestMapping("/comments")
 @CrossOrigin
+
 public class CommentController {
     @Autowired
     private CommentService service;
