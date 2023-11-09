@@ -25,7 +25,6 @@ public class ChatController {
     @SendTo("/room/conversation_id/{conversation_id}")
     public Messages greeting(Messages message) throws Exception {
         Thread.sleep(1000); // simulated delay 
-//        return repository.save(message);
-        return message; 
+        return repository.save(message);
    }
 }
