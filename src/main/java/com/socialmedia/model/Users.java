@@ -1,11 +1,14 @@
 package com.socialmedia.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import java.sql.Date;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
+import java.sql.Blob;
 
 @Entity
 public class Users {
@@ -15,15 +18,22 @@ public class Users {
     private Integer id;
     private String username;
     private String password;
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date birthdate;
     private String fullname;
     private String introduce;
+    @Lob
+    @Column(columnDefinition = "LONGTEXT")
     private String avatar;
+  
     private String website;
     private String gender;
     private String language;
+    private String email;
     private boolean privateBool;
-
+    private String country;
+    private Blob image;
+    
     public Users() {
     }
 
@@ -107,14 +117,26 @@ public class Users {
         this.language = language;
     }
 
-    public boolean isPrivateBool() {
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean getPrivateBool() {
         return privateBool;
     }
 
     public void setPrivateBool(boolean privateBool) {
         this.privateBool = privateBool;
     }
+    public String getCountry() {
+        return country;
+    }
 
-
-    
+    public void setCountry(String country) {
+        this.country = country;
+    }
 }
