@@ -1,7 +1,7 @@
 package com.socialmedia.model;
 
-import jakarta.persistence.Column;
-import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,15 +23,23 @@ public class Users {
     private String gender;
     private String language;
     private boolean privateBool;
+    private Date created_at;
 
     public Users() {
+        // Khởi tạo created_at khi tạo mới đối tượng
+        this.created_at = new Date();
     }
 
-    public int getId() {
+    public String getFormattedCreatedAt() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        return sdf.format(created_at);
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -115,6 +123,12 @@ public class Users {
         this.privateBool = privateBool;
     }
 
+    public Date getCreated_at() {
+        return created_at;
+    }
 
-    
+    public void setCreated_at(Date created_at) {
+        this.created_at = created_at;
+    }
+
 }

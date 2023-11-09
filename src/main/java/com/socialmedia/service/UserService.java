@@ -10,5 +10,6 @@ public interface UserService {
     public List<Users> getAllUsers();
     public Users getUserByUsername(String username);
     public Optional<Users> getUserById(int id);
+    public Users getUserByPassword(String password);
     public void loadData(String filPath) throws FileNotFoundException;
 }

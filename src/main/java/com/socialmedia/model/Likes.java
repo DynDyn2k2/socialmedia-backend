@@ -1,5 +1,7 @@
 package com.socialmedia.model;
 
+import java.util.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +23,8 @@ public class Likes {
     @ManyToOne
     @JoinColumn(name="pinId")  
     private Pins pin;
+
+    private Date created_at;
 
     public int getId() {
         return id;
@@ -46,5 +50,11 @@ public class Likes {
         this.pin = pin;
     }
 
-    
+    public Date getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(Date created_at) {
+        this.created_at = created_at;
+    }
 }

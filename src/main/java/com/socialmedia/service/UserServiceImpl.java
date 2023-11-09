@@ -36,6 +36,11 @@ public class UserServiceImpl implements UserService {
        return repository.findById(id);
     }
 
+    @Override
+    public Users getUserByPassword(String password) {
+        return repository.findOneByPassword(password);
+    }
+
 
     @Override
     public void loadData(String filPath) throws FileNotFoundException {
