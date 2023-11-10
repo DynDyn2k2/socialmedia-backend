@@ -9,7 +9,6 @@ import com.socialmedia.repository.CommentRepository;
 public class CommentServiceImpl implements CommentService {
 
     @Autowired
-    private CommentRepository  repository;
-
+    private CommentRepository repository;
 
 }

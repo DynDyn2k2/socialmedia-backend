@@ -1,9 +1,11 @@
 package com.socialmedia.controller;
 
-import com.socialmedia.model.Likes;
-import com.socialmedia.service.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.socialmedia.service.LikeService;
 
 @RestController
 @RequestMapping("/likes")
@@ -11,5 +13,4 @@ import org.springframework.web.bind.annotation.*;
 public class LikeController {
     @Autowired
     private LikeService service;
-
 }

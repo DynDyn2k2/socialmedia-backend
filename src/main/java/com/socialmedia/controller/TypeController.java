@@ -5,13 +5,13 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.socialmedia.service.ConversationService;
+import com.socialmedia.service.TypeService;
 
 @RestController
-@RequestMapping("/conversations")
+@RequestMapping("/boards")
 @CrossOrigin
-public class ConversationController {
+public class TypeController {
     @Autowired
-    private ConversationService service;
+    private TypeService service;
 
 }

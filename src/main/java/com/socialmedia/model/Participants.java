@@ -12,16 +12,38 @@ public class Participants {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int participantId;
-    
+    private int id;
+
     @ManyToOne
-    @JoinColumn(name="conversationId")  
+    @JoinColumn(name = "conversationId")
     private Conversations conversation;
- 
+
     @ManyToOne
-    @JoinColumn(name="userId")  
+    @JoinColumn(name = "userId")
     private Users user;
 
-    private String role;
-    
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Conversations getConversation() {
+        return conversation;
+    }
+
+    public void setConversation(Conversations conversation) {
+        this.conversation = conversation;
+    }
+
+    public Users getUser() {
+        return user;
+    }
+
+    public void setUser(Users user) {
+        this.user = user;
+    }
+
 }

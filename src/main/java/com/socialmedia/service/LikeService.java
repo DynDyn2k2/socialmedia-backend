@@ -4,5 +4,4 @@ import com.socialmedia.model.Likes;
 
 public interface LikeService {
 
-    
 }

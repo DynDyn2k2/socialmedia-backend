@@ -13,7 +13,7 @@ public class Comments {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int commentId;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "userId")
@@ -25,5 +25,45 @@ public class Comments {
 
     private String content;
     private Date comment_at;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Users getUser() {
+        return user;
+    }
+
+    public void setUser(Users user) {
+        this.user = user;
+    }
+
+    public Pins getPin() {
+        return pin;
+    }
+
+    public void setPin(Pins pin) {
+        this.pin = pin;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Date getComment_at() {
+        return comment_at;
+    }
+
+    public void setComment_at(Date comment_at) {
+        this.comment_at = comment_at;
+    }
 
 }
