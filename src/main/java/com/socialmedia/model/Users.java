@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Users {
@@ -14,6 +16,7 @@ public class Users {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String username;
+    private String email;
     private String password;
     private Date birthdate;
     private String fullname;
@@ -23,15 +26,20 @@ public class Users {
     private String gender;
     private String language;
     private boolean privateBool;
+    private java.util.Date createdAt;
+
+    @ManyToOne
+    @JoinColumn(name = "permissionId")
+    private Permissions permission;
 
     public Users() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -41,6 +49,14 @@ public class Users {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -115,6 +131,20 @@ public class Users {
         this.privateBool = privateBool;
     }
 
+    public Permissions getPermission() {
+        return permission;
+    }
 
-    
+    public void setPermission(Permissions permission) {
+        this.permission = permission;
+    }
+
+    public java.util.Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(java.util.Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
 }

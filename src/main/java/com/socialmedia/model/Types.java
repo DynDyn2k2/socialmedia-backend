@@ -23,17 +23,6 @@ public class Types {
 
     private String typeName;
 
-    // Mối quan hệ 1 nhiều với bài ghim
-    @OneToMany(mappedBy = "type")
-    private List<Pins> pins = new ArrayList<>();
-
-    public List<Pins> getPins() {
-        return pins;
-    }
-
-    public void setPins(List<Pins> pins) {
-        this.pins = pins;
-    }
 
     public String getTypeName() {
         return typeName;

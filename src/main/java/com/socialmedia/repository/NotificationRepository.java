@@ -6,4 +6,5 @@ import com.socialmedia.model.Notifications;
 
 public interface NotificationRepository extends JpaRepository<Notifications, Integer> {
 
+    
 }

@@ -22,4 +22,14 @@ public class FriendshipServiceImpl implements FriendshipService {
     public List<Friendships> getAllByUser2AndStatus(Users user, Friendships.FriendshipStatus status) {
         return repository.findAllByUser2AndStatus(user, status);
     }
+
+    @Override
+    public List<Friendships> getAllByUser1(Users user) {
+        return repository.findAllByUser1(user);
+    }
+
+    @Override
+    public List<Friendships> getAllByUser2(Users user) {
+       return repository.findAllByUser2(user);
+    }
 }

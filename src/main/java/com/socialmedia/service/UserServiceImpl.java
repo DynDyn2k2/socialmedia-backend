@@ -7,23 +7,25 @@ import org.springframework.stereotype.Service;
 import com.socialmedia.model.Users;
 import com.socialmedia.repository.UserRepository;
 import java.io.FileNotFoundException;
+import java.util.Date;
 import java.util.Optional;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserRepository  repository;
+    private UserRepository repository;
 
     @Override
     public Users saveUser(Users user) {
-        return  repository.save(user);
+        return repository.save(user);
     }
-
 
     @Override
     public List<Users> getAllUsers() {
-       return  repository.findAll();
+        return repository.findAll();
     }
 
     @Override
@@ -33,9 +35,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<Users> getUserById(int id) {
-       return repository.findById(id);
+        return repository.findById(id);
     }
-
 
     @Override
     public void loadData(String filPath) throws FileNotFoundException {
@@ -46,12 +47,9 @@ public class UserServiceImpl implements UserService {
     // @Override
     // public void loadData(String filePath) throws FileNotFoundException {
     // List<Users> dataList = readDataFromCSV(filePath);
-
     // // Lưu trữ dữ liệu vào CSDL
     // repository.saveAll(dataList);
-
     // }
-
     // private List<Users> readDataFromCSV(String filePath) throws
     // FileNotFoundException {
     // List<Users> dataList = new ArrayList<>();
@@ -88,6 +86,28 @@ public class UserServiceImpl implements UserService {
     // e.printStackTrace();
     // }
     // return dataList;
+    @Override
+    public boolean delete(int id) {
+        try {
+            repository.deleteById(id);
+            return true;
+        } catch (EmptyResultDataAccessException ex) {
+            System.out.println("Không tìm thấy thực thể để xóa");
+            return false;
+        } catch (DataIntegrityViolationException ex) {
+            System.out.println("Lỗi liên quan đến tính toàn vẹn dữ liệu hoặc ràng buộc khóa ngoại");
+            return false;
+        }
+    }
+
+    @Override
+    public long countAll() {
+        return repository.count();
+    }
+
+    @Override
+    public long countByCreatedAtBefore(Date date) {
+        return repository.countByCreatedAtBefore(date);
+    }
 
 }
-
