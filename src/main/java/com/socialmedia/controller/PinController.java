@@ -155,6 +155,11 @@ public class PinController {
         }
     }
 
+    @PostMapping("/add")
+    public ResponseEntity<Pins> save(@RequestBody Pins pin) {
+        return new ResponseEntity<>(pinService.save(pin), HttpStatus.OK);
+    }
+
     @GetMapping("/countAll")
     public long countAll() {
         return pinService.countAll();
