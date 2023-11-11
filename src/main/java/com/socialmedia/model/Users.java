@@ -8,7 +8,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
+import java.sql.Blob;
 
 @Entity
 public class Users {
@@ -22,6 +24,8 @@ public class Users {
     private Date birthdate;
     private String fullname;
     private String introduce;
+    @Lob
+    @Column(columnDefinition = "LONGTEXT")
     private String avatar;
     private String website;
     private String gender;
@@ -113,6 +117,7 @@ public class Users {
         this.avatar = avatar;
     }
 
+
     public String getWebsite() {
         return website;
     }
@@ -161,5 +166,6 @@ public class Users {
         this.createdAt = createdAt;
     }
 
-}
 
+    
+}

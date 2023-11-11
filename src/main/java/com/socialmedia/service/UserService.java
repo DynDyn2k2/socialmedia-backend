@@ -5,6 +5,7 @@ import com.socialmedia.model.Users;
 import java.io.FileNotFoundException;
 import java.util.Date;
 import java.util.Optional;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService {
 
@@ -24,5 +25,12 @@ public interface UserService {
 
     public long countByCreatedAtBefore(Date date);
 
+    public void changeUserPassword(int id, String currentPassword, String newPassword);
+
+    public void updateAvatar(Integer id, MultipartFile avatarfile);
+
+    public void changeUserPrivateState(int id, boolean currentState);
+
+    public void changeUserbirthday(int id, Date birthday);
 
 }

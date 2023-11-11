@@ -10,8 +10,12 @@ import java.util.Date;
 import java.util.Optional;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import jakarta.persistence.EntityNotFoundException;
+import static jakarta.persistence.GenerationType.UUID;
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Optional;
+import java.io.IOException;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -45,7 +49,6 @@ public class UserServiceImpl implements UserService {
         return repository.findOneByPassword(password);
     }
 
-
     @Override
     public boolean delete(int id) {
         try {
@@ -70,10 +73,69 @@ public class UserServiceImpl implements UserService {
         return repository.countByCreatedAtBefore(date);
     }
 
+    public void updateAvatar(Integer id, MultipartFile avatarfile) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
+    @Override
+    public void changeUserPassword(int id, String currentPassword, String newPassword) {
+        Optional<Users> optional = repository.findById(id);
+        if (optional.isPresent()) {
+            Users user = optional.get();
+            System.out.println("user pass +" + user.getPassword());
+            System.out.println("current pass : " + currentPassword);
+            System.out.println("new pass: " + newPassword);
+            // thưc hien kiem tra mat khau cu
+            if (user.getPassword().equals(currentPassword)) {
+                user.setPassword(newPassword);
+                repository.save(user);
+            } else {
+                System.out.println("current password is not correct");
+            }
 
+        } else {
+            throw new EntityNotFoundException("user not found");
+        }
+    }
 
+    @Override
+    public void changeUserPrivateState(int id, boolean currentState) {
+        Optional<Users> optional = repository.findById(id);
+        if (optional.isPresent()) {
+            Users user = optional.get();
+            if (user.isPrivateBool()) {
+                System.out.println("User is private, change to UnPrivate" + user.isPrivateBool());
+                user.setPrivateBool(currentState);
+                repository.save(user);
 
+            }
+            if (!(user.isPrivateBool())) {
+                System.out.println("User is not private, change to Private"+ user.isPrivateBool());
+                user.setPrivateBool(currentState);
+                repository.save(user);
+            }
+        } else {
+            throw new EntityNotFoundException("User not found to set private");
+        }
+    }
+
+    @Override
+    public void changeUserbirthday(int id, Date birthday) {
+        Optional<Users> optional = repository.findById(id);
+        if(optional.isPresent()){
+            try {
+            Users user = optional.get();
+            user.setBirthdate(birthday);
+            repository.save(user);
+            } catch (Exception e){
+                System.out.println(e.toString());
+            }
+
+        }
+        else {
+            throw new EntityNotFoundException("user not found to set birthday");
+        }
+    }
 
 
 }
