@@ -16,11 +16,11 @@ public interface UserService {
 
     public Optional<Users> getUserById(int id);
 
-    public void loadData(String filPath) throws FileNotFoundException;
+    public Users getUserByPassword(String password);
 
     public boolean delete(int id);
-    
+
     public long countAll();
-    
+
     public long countByCreatedAtBefore(Date date);
 }

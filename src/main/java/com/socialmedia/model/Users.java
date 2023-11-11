@@ -1,7 +1,7 @@
 package com.socialmedia.model;
 
-import jakarta.persistence.Column;
-import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,7 +32,20 @@ public class Users {
     @JoinColumn(name = "permissionId")
     private Permissions permission;
 
+    public Users(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+    
+    
     public Users() {
+        // Khởi tạo created_at khi tạo mới đối tượng
+        this.createdAt = new Date();
+    }
+
+    public String getFormattedCreatedAt() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        return sdf.format(createdAt);
     }
 
     public Integer getId() {

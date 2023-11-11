@@ -14,16 +14,16 @@ public class Likes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    
+
     @ManyToOne
-    @JoinColumn(name="userId")  
+    @JoinColumn(name = "userId")
     private Users user;
- 
+
     @ManyToOne
-    @JoinColumn(name="pinId")  
+    @JoinColumn(name = "pinId")
     private Pins pin;
-    
-       private Date createdAt;
+
+    private Date createdAt;
 
     public int getId() {
         return id;
@@ -57,5 +57,4 @@ public class Likes {
         this.createdAt = createdAt;
     }
 
-    
 }

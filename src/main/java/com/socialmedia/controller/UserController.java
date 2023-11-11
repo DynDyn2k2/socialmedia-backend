@@ -3,11 +3,11 @@ package com.socialmedia.controller;
 import com.socialmedia.model.Users;
 import com.socialmedia.service.UserService;
 import java.util.Calendar;
-import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +23,42 @@ public class UserController {
     @PostMapping("/add")
     public ResponseEntity<Users> add(@RequestBody Users user) {
         return new ResponseEntity<>(service.saveUser(user), HttpStatus.OK);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Integer> login(@RequestBody Map<String, String> request) {
+        String username = request.get("username");
+        String password = request.get("password");       
+        Users foundUser = service.getUserByUsername(username); 
+        if (foundUser != null && foundUser.getPassword().equals(password)) {
+            return new ResponseEntity<>(foundUser.getId(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<String> register(@RequestBody Users user) {
+        // Kiểm tra xem người dùng đã tồn tại chưa
+        Users existingUser = service.getUserByUsername(user.getUsername());
+        if (existingUser != null) {
+            System.out.println(existingUser);
+            return new ResponseEntity<>("User already exists", HttpStatus.BAD_REQUEST);
+        }
+        System.out.println("=========:"+user);
+        // Đặt thời gian đăng ký
+        user.setCreatedAt(new Date());
+        // Lưu người dùng mới vào cơ sở dữ liệu
+        Users registeredUser = service.saveUser(user);
+
+        if (registeredUser != null) {
+            System.out.println(registeredUser);
+            return new ResponseEntity<>("Registration successful", HttpStatus.OK);
+        } else {
+            System.out.println(registeredUser);
+            return new ResponseEntity<>("Registration failed", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     @GetMapping("/getAll")
@@ -71,4 +107,10 @@ public class UserController {
 
         return percent;
     }
+
+    @GetMapping(value = {"/password/{password}"})
+    public Users getUserByPassword(@PathVariable("password") String password) {
+        return service.getUserByPassword(password);
+    }
+
 }
