@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 
+
 @Service
 public class TypeServiceImpl implements TypeService {
 
@@ -45,3 +46,4 @@ public class TypeServiceImpl implements TypeService {
     }
 
 }
+

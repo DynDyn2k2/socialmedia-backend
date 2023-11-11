@@ -15,7 +15,7 @@ public interface PinRepository extends JpaRepository<Pins, Integer> {
     public List<Pins> findPinsByTypeId(Long typeId);
 
     public List<Pins> findByUser(Optional<Users> user);
-    
-        public long countByCreatedAtBefore(Date created_at);    
+
+    public long countByCreatedAtBefore(Date created_at);
 
 }

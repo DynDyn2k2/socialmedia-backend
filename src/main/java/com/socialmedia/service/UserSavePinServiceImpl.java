@@ -24,6 +24,7 @@ public class UserSavePinServiceImpl implements UserSavePinService {
         return repository.save(userSavePin);
     }
 
+
     @Override
     public List<UserSavePin> getAllUserSavePin() {
         return repository.findAll();
@@ -33,6 +34,7 @@ public class UserSavePinServiceImpl implements UserSavePinService {
     public List<UserSavePin> findAllByUserAndBoard(Users user, Boards board) {
         return repository.findAllByUserAndBoard(user, board);
     }
+
 
     @Override
     public List<UserSavePin> findAllByPin(Pins pin) {
@@ -45,9 +47,9 @@ public class UserSavePinServiceImpl implements UserSavePinService {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(UserSavePin userSavePin) {
         try {
-            repository.deleteById(id);
+            repository.delete(userSavePin);
             return true;
         } catch (EmptyResultDataAccessException ex) {
             System.out.println("Không tìm thấy thực thể để xóa");

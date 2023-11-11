@@ -1,3 +1,4 @@
+
 package com.socialmedia.model;
 
 import java.util.Date;

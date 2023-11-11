@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.Optional;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import java.io.FileNotFoundException;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -35,8 +37,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<Users> getUserById(int id) {
         return repository.findById(id);
-    }
 
+    }
 
     @Override
     public Users getUserByPassword(String password) {
@@ -67,5 +69,11 @@ public class UserServiceImpl implements UserService {
     public long countByCreatedAtBefore(Date date) {
         return repository.countByCreatedAtBefore(date);
     }
+
+
+
+
+
+
 
 }

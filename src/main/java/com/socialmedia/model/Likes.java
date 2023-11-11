@@ -1,3 +1,4 @@
+
 package com.socialmedia.model;
 
 import jakarta.persistence.Entity;
@@ -58,3 +59,4 @@ public class Likes {
     }
 
 }
+

@@ -37,6 +37,7 @@ public class UserSavePinController {
     @Autowired
     private PinService pinService;
 
+
     @GetMapping(value = "/getAll")
     public List<UserSavePin> getAllUserSavePin() {
         return userSavePinservice.getAllUserSavePin();
@@ -63,7 +64,6 @@ public class UserSavePinController {
             }
 
         }
-
         return listPin;
     }
 
@@ -84,6 +84,13 @@ public class UserSavePinController {
             return null;
         }
 
+    }
+
+
+    @PostMapping("/delete")
+    public boolean delete(@RequestBody UserSavePin userSavePin) {
+        userSavePinservice.delete(userSavePin);
+        return true;
     }
 
 }

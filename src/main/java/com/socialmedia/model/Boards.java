@@ -1,3 +1,4 @@
+
 package com.socialmedia.model;
 
 import jakarta.persistence.Entity;
@@ -13,13 +14,14 @@ public class Boards {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    
+
     @ManyToOne
-    @JoinColumn(name="userId")  
+    @JoinColumn(name = "userId")
     private Users user;
-          
+
     private String name;
     private String description;       
+
 
     public Boards() {
     }
@@ -55,6 +57,5 @@ public class Boards {
     public void setDescription(String description) {
         this.description = description;
     }
-    
-    
+
 }

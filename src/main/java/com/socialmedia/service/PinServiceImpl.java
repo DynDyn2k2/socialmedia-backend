@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import java.util.List;
+import java.util.Optional;
+
 
 @Service
 public class PinServiceImpl implements PinService {
@@ -22,6 +25,7 @@ public class PinServiceImpl implements PinService {
     public List<Pins> findByUserOrderByIdAsc(Users user) {
         return repository.findByUserOrderByIdAsc(user);
     }
+
 
     @Override
     public List<Pins> getPinsByTypeId(Long typeId) {

@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -58,7 +59,6 @@ public class UserController {
             System.out.println(registeredUser);
             return new ResponseEntity<>("Registration failed", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
 
     @GetMapping("/getAll")
@@ -66,12 +66,14 @@ public class UserController {
         return service.getAllUsers();
     }
 
-    @GetMapping(value = {"/username/{username}"})
+
+    @GetMapping(value = { "/username/{username}" })
     public Users getUserByUsername(@PathVariable("username") String username) {
         return service.getUserByUsername(username);
     }
 
-    @GetMapping(value = {"/id/{id}"})
+
+    @GetMapping(value = { "/id/{id}" })
     public Users getUserById(@PathVariable("id") int id) {
         Optional<Users> optional = service.getUserById(id);
         return optional.get();
@@ -114,3 +116,4 @@ public class UserController {
     }
 
 }
+

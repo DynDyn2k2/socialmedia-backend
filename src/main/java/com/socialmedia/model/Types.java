@@ -1,4 +1,3 @@
-
 package com.socialmedia.model;
 
 import java.util.ArrayList;
@@ -16,13 +15,11 @@ public class Types {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String typeName;
 
     public Long getId() {
         return id;
     }
-
-    private String typeName;
-
 
     public String getTypeName() {
         return typeName;

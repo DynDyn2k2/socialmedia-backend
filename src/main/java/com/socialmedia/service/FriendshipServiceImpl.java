@@ -11,11 +11,12 @@ import com.socialmedia.model.Users;
 public class FriendshipServiceImpl implements FriendshipService {
 
     @Autowired
-    private FriendshipRepository  repository;
+    private FriendshipRepository repository;
 
     @Override
     public List<Friendships> getAllByUser1AndStatus(Users user, Friendships.FriendshipStatus status) {
        return repository.findAllByUser1AndStatus(user, status);
+
     }
 
     @Override
@@ -32,4 +33,5 @@ public class FriendshipServiceImpl implements FriendshipService {
     public List<Friendships> getAllByUser2(Users user) {
        return repository.findAllByUser2(user);
     }
+
 }

@@ -12,7 +12,11 @@ public interface UserSavePinRepository extends JpaRepository<UserSavePin, Intege
 
     public List<UserSavePin> findAllByUserAndBoard(Users user, Boards board);
 
+
     public List<UserSavePin> findAllByPin(Pins pin);
     
       public List<UserSavePin> findAllByBoard(Boards board);          
+
+
 }
+

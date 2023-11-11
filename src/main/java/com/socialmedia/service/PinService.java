@@ -26,4 +26,5 @@ public interface PinService {
     public long countAll();
 
     public long countByCreatedAtBefore(Date date);
+
 }

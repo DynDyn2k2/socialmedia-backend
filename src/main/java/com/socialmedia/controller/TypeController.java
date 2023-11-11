@@ -1,11 +1,11 @@
 package com.socialmedia.controller;
 
+
 import com.socialmedia.model.Types;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.socialmedia.service.TypeService;
 import java.util.List;
 import java.util.Optional;

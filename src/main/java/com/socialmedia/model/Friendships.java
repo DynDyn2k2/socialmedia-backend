@@ -1,3 +1,4 @@
+
 package com.socialmedia.model;
 
 import jakarta.persistence.Column;
@@ -80,3 +81,4 @@ public class Friendships {
     
 
 }
+

@@ -10,6 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 import org.springframework.web.bind.annotation.GetMapping;
 
+
 @RestController
 @RequestMapping("/likes")
 @CrossOrigin
@@ -44,3 +45,5 @@ public class LikeController {
         return percent;
     }
 }
+
+

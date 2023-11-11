@@ -49,6 +49,7 @@ public class PinController {
     @Autowired
     private UserSavePinService userSavePinService;
 
+
     @GetMapping("/username/{username}")
     public List<Pins> findByUserIdOrderByPinIdAsc(@PathVariable("username") String username) {
         Users user = userService.getUserByUsername(username);
@@ -89,6 +90,7 @@ public class PinController {
         }
         return null;
     }
+
 
     @PutMapping("/edit/{id}")
     public ResponseEntity<Pins> update(@PathVariable("id") int id, @RequestBody Pins pin) {
@@ -142,7 +144,7 @@ public class PinController {
             //Xóa userSavePin
             List<UserSavePin> listUserSavePin = userSavePinService.findAllByPin(pin);
             for (UserSavePin item : listUserSavePin) {
-                boolean deleteUserSavePin = userSavePinService.delete(item.getId());
+                boolean deleteUserSavePin = userSavePinService.delete(item);
                 if (deleteUserSavePin == false) {
                     delete = false;
                 }

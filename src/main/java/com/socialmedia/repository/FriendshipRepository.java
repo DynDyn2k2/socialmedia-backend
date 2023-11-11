@@ -15,3 +15,4 @@ public interface FriendshipRepository extends JpaRepository<Friendships, Integer
 
     public List<Friendships> findAllByUser2(Users user);
 }
+

@@ -27,6 +27,7 @@ public class BoardController {
     @Autowired
     private UserSavePinService userSavePinService;
 
+
     @GetMapping("/username/{username}")
     public List<Boards> findByUserIdOrderByPinIdAsc(@PathVariable("username") String username) {
         Users user = userService.getUserByUsername(username);
@@ -76,7 +77,7 @@ public class BoardController {
             //Xóa userSavePin
             List<UserSavePin> listUserSavePin = userSavePinService.findAllByBoard(board);
             for (UserSavePin item : listUserSavePin) {
-                boolean deleteUserSavePin = userSavePinService.delete(item.getId());
+                boolean deleteUserSavePin = userSavePinService.delete(item);
                 if (deleteUserSavePin == false) {
                     delete = false;
                 }
@@ -88,5 +89,6 @@ public class BoardController {
             return false;
         }
     }
+
 
 }
