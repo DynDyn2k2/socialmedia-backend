@@ -1,4 +1,3 @@
-
 package com.socialmedia.repository;
 
 import com.socialmedia.model.Users;
@@ -12,5 +11,6 @@ public interface UserRepository extends JpaRepository<Users,Integer> {
 
     
     public long countByCreatedAtBefore(Date created_at);    
+
 
 }
