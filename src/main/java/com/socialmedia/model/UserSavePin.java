@@ -22,10 +22,11 @@ public class UserSavePin {
     @ManyToOne
     @JoinColumn(name = "pinId")
     private Pins pin;
-    
+
     @ManyToOne
     @JoinColumn(name = "boardId")
     private Boards board;
+
 
     public int getId() {
         return id;

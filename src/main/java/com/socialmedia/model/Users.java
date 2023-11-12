@@ -1,13 +1,15 @@
 package com.socialmedia.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import jakarta.persistence.Column;
-import java.sql.Date;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 import java.sql.Blob;
 
 @Entity
@@ -17,31 +19,45 @@ public class Users {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String username;
+    private String email;
     private String password;
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date birthdate;
     private String fullname;
     private String introduce;
     @Lob
     @Column(columnDefinition = "LONGTEXT")
     private String avatar;
-  
     private String website;
     private String gender;
     private String language;
-    private String email;
     private boolean privateBool;
-    private String country;
+    private java.util.Date createdAt;
+
+    @ManyToOne
+    @JoinColumn(name = "permissionId")
+    private Permissions permission;
+
+    public Users(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
     
     
     public Users() {
+        // Khởi tạo created_at khi tạo mới đối tượng
+        this.createdAt = new Date();
     }
 
-    public int getId() {
+    public String getFormattedCreatedAt() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        return sdf.format(createdAt);
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -51,6 +67,14 @@ public class Users {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -93,6 +117,7 @@ public class Users {
         this.avatar = avatar;
     }
 
+
     public String getWebsite() {
         return website;
     }
@@ -117,26 +142,30 @@ public class Users {
         this.language = language;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public boolean getPrivateBool() {
+    public boolean isPrivateBool() {
         return privateBool;
     }
 
     public void setPrivateBool(boolean privateBool) {
         this.privateBool = privateBool;
     }
-    public String getCountry() {
-        return country;
+
+    public Permissions getPermission() {
+        return permission;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setPermission(Permissions permission) {
+        this.permission = permission;
     }
+
+    public java.util.Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(java.util.Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+
+    
 }
