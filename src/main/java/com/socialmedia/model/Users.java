@@ -32,7 +32,7 @@ public class Users {
     private String email;
     private boolean privateBool;
     private String country;
-    private Blob image;
+    
     
     public Users() {
     }
