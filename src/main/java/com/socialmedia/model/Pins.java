@@ -1,12 +1,13 @@
 package com.socialmedia.model;
 
-
+import jakarta.persistence.Column;
 import java.util.Date;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import java.util.Date;
 
@@ -16,19 +17,20 @@ public class Pins {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    
+
     @ManyToOne
-    @JoinColumn(name="userId")  
+    @JoinColumn(name = "userId")
     private Users user;
-          
+    @Lob
+    @Column(columnDefinition = "LONGTEXT")
     private String image;
     private String title;
     private String description;
     private String link;
     private Date createdAt;
- 
+
     @ManyToOne
-    @JoinColumn(name="typeId")  
+    @JoinColumn(name = "typeId")
     private Types type;
 
     public Pins() {
