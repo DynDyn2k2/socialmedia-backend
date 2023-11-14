@@ -1,6 +1,5 @@
-package com.socialmedia.model;
 
-import java.util.Date;
+package com.socialmedia.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import java.util.Date;
 
 @Entity
 public class Likes {
@@ -15,16 +15,16 @@ public class Likes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    
+
     @ManyToOne
-    @JoinColumn(name="userId")  
+    @JoinColumn(name = "userId")
     private Users user;
- 
+
     @ManyToOne
-    @JoinColumn(name="pinId")  
+    @JoinColumn(name = "pinId")
     private Pins pin;
 
-    private Date created_at;
+    private Date createdAt;
 
     public int getId() {
         return id;
@@ -50,11 +50,13 @@ public class Likes {
         this.pin = pin;
     }
 
-    public Date getCreated_at() {
-        return created_at;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(Date created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
+
 }
+

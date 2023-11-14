@@ -1,3 +1,4 @@
+
 package com.socialmedia.model;
 
 import java.util.Date;
@@ -24,7 +25,7 @@ public class Comments {
     private Pins pin;
 
     private String content;
-    private Date comment_at;
+    private Date commentAt;
 
     public int getId() {
         return id;
@@ -58,12 +59,12 @@ public class Comments {
         this.content = content;
     }
 
-    public Date getComment_at() {
-        return comment_at;
+    public Date getCommentAt() {
+        return commentAt;
     }
 
-    public void setComment_at(Date comment_at) {
-        this.comment_at = comment_at;
+    public void setCommentAt(Date commentAt) {
+        this.commentAt = commentAt;
     }
 
     
