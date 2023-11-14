@@ -49,7 +49,6 @@ public class PinController {
     @Autowired
     private UserSavePinService userSavePinService;
 
-
     @GetMapping("/username/{username}")
     public List<Pins> findByUserIdOrderByPinIdAsc(@PathVariable("username") String username) {
         Users user = userService.getUserByUsername(username);
@@ -90,7 +89,6 @@ public class PinController {
         }
         return null;
     }
-
 
     @PutMapping("/edit/{id}")
     public ResponseEntity<Pins> update(@PathVariable("id") int id, @RequestBody Pins pin) {
@@ -161,6 +159,8 @@ public class PinController {
     public ResponseEntity<Pins> save(@RequestBody Pins pin) {
         return new ResponseEntity<>(pinService.save(pin), HttpStatus.OK);
     }
+
+
 
     @GetMapping("/countAll")
     public long countAll() {
