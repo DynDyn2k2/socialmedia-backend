@@ -1,7 +1,6 @@
 package com.socialmedia.service;
 
 import com.socialmedia.model.Participants;
-import com.socialmedia.model.Users;
 import java.util.List;
 
 public interface ParticipantService {

@@ -26,5 +26,6 @@ public class ChatController {
     public Messages greeting(Messages message) throws Exception {
         Thread.sleep(1000); // simulated delay 
         return repository.save(message);
+//        return message;
    }
 }

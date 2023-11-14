@@ -46,12 +46,6 @@
                     <artifactId>spring-boot-starter-websocket</artifactId>
                     <version>3.1.5</version>
                 </dependency>
-                <dependency>
-                    <groupId>com.corundumstudio.socketio</groupId>
-                    <artifactId>netty-socketio</artifactId>
-                    <version>1.7.22</version>
-                </dependency>
-
 	</dependencies>
 
 	<build>
