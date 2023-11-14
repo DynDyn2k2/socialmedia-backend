@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import java.sql.Blob;
+import java.util.Date;
 
 @Entity
 public class Pins {
@@ -31,7 +32,11 @@ public class Pins {
     @ManyToOne
     @JoinColumn(name="typeId")  
     private Types type;
+    
+    private Date created_at;
 
+   
+    
     public Pins() {
     }
     public int getId() {
@@ -99,6 +104,13 @@ public class Pins {
     public void setType(Types type) {
         this.type = type;
     }
+    
+    public Date getCreated_at() {
+        return created_at;
+    }
 
+    public void setCreated_at(Date created_at) {
+        this.created_at = created_at;
+    }
     
 }

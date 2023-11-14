@@ -5,6 +5,7 @@
 package com.socialmedia.controller;
 
 import com.socialmedia.webSocketConfig.SimpleComment;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
@@ -18,9 +19,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @CrossOrigin(origins = "http://localhost:3000")
 public class RealTimeCommentController {
 
-    @MessageMapping("/addComment")
-    @SendTo("/topic/comment")
-    public SimpleComment addComment(SimpleComment comment) throws Exception{
+    @MessageMapping("/addComment/pin_id/{pin_id}")
+    @SendTo("/topic/comment/pin_id/{pin_id}")
+    public SimpleComment addComment(@DestinationVariable("pin_id") int pin_id, SimpleComment comment) throws Exception{
         Thread.sleep(1000);
         return comment;
     }
