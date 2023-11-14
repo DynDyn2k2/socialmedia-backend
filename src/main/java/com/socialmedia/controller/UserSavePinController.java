@@ -37,6 +37,7 @@ public class UserSavePinController {
     @Autowired
     private PinService pinService;
 
+
     @GetMapping(value = "/getAll")
     public List<UserSavePin> getAllUserSavePin() {
         return userSavePinservice.getAllUserSavePin();
@@ -63,39 +64,32 @@ public class UserSavePinController {
             }
 
         }
-
         return listPin;
     }
 
     @PostMapping("/add")
     public boolean savePin(@RequestBody UserSavePin userSavePin) {
-        
-//        System.out.println(userId);
-//        Optional<Users> optionalUser = userService.getUserById(userId);
-//        Users user = new Users();
-//        if (optionalUser.isPresent()) {
-//            user = optionalUser.get();
-//        }
-//
-//        Optional<Pins> optionalPin = pinService.getPinById(pinId);
-//        Pins pin = new Pins();
-//        if (optionalPin.isPresent()) {
-//            pin = optionalPin.get();
-//        }
-//
-//        Optional<Boards> optionalBoard = boardService.findById(boardId);
-//        Boards board = new Boards();
-//        if (optionalBoard.isPresent()) {
-//            board = optionalBoard.get();
-//        }
-        
-//        UserSavePin userSavePin = new UserSavePin();
-//        userSavePin.setUser(user);
-//        userSavePin.setPin(pin);
-//        userSavePin.setBoard(board);
-//        System.out.println(userSavePin);
         userSavePinservice.saveUserSavePin(userSavePin);
-        
+        return true;
+    }
+
+    @GetMapping("/boardId/{id}")
+    public List<UserSavePin> getPinByBoardId(@PathVariable("id") int id) {
+        Optional<Boards> optionalBoard = boardService.findById(id);
+        if (optionalBoard.isPresent()) {
+            Boards board = optionalBoard.get();
+            List<UserSavePin> list = userSavePinservice.findAllByBoard(board);
+            return list;
+        } else {
+            return null;
+        }
+
+    }
+
+
+    @PostMapping("/delete")
+    public boolean delete(@RequestBody UserSavePin userSavePin) {
+        userSavePinservice.delete(userSavePin);
         return true;
     }
 
