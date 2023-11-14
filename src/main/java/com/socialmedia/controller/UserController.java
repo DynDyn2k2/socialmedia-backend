@@ -32,12 +32,12 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Integer> login(@RequestBody Map<String, String> request) {
+    public ResponseEntity<Users> login(@RequestBody Map<String, String> request) {
         String username = request.get("username");
         String password = request.get("password");
         Users foundUser = service.getUserByUsername(username);
         if (foundUser != null && foundUser.getPassword().equals(password)) {
-            return new ResponseEntity<>(foundUser.getId(), HttpStatus.OK);
+            return new ResponseEntity<>(foundUser, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
