@@ -21,10 +21,11 @@ public class ChatController {
     @Autowired
     private MessageRepository repository;
     
-    @MessageMapping("/chat/conversation/{conversation_id}")
+    @MessageMapping("/chat/conversation_id/{conversation_id}")
     @SendTo("/room/conversation_id/{conversation_id}")
     public Messages greeting(Messages message) throws Exception {
         Thread.sleep(1000); // simulated delay 
-        return repository.save(message);
+//        return repository.save(message);
+        return message;
    }
 }
