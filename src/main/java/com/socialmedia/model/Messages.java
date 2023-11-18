@@ -22,6 +22,7 @@ public class Messages {
  
     private String content;
     private Date send_at; 
+    private boolean seen;
 
     @ManyToOne
     @JoinColumn(name = "conversationId")
@@ -68,6 +69,12 @@ public class Messages {
         this.conversation = conversation;
     }
 
-    
+    public boolean isSeen() {
+        return seen;
+    }
+
+    public void setSeen(boolean seen) {
+        this.seen = seen;
+    }
 
 }

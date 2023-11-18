@@ -13,11 +13,15 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TimeZone;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.stereotype.Controller;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
 /**
  *
@@ -26,6 +30,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @Controller
 @CrossOrigin(origins = "http://localhost:3000")
 public class ChatController {
+    
+    private Map<String, Integer> roomMap = new HashMap<>();
+    
     @Autowired
     private MessageRepository messageRepository;
     @Autowired
@@ -35,7 +42,7 @@ public class ChatController {
     
     @MessageMapping("/chat/conversation_id/{conversation_id}")
     @SendTo("/room/conversation_id/{conversation_id}")
-    public Messages greeting(SimpleMessage sMessage) throws Exception {
+    public Messages chatting(SimpleMessage sMessage, @DestinationVariable("conversation_id") String conversation_id) throws Exception {
         Thread.sleep(1000); // simulated delay
         Messages message = new Messages();
         message.setContent(sMessage.getContent());
@@ -43,6 +50,24 @@ public class ChatController {
         message.setSend_at(new Date());
         message.setUser(userRepository.findById(sMessage.getUser_id()).get());
         message.setConversation(conversationRepository.findById(sMessage.getConversation_id()).get());
-        return messageRepository.save(message);
-   }
+        if(roomMap.get(conversation_id) == 1) {
+            message.setSeen(false);
+        }
+        else {
+            message.setSeen(true);
+        }
+//        return messageRepository.save(message);
+        return message;
+    }
+    
+    @SubscribeMapping("/login/{conversation_id}")
+    public void initRoom(@DestinationVariable("conversation_id") String conversation_id) {
+        if(!roomMap.containsKey(conversation_id)) {
+            roomMap.put(conversation_id, 1);
+        }
+        else {
+            int newCount = roomMap.get(conversation_id) +1;
+            roomMap.put(conversation_id, newCount);
+        }
+    }
 }
