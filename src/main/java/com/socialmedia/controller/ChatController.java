@@ -17,12 +17,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.EventListener;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.stereotype.Controller;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.annotation.SubscribeMapping;
+import org.springframework.messaging.support.GenericMessage;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.socket.messaging.SessionUnsubscribeEvent;
 /**
  *
  * @author PC
@@ -62,12 +66,16 @@ public class ChatController {
     
     @SubscribeMapping("/login/{conversation_id}")
     public void initRoom(@DestinationVariable("conversation_id") String conversation_id) {
-        if(!roomMap.containsKey(conversation_id)) {
-            roomMap.put(conversation_id, 1);
+        int userCount = 1;
+        if(roomMap.containsKey(conversation_id)) {
+            userCount = 2;
         }
-        else {
-            int newCount = roomMap.get(conversation_id) +1;
-            roomMap.put(conversation_id, newCount);
-        }
+        roomMap.put(conversation_id, userCount);
+    }
+    
+    @MessageMapping("/unsubscribe")
+    public void handleUnsubscribe(@Payload String conversation_id) {
+        roomMap.put(conversation_id, 1);
+//        return "Conversation: " + conversation_id + " === Joined: " + roomMap.get(conversation_id);
     }
 }
