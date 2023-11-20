@@ -8,6 +8,9 @@ import java.util.Optional;
 
 public interface BoardService {
     public List<Boards> findByUserOrderByIdAsc(Users user);
+
     public Optional<Boards> findById(int id);
-    public Boards saveBoard( Boards board);
+    public Boards save(Boards board);
+    
+    public boolean delete(int id);
 }

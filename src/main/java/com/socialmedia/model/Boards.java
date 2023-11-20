@@ -1,7 +1,6 @@
 
 package com.socialmedia.model;
 
-import java.sql.Date;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,13 +14,14 @@ public class Boards {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    
+
     @ManyToOne
-    @JoinColumn(name="userId")  
+    @JoinColumn(name = "userId")
     private Users user;
-          
+
     private String name;
     private String description;       
+
 
     public Boards() {
     }
@@ -57,6 +57,5 @@ public class Boards {
     public void setDescription(String description) {
         this.description = description;
     }
-    
-    
+
 }

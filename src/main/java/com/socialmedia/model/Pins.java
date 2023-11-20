@@ -1,12 +1,13 @@
 package com.socialmedia.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
-import java.sql.Blob;
 import java.util.Date;
 
 @Entity
@@ -15,27 +16,21 @@ public class Pins {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    
-    @ManyToOne
-    @JoinColumn(name="userId")  
-    private Users user;
 
-   
     @ManyToOne
-    @JoinColumn(name="boardId")  
-    private Boards board;
+    @JoinColumn(name = "userId")
+    private Users user;
+    @Lob
+    @Column(columnDefinition = "LONGTEXT")
     private String image;
     private String title;
     private String description;
     private String link;
- 
-    @ManyToOne
-    @JoinColumn(name="typeId")  
-    private Types type;
-    
-    private Date created_at;
+    private Date createdAt;
 
-   
+    @ManyToOne
+    @JoinColumn(name = "typeId")
+    private Types type;
     
     public Pins() {
     }
@@ -55,14 +50,6 @@ public class Pins {
         this.image = image;
     }
     
-    public Boards getBoard() {
-        return board;
-    }
-
-    public void setBoard(Boards board) {
-        this.board = board;
-    }
-    
     public Users getUser() {
         return user;
     }
@@ -79,7 +66,6 @@ public class Pins {
         this.title = title;
     }
 
-    
     public String getDescription() {
         return description;
     }
@@ -96,7 +82,6 @@ public class Pins {
         this.link = link;
     }
 
-
     public Types getType() {
         return type;
     }
@@ -105,12 +90,12 @@ public class Pins {
         this.type = type;
     }
     
-    public Date getCreated_at() {
-        return created_at;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(Date created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
-    
+
 }
