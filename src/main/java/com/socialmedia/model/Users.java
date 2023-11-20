@@ -24,9 +24,7 @@ public class Users {
     private Date birthdate;
     private String fullname;
     private String introduce;
-    @Lob
-    @Column(columnDefinition = "LONGTEXT")
-    private String avatar;
+    
     private String website;
     private String gender;
     private String language;
@@ -37,6 +35,10 @@ public class Users {
     @JoinColumn(name = "permissionId")
     private Permissions permission;
 
+    @Lob
+    @Column(columnDefinition = "LONGTEXT")
+    private String avatar;
+    
     public Users(String email, String password) {
         this.email = email;
         this.password = password;

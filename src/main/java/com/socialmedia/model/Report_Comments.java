@@ -101,5 +101,12 @@ public class Report_Comments {
         this.userRatify = userRatify;
     }
 
-    
+    // // Thêm phương thức để kiểm tra trạng thái của báo cáo
+    // public boolean isRejected() {
+    //     return reject != null && reject;
+    // }
+
+    // public boolean isApproved() {
+    //     return approve != null && approve;
+    // }
 }

@@ -4,13 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.socialmedia.service.CommentService;
+
 import java.util.Calendar;
 import java.util.Date;
+
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-
-
 
 @RestController
 @RequestMapping("/comments")
@@ -24,8 +24,8 @@ public class CommentController {
     public long countAll() {
         return service.countAll();
     }
-    
-        @GetMapping("/percent7days")
+
+    @GetMapping("/percent7days")
     public double percent7days() {
         Date currentDate = new Date();
         // Tạo một đối tượng Calendar và thiết lập nó với ngày hiện tại
@@ -45,6 +45,4 @@ public class CommentController {
 
         return percent;
     }
-
 }
-
