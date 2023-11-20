@@ -71,12 +71,12 @@ public class UserController {
         return service.getAllUsers();
     }
 
-    @GetMapping(value = {"/username/{username}"})
+    @GetMapping(value = { "/username/{username}" })
     public Users getUserByUsername(@PathVariable("username") String username) {
         return service.getUserByUsername(username);
     }
 
-    @GetMapping(value = {"/id/{id}"})
+    @GetMapping(value = { "/id/{id}" })
     public ResponseEntity<Users> getUserById(@PathVariable("id") int id) {
         Optional<Users> optional = service.getUserById(id);
         if (optional.isPresent()) {
@@ -117,7 +117,7 @@ public class UserController {
         return percent;
     }
 
-    @GetMapping(value = {"/password/{password}"})
+    @GetMapping(value = { "/password/{password}" })
     public Users getUserByPassword(@PathVariable("password") String password) {
         return service.getUserByPassword(password);
     }
@@ -144,7 +144,7 @@ public class UserController {
 
         try {
             service.changeUserPrivateState(id, currentState);
-            return new ResponseEntity<>("Private State changed successfully", HttpStatus.OK);     
+            return new ResponseEntity<>("Private State changed successfully", HttpStatus.OK);
 
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Failed to change private state " + e.getMessage());
@@ -155,8 +155,7 @@ public class UserController {
     @PutMapping("/id/{id}")
     public ResponseEntity<Users> updateUser(
             @PathVariable("id") int id,
-            @RequestBody Users updateUser
-    ) {
+            @RequestBody Users updateUser) {
         Optional<Users> OptionalUser = service.getUserById(id);
         if (OptionalUser.isPresent()) {
             Users user = OptionalUser.get();
@@ -204,8 +203,7 @@ public class UserController {
     @PutMapping("/id/{id}/birthdate")
     public ResponseEntity<Date> updateBirthday(
             @PathVariable("id") int id,
-            @RequestBody Map<String, Date> request
-    ) {
+            @RequestBody Map<String, Date> request) {
         Date updateDate = request.get("updateBirthday");
         try {
             service.changeUserbirthday(id, updateDate);
@@ -218,14 +216,13 @@ public class UserController {
     @PutMapping("/id/{id}/avatar")
     public ResponseEntity<String> updateAvatar(
             @PathVariable("id") int id,
-            @RequestBody Map<String, String> request
-    ) {
+            @RequestBody Map<String, String> request) {
         try {
-//            Base64.Decoder decoder = Base64.getDecoder();
+            // Base64.Decoder decoder = Base64.getDecoder();
             String base64String = request.get("base64String");
             System.out.println(base64String);
-//            byte[] avatarBytes  = decoder.decode(base64String);
-//            byte[] avatarBytes = Base64.getDecoder() .decode(base64String);
+            // byte[] avatarBytes = decoder.decode(base64String);
+            // byte[] avatarBytes = Base64.getDecoder() .decode(base64String);
             Optional<Users> Optionaluser = service.getUserById(id);
             if (Optionaluser.isPresent()) {
                 Users user = Optionaluser.get();
