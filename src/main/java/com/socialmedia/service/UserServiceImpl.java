@@ -130,7 +130,6 @@ public class UserServiceImpl implements UserService {
             } catch (Exception e){
                 System.out.println(e.toString());
             }
-
         }
         else {
             throw new EntityNotFoundException("user not found to set birthday");

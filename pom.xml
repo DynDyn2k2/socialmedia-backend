@@ -59,7 +59,7 @@
             <version>1.4</version>
         </dependency>
 
-<<<<<<< HEAD
+
         <dependency>
             <groupId>com.corundumstudio.socketio</groupId>
             <artifactId>netty-socketio</artifactId>
@@ -71,8 +71,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-=======
->>>>>>> 405f09e65ba0ef09aab2a97543da067380ed980b
+
     </dependencies>
 
 <build>
