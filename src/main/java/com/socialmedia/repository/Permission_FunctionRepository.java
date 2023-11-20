@@ -10,4 +10,5 @@ public interface Permission_FunctionRepository extends JpaRepository<Permission_
     public List<Permission_Function> findAllByPermission(Permissions permission);
 
     void deleteByPermission(Permissions permission);
+    
 }

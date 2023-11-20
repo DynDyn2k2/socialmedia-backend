@@ -14,4 +14,8 @@ public interface CommentService {
     public long countAll();
 
     public long countByCreatedAtBefore(Date date);
+
+    public long countByCreatedAt(Date date);
+
+    public long countByCreatedAt(Date date1, Date date2);
 }

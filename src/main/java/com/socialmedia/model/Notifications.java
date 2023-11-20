@@ -3,13 +3,23 @@ package com.socialmedia.model;
 
 import java.util.Date;
 
+import com.socialmedia.model.enums.Notification_TYPE;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Notifications {
 
@@ -21,40 +31,46 @@ public class Notifications {
     @JoinColumn(name = "userId")
     private Users user;
 
-    private String link;
-    private String title;
-    private Date notification_at;
-
-    public int getId() {
-        return id;
+    public Users getUser() {
+        return user;
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public String getLink() {
-        return link;
+    public void setNotificationAt(Date notificationAt) {
+        this.notificationAt = notificationAt;
     }
 
-    public void setLink(String link) {
-        this.link = link;
+    public void setUser(Users user) {
+        this.user = user;
     }
 
-    public String getTitle() {
-        return title;
+    // Cài đặt những giá trị mặc định có thể xảy ra cho các loại thông báo
+    @Enumerated(EnumType.STRING)
+    private Notification_TYPE notificationType;
+
+    public Notification_TYPE getNotificationType() {
+        return notificationType;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setNotificationType(Notification_TYPE notificationType) {
+        this.notificationType = notificationType;
     }
 
-    public Date getNotification_at() {
-        return notification_at;
+    private Date notificationAt;
+
+    public Date getNotificationAt() {
+        return notificationAt;
     }
 
     public void setNotification_at(Date notification_at) {
-        this.notification_at = notification_at;
+        this.notificationAt = notification_at;
+    }
+
+    public int getId() {
+        return id;
     }
 
 }

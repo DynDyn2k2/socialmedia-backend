@@ -60,7 +60,7 @@ public class Content_ReportController {
             Content_Report currentContent_Report = optional.get();
             currentContent_Report.setContent(content_report.getContent());
             currentContent_Report.setDescription(content_report.getDescription());
-            return new ResponseEntity<>(service.save(content_report), HttpStatus.OK);
+            return new ResponseEntity<>(service.save(currentContent_Report), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

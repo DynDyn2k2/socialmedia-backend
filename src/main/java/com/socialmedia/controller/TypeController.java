@@ -58,7 +58,7 @@ public class TypeController {
         if (optional.isPresent()) {
             Types currentType = optional.get();
             currentType.setTypeName(type.getTypeName());
-            return new ResponseEntity<>(service.save(type), HttpStatus.OK);
+            return new ResponseEntity<>(service.save(currentType), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

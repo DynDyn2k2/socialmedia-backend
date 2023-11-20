@@ -35,4 +35,5 @@ public class Permission_FunctionServiceImpl implements Permission_FunctionServic
         repository.deleteByPermission(permission);
     }
 
+
 }
