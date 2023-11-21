@@ -5,6 +5,7 @@
 package com.socialmedia.controller;
 
 import com.socialmedia.model.Report_Pins;
+import com.socialmedia.model.ResultReport;
 import com.socialmedia.model.Users;
 import com.socialmedia.repository.Report_PinRepository;
 import com.socialmedia.service.Report_PinService;
@@ -34,6 +35,18 @@ public class Report_PinsController {
     private Report_PinRepository reportPinRepository;
     @Autowired
     private Report_PinService reportPinService;
+
+    @GetMapping("/count")
+    public Object count() {
+        long countAll = reportPinService.countAll();
+        long countNotApprovedYet = reportPinService.countByUserRatify(null);
+        long countApprove = reportPinService.countByApprove(true);
+        ResultReport r = new ResultReport();
+        r.countAll = countAll;
+        r.countNotApprovedYet = countNotApprovedYet;
+        r.countApprove = countApprove;
+        return r;
+    }
 
     @GetMapping(value = "/getAll")
     public List<Report_Pins> getAllReportPins() {
@@ -71,11 +84,11 @@ public class Report_PinsController {
     @PutMapping("/id/{id}/{approveState}")
     public ResponseEntity<String> changeApproveState(
             @PathVariable("id") int id,
-            @RequestBody Users userRatify,          
+            @RequestBody Users userRatify,
             @PathVariable("approveState") Boolean approveState) {
 
         try {
-            System.out.println("======================"+userRatify);
+            System.out.println("======================" + userRatify);
             reportPinService.changeApprove(id, userRatify, approveState);
             return new ResponseEntity<>("Approve State changed successfully", HttpStatus.OK);
 
