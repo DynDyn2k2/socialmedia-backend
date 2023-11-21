@@ -15,4 +15,7 @@ public interface Report_PinService {
     public long countByUserRatify(Users userRatify);
 
     public long countByApprove(boolean approve);
+
+    public void changeApprove(int id, Users userRatify, boolean currentState);
+
 }

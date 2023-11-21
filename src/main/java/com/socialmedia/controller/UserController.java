@@ -75,12 +75,12 @@ public class UserController {
         return service.getAllUsers();
     }
 
-    @GetMapping(value = {"/username/{username}"})
+    @GetMapping(value = { "/username/{username}" })
     public Users getUserByUsername(@PathVariable("username") String username) {
         return service.getUserByUsername(username);
     }
 
-    @GetMapping(value = {"/id/{id}"})
+    @GetMapping(value = { "/id/{id}" })
     public ResponseEntity<Users> getUserById(@PathVariable("id") int id) {
         Optional<Users> optional = service.getUserById(id);
         if (optional.isPresent()) {
@@ -121,7 +121,7 @@ public class UserController {
         return percent;
     }
 
-    @GetMapping(value = {"/password/{password}"})
+    @GetMapping(value = { "/password/{password}" })
     public Users getUserByPassword(@PathVariable("password") String password) {
         return service.getUserByPassword(password);
     }
@@ -279,3 +279,5 @@ public class UserController {
     }
 
 }
+
+
