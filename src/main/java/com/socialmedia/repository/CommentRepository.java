@@ -12,6 +12,8 @@ public interface CommentRepository extends JpaRepository<Comments, Integer> {
 
     public List<Comments> findAllByPin(Pins pin);
 
+    public List<Comments> findByPinId(int pin_id);
+
     public long countByCommentAtBefore(Date created_at);
 
     @Query("SELECT COUNT(e) FROM Comments e WHERE DATE_FORMAT(e.commentAt, '%Y-%m-%d') = :formattedDate")

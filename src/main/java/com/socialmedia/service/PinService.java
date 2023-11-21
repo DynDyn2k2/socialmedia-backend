@@ -31,4 +31,5 @@ public interface PinService {
 
     public long countByCreatedAt(Date date1, Date date2);
 
+
 }

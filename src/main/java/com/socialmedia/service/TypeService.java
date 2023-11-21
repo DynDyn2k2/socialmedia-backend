@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TypeService {
-
     public List<Types> getAll();
 
     public Optional<Types> findById(int id);

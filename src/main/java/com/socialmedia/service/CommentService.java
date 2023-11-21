@@ -7,9 +7,13 @@ import java.util.List;
 
 public interface CommentService {
 
-    public List<Comments> findAllByPin(Pins pin);
+    public List<Comments> getAll();
 
-    public boolean delete(int id);
+    public Comments saveComment(Comments comment);
+
+    public boolean delete(int cmt_id);
+
+    public List<Comments> findAllByPin(Pins pin);
 
     public long countAll();
 

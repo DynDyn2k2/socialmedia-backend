@@ -1,6 +1,5 @@
 package com.socialmedia.controller;
 
-
 import com.socialmedia.model.Types;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,7 +23,7 @@ public class TypeController {
 
     @Autowired
     private TypeService service;
-
+    
     @GetMapping("/getAll")
     public List<Types> getAll() {
         List<Types> list = service.getAll();

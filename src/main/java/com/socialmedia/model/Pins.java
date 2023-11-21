@@ -31,10 +31,9 @@ public class Pins {
     @ManyToOne
     @JoinColumn(name = "typeId")
     private Types type;
-
+    
     public Pins() {
     }
-
     public int getId() {
         return id;
     }
@@ -43,20 +42,20 @@ public class Pins {
         this.id = id;
     }
 
+    public String getImage() {
+           return image;
+       }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+    
     public Users getUser() {
         return user;
     }
 
     public void setUser(Users user) {
         this.user = user;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public String getTitle() {
@@ -90,7 +89,7 @@ public class Pins {
     public void setType(Types type) {
         this.type = type;
     }
-
+    
     public Date getCreatedAt() {
         return createdAt;
     }

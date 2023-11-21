@@ -43,6 +43,18 @@ public class UserSavePinController {
         return userSavePinservice.getAllUserSavePin();
     }
 
+    @GetMapping("getPinByUser/{userId}")
+    public List<UserSavePin> getPinByUserId(@PathVariable("id") int id) {
+        Optional<Users> optionalUser = userService.getUserById(id);
+        if (optionalUser.isPresent()) {
+            Users user = optionalUser.get();
+            List<UserSavePin> list = userSavePinservice.findAllByUser(user);
+            return list;
+        } else {
+            return null;
+        }
+    }
+    
     @GetMapping("getPin/{username}/{boardId}")
     public List<Pins> getPinByUserIdAndBoardId(@PathVariable("username") String username,
             @PathVariable("boardId") int boardId) {

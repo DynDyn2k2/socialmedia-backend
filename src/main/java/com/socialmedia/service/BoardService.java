@@ -10,10 +10,7 @@ public interface BoardService {
     public List<Boards> findByUserOrderByIdAsc(Users user);
 
     public Optional<Boards> findById(int id);
-
     public Boards save(Boards board);
     
     public boolean delete(int id);
-
-
 }

@@ -18,8 +18,13 @@ public class CommentServiceImpl implements CommentService {
     private CommentRepository repository;
 
     @Override
-    public List<Comments> findAllByPin(Pins pin) {
-        return repository.findAllByPin(pin);
+    public List<Comments> getAll() {
+        return repository.findAll();
+    }
+    
+    @Override
+    public Comments saveComment(Comments comment) {
+        return repository.save(comment);
     }
 
     @Override
@@ -61,6 +66,11 @@ public class CommentServiceImpl implements CommentService {
         SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate2 = dateFormat2.format(date2);
         return repository.countByCreatedAt(formattedDate1, formattedDate2);
+    }
+
+    @Override
+    public List<Comments> findAllByPin(Pins pin) {
+        return repository.findAllByPin(pin);
     }
 
 }
