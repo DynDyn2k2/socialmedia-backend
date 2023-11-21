@@ -37,9 +37,9 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<Users> login(@RequestBody Map<String, String> request) {
-        String username = request.get("username");
+        String email = request.get("email");
         String password = request.get("password");
-        Users foundUser = service.getUserByUsername(username);
+        Users foundUser = service.getUserByEmail(email);
         if (foundUser != null && foundUser.getPassword().equals(password)) {
             return new ResponseEntity<>(foundUser, HttpStatus.OK);
         } else {

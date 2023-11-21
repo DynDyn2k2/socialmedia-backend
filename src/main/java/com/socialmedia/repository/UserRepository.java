@@ -10,6 +10,8 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
 
     public Users findOneByUsername(String Username);
 
+    public Users findOneByEmail(String Email);
+
     public Users findOneByPassword(String password);
 
     public long countByCreatedAtBefore(Date created_at);

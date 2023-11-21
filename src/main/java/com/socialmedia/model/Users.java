@@ -24,14 +24,15 @@ public class Users {
     private Date birthdate;
     private String fullname;
     private String introduce;
-    @Lob
-    @Column(columnDefinition = "LONGTEXT")
-    private String avatar;
+
     private String website;
     private String gender;
     private String language;
     private boolean privateBool;
     private java.util.Date createdAt;
+    @Lob
+    @Column(columnDefinition = "LONGTEXT")
+    private String avatar;
 
     @ManyToOne
     @JoinColumn(name = "permissionId")

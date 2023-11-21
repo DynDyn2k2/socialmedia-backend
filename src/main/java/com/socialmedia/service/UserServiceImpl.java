@@ -38,6 +38,13 @@ public class UserServiceImpl implements UserService {
     public Users getUserByUsername(String username) {
         return repository.findOneByUsername(username);
     }
+    
+    
+    @Override
+    public Users getUserByEmail(String email) {
+        return repository.findOneByEmail(email);
+    }
+
 
     @Override
     public Optional<Users> getUserById(int id) {
@@ -91,6 +98,7 @@ public class UserServiceImpl implements UserService {
         return repository.countByCreatedAt(formattedDate1, formattedDate2);
     }
 
+    @Override
     public void updateAvatar(Integer id, MultipartFile avatarfile) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
@@ -148,7 +156,6 @@ public class UserServiceImpl implements UserService {
             } catch (Exception e) {
                 System.out.println(e.toString());
             }
-
         } else {
             throw new EntityNotFoundException("user not found to set birthday");
         }
