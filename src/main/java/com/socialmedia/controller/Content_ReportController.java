@@ -1,7 +1,6 @@
 package com.socialmedia.controller;
 
 import com.socialmedia.model.Content_Report;
-import com.socialmedia.model.Content_Report;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,14 +52,15 @@ public class Content_ReportController {
     }
 
     @PutMapping("/edit/{id}")
-    public ResponseEntity<Content_Report> update(@PathVariable("id") int id, @RequestBody Content_Report content_report) {
+    public ResponseEntity<Content_Report> update(@PathVariable("id") int id,
+            @RequestBody Content_Report content_report) {
         Optional<Content_Report> optional = service.findById(id);
 
         if (optional.isPresent()) {
             Content_Report currentContent_Report = optional.get();
             currentContent_Report.setContent(content_report.getContent());
             currentContent_Report.setDescription(content_report.getDescription());
-            return new ResponseEntity<>(service.save(content_report), HttpStatus.OK);
+            return new ResponseEntity<>(service.save(currentContent_Report), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

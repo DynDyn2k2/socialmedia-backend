@@ -46,7 +46,6 @@ public class Permission_FunctionController {
         } else {
             return null;
         }
-
     }
 
     @PostMapping("/add")
@@ -60,4 +59,6 @@ public class Permission_FunctionController {
             permission_FunctionService.deleteByPermission(permission);
         }
     }
+
+
 }

@@ -46,5 +46,4 @@ public class DetailNotification {
         this.pin = pin;
     }
 
-
 }

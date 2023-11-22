@@ -7,11 +7,19 @@ import java.util.List;
 
 public interface CommentService {
 
-    public List<Comments> findAllByPin(Pins pin);
+    public List<Comments> getAll();
 
-    public boolean delete(int id);
+    public Comments saveComment(Comments comment);
+
+    public boolean delete(int cmt_id);
+
+    public List<Comments> findAllByPin(Pins pin);
 
     public long countAll();
 
     public long countByCreatedAtBefore(Date date);
+
+    public long countByCreatedAt(Date date);
+
+    public long countByCreatedAt(Date date1, Date date2);
 }

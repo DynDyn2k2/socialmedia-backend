@@ -1,6 +1,10 @@
 package com.socialmedia.controller;
 
-import com.socialmedia.model.Boards;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import com.socialmedia.model.Messages;
 import com.socialmedia.service.ConversationService;
 import com.socialmedia.service.MessageService;
@@ -28,8 +32,8 @@ public class MessageController {
     public List<Messages> getAll() {
         return messageService.getAll();
     }
-    
-    @GetMapping(value="/conversation_id/{conversation_id}")
+
+    @GetMapping(value = "/conversation_id/{conversation_id}")
     public List<Messages> getMessagesByConversationId(@PathVariable("conversation_id") int id) {
         return messageService.getAllMessagesByConversationId(id);
     }    

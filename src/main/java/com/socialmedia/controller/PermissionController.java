@@ -50,7 +50,7 @@ public class PermissionController {
         if (optional.isPresent()) {
             Permissions currentPermission = optional.get();
             currentPermission.setName(permission.getName());
-            return new ResponseEntity<>(permissionService.save(permission), HttpStatus.OK);
+            return new ResponseEntity<>(permissionService.save(currentPermission), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

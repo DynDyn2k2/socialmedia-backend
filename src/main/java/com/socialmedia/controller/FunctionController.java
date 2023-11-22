@@ -53,7 +53,7 @@ public class FunctionController {
         if (optional.isPresent()) {
             Functions currentFunction = optional.get();
             currentFunction.setName(function.getName());
-            return new ResponseEntity<>(functionService.save(function), HttpStatus.OK);
+            return new ResponseEntity<>(functionService.save(currentFunction), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

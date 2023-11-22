@@ -61,4 +61,9 @@ public class FriendshipServiceImpl implements FriendshipService {
             return false;
         }
     }
+
+    @Override
+    public Friendships getOneByUser1AndUser2(Users user1, Users user2) {
+        return repository.findOneByUser1AndUser2(user1, user2);
+    }
 }

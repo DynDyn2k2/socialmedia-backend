@@ -20,11 +20,11 @@ public class Friendships {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "userId1")
+    @JoinColumn(name = "userIdSend")
     private Users user1;
 
     @ManyToOne
-    @JoinColumn(name = "userId2")
+    @JoinColumn(name = "userIdReceive")
     private Users user2;
 
     @Enumerated(EnumType.STRING)

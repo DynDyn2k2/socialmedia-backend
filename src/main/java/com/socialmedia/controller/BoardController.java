@@ -6,6 +6,7 @@ import com.socialmedia.model.Users;
 import com.socialmedia.service.BoardService;
 import com.socialmedia.service.UserService;
 import com.socialmedia.service.UserSavePinService;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/boards")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 public class BoardController {
 
     @Autowired
@@ -26,7 +27,6 @@ public class BoardController {
 
     @Autowired
     private UserSavePinService userSavePinService;
-
 
     @GetMapping("/username/{username}")
     public List<Boards> findByUserIdOrderByPinIdAsc(@PathVariable("username") String username) {
@@ -54,8 +54,8 @@ public class BoardController {
             Boards currentBoard = optional.get();
             currentBoard.setDescription(board.getDescription());
             currentBoard.setName(board.getName());
-            currentBoard.setUser(board.getUser());
-            return new ResponseEntity<>(boardService.save(board), HttpStatus.OK);
+            currentBoard.setUser(board.getUser());    
+            return new ResponseEntity<>(boardService.save(currentBoard), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -63,6 +63,7 @@ public class BoardController {
 
     @PostMapping("/add")
     public ResponseEntity<Boards> add(@RequestBody Boards board) {
+        board.setCreated_at(new Date());
         return new ResponseEntity<>(boardService.save(board), HttpStatus.OK);
     }
 
@@ -90,5 +91,5 @@ public class BoardController {
         }
     }
 
-
 }
+    

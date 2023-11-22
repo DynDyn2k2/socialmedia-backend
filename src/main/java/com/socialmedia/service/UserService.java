@@ -25,6 +25,10 @@ public interface UserService {
 
     public long countByCreatedAtBefore(Date date);
 
+    public long countByCreatedAt(Date date);
+
+    public long countByCreatedAt(Date date1, Date date2);
+
     public void changeUserPassword(int id, String currentPassword, String newPassword);
 
     public void updateAvatar(Integer id, MultipartFile avatarfile);

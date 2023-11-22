@@ -14,6 +14,8 @@ public interface FriendshipService {
     public List<Friendships> getAllByUser1(Users user);
 
     public List<Friendships> getAllByUser2(Users user);
+    
+    public Friendships getOneByUser1AndUser2(Users user1, Users user2);
 
     public Optional<Friendships> getById(int id);
 

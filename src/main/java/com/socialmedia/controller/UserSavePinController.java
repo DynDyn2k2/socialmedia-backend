@@ -1,27 +1,28 @@
 package com.socialmedia.controller;
 
-import com.socialmedia.model.Boards;
-import com.socialmedia.model.Pins;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.socialmedia.model.Boards;
+import com.socialmedia.model.Pins;
 import com.socialmedia.model.UserSavePin;
 import com.socialmedia.model.Users;
 import com.socialmedia.service.BoardService;
 import com.socialmedia.service.PinService;
 import com.socialmedia.service.UserSavePinService;
 import com.socialmedia.service.UserService;
-import java.util.ArrayList;
-import java.util.Optional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/userSavePin")
@@ -37,14 +38,26 @@ public class UserSavePinController {
     @Autowired
     private PinService pinService;
 
-
     @GetMapping(value = "/getAll")
     public List<UserSavePin> getAllUserSavePin() {
         return userSavePinservice.getAllUserSavePin();
     }
 
+    @GetMapping("getPinByUser/{userId}")
+    public List<UserSavePin> getPinByUserId(@PathVariable("id") int id) {
+        Optional<Users> optionalUser = userService.getUserById(id);
+        if (optionalUser.isPresent()) {
+            Users user = optionalUser.get();
+            List<UserSavePin> list = userSavePinservice.findAllByUser(user);
+            return list;
+        } else {
+            return null;
+        }
+    }
+    
     @GetMapping("getPin/{username}/{boardId}")
-    public List<Pins> getPinByUserIdAndBoardId(@PathVariable("username") String username, @PathVariable("boardId") int boardId) {
+    public List<Pins> getPinByUserIdAndBoardId(@PathVariable("username") String username,
+            @PathVariable("boardId") int boardId) {
         Optional<Boards> optionalBoard = boardService.findById(boardId);
         Boards board = new Boards();
         if (optionalBoard.isPresent()) {
@@ -86,6 +99,19 @@ public class UserSavePinController {
 
     }
 
+    @GetMapping("userId/{id}")
+    public Set<Pins> getPinsByUserId(@PathVariable("id") int id) {
+        Optional<Users> optionalUser = userService.getUserById(id);
+        Set<Pins> result = new HashSet<>();
+        if (optionalUser.isPresent()) {
+            Users user = optionalUser.get();
+            userSavePinservice.findAllByUser(user).forEach(e -> {
+                result.add(e.getPin());
+            });
+            return result;
+        }
+        return null;
+    }
 
     @PostMapping("/delete")
     public boolean delete(@RequestBody UserSavePin userSavePin) {

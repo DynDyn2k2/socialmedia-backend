@@ -4,7 +4,14 @@
  */
 package com.socialmedia.controller;
 
+import com.socialmedia.model.Comments;
+import com.socialmedia.service.CommentService;
+import com.socialmedia.service.PinService;
+import com.socialmedia.service.UserService;
 import com.socialmedia.webSocketConfig.SimpleComment;
+import java.util.Date;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
@@ -17,11 +24,23 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @Controller
 @CrossOrigin(origins = "http://localhost:3000")
 public class RealTimeCommentController {
-
-    @MessageMapping("/addComment")
-    @SendTo("/topic/comment")
-    public SimpleComment addComment(SimpleComment comment) throws Exception{
+    @Autowired
+    private CommentService commentService;
+    @Autowired
+    private PinService pinService;
+    @Autowired
+    private UserService userService;
+    @MessageMapping("/addComment/pin_id/{pin_id}")
+    @SendTo("/topic/comment/pin_id/{pin_id}")
+    public Comments addComment(@DestinationVariable("pin_id") int pin_id, SimpleComment sComment) throws Exception{
         Thread.sleep(1000);
-        return comment;
+        Comments comment = new Comments();
+        comment.setCommentAt(new Date());
+        comment.setContent(sComment.getContent());
+        comment.setId(sComment.getCommentId());
+        comment.setUser(userService.getUserById(sComment.getUserId()).get());
+        comment.setPin(pinService.getPinById(pin_id).get());
+        return commentService.saveComment(comment);
+//        return comment;
     }
 }
