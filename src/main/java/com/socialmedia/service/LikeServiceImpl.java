@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.socialmedia.model.Likes;
 import com.socialmedia.model.Pins;
+import com.socialmedia.model.Users;
 import com.socialmedia.repository.LikeRepository;
 import java.util.Date;
 import java.util.List;
@@ -43,5 +44,24 @@ public class LikeServiceImpl implements LikeService {
     @Override
     public long countByCreatedAtBefore(Date date) {
         return repository.countByCreatedAtBefore(date);
+    }
+
+    @Override
+    public Likes saveLike(Likes like) {
+        return repository.save(like);
+    }
+
+    @Override
+    public boolean delete(Likes like) {
+        try {
+            repository.delete(like);
+            return true;
+        } catch (EmptyResultDataAccessException ex) {
+            System.out.println("Không tìm thấy thực thể để xóa");
+            return false;
+        } catch (DataIntegrityViolationException ex) {
+            System.out.println("Lỗi liên quan đến tính toàn vẹn dữ liệu hoặc ràng buộc khóa ngoại");
+            return false;
+        }
     }
 }
