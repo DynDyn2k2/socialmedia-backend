@@ -74,8 +74,9 @@ public class ChatController {
     }
     
     @MessageMapping("/unsubscribe")
-    public void handleUnsubscribe(@Payload String conversation_id) {
+    @SendTo("/room/testSubscribe")
+    public String handleUnsubscribe(@Payload String conversation_id) {
         roomMap.put(conversation_id, 1);
-//        return "Conversation: " + conversation_id + " === Joined: " + roomMap.get(conversation_id);
+        return "Conversation: " + conversation_id + " === Joined: " + roomMap.get(conversation_id);
     }
 }

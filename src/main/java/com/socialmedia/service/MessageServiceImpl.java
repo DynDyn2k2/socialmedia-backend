@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.socialmedia.model.Messages;
 import com.socialmedia.repository.MessageRepository;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MessageServiceImpl implements MessageService {
@@ -29,9 +30,17 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public Messages getMessageById(int id) {
-        return repository.findById(id).get();
+    public Optional<Messages> getMessageById(int id) {
+        return repository.findById(id);
     }
 
-
+    @Override
+    public void changeSeenStatus(int id, boolean status) {
+        Optional<Messages> optional = repository.findById(id);
+        if(optional.isPresent()) {
+            Messages message = optional.get();
+            message.setSeen(status);
+            repository.save(message);
+        }
+    }
 }
