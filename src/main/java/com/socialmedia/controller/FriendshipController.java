@@ -138,34 +138,36 @@ public class FriendshipController {
         Optional<Users> optional2 = userService.getUserById(id2);
         Users user2 = optional2.get();
 //        Friendships.FriendshipStatus status1 = Friendships.FriendshipStatus.PENDING;
+
         Friendships friendship1 = friendshipService.getOneByUser1AndUser2(user1, user2);
+        System.out.println("friendship1==============" + friendship1);
         if (friendship1 != null) {
-            if (friendship1.getStatus() == Friendships.FriendshipStatus.ACCEPTED) {
-                System.out.println("friendship1+ACCEPTED");
-                return friendship1;
-            } else if (friendship1.getStatus() == Friendships.FriendshipStatus.PENDING) {
-                System.out.println("friendship1+PENDING");
-                return friendship1;
-            } else {
-                Friendships friendship2 = friendshipService.getOneByUser1AndUser2(user2, user1);
-                if (friendship2 != null) {
-                    if (friendship2.getStatus() == Friendships.FriendshipStatus.ACCEPTED) {
-                        System.out.println("friendship2+ACCEPTED");
-                        return friendship2;
-                    } else if (friendship2.getStatus() == Friendships.FriendshipStatus.PENDING) {
-                        System.out.println("friendship2+PENDING");
-                        return friendship2;
-                    } else {
-                        System.out.println("======================null");
-                        return null;
-                    }
-                } else {
-                    return null;
+            switch (friendship1.getStatus()) {
+                case ACCEPTED -> {
+                    System.out.println("friendship1+ACCEPTED");
+                    return friendship1;
+                }
+                case PENDING -> {
+                    System.out.println("friendship1+PENDING");
+                    return friendship1;
                 }
             }
         } else {
-            return null;
-        }
+            Friendships friendship2 = friendshipService.getOneByUser1AndUser2(user2, user1);
+            if (friendship2 != null) {
+                switch (friendship2.getStatus()) {
+                    case ACCEPTED -> {
+                        System.out.println("friendship2+ACCEPTED");
+                        return friendship2;
+                    }         
+                    case PENDING -> {
+                        System.out.println("friendship2+PENDING");
+                        return friendship2;
+                    }
+                }
 
+            }
+        }
+        return null;
     }
 }

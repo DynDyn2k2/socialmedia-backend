@@ -35,13 +35,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>            
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.opencsv</groupId>
             <artifactId>opencsv</artifactId>
             <version>5.5</version> <!-- You can use the latest version available -->
-        </dependency>       
+        </dependency>
         <!--TOKEN-->
         <!--        <dependency>
             <groupId>org.springframework.boot</groupId>

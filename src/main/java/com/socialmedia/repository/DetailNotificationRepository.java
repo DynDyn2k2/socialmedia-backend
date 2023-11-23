@@ -12,5 +12,5 @@ public interface DetailNotificationRepository extends JpaRepository<DetailNotifi
 
     public List<DetailNotification> findAllByPin(Pins pin);
 
-    List<DetailNotification> findAllByNotification(Notifications notification);
+    public List<DetailNotification> findAllByNotification(Notifications notification);
 }
