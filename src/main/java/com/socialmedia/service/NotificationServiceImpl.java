@@ -42,12 +42,14 @@ public class NotificationServiceImpl implements NotificationService {
         return notifications;
     }
 
-    public boolean checkNotificationChange(int userId) {
-        Long currentCount = (long) this.getNotificationsByUser(userId).size();
-        if (prevCount == null || !currentCount.equals(prevCount)) {
-            prevCount = currentCount;
-            return true;
+    @Override
+    public Notifications getById(int id) {
+        Optional<Notifications> optionalNot = repository.findById(id);
+        if (optionalNot.isPresent()) {
+            Notifications not = optionalNot.get();
+            return not;
         }
-        return false;
+        return null;
     }
+
 }

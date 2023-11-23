@@ -10,5 +10,6 @@ public interface NotificationService {
 
     public List<Notifications> getNotificationsByUser(int userId);
 
-    public boolean checkNotificationChange(int userId);
+    public Notifications getById(int id);
+
 }
