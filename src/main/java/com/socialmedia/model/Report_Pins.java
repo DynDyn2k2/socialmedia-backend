@@ -38,8 +38,8 @@ public class Report_Pins {
     @JoinColumn(name = "content_ReportId")
     private Content_Report content;
 
-    private Boolean reject;
-    private Boolean approve;
+    private boolean reject;
+    private boolean approve;
 
     public int getId() {
         return id;

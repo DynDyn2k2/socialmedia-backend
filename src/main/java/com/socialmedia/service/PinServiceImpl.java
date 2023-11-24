@@ -1,18 +1,17 @@
 package com.socialmedia.service;
 
-import com.socialmedia.model.Boards;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import com.socialmedia.model.Pins;
-import com.socialmedia.model.Users;
-import com.socialmedia.repository.PinRepository;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
-import java.util.List;
-import java.util.Optional;
+import org.springframework.stereotype.Service;
+import com.socialmedia.model.Pins;
+import com.socialmedia.model.Types;
+import com.socialmedia.model.Users;
+import com.socialmedia.repository.PinRepository;
 
 
 @Service
@@ -26,10 +25,9 @@ public class PinServiceImpl implements PinService {
         return repository.findByUserOrderByIdAsc(user);
     }
 
-
     @Override
-    public List<Pins> getPinsByTypeId(Long typeId) {
-        return repository.findPinsByTypeId(typeId);
+    public List<Pins> getPinsByType(Types type) {
+        return repository.findByType(type);
     }
 
     @Override
@@ -46,7 +44,6 @@ public class PinServiceImpl implements PinService {
     public Optional<Pins> getPinById(int id) {
         return repository.findById(id);
     }
-
     @Override
     public Pins save(Pins pin) {
         return repository.save(pin);
@@ -74,6 +71,23 @@ public class PinServiceImpl implements PinService {
     @Override
     public long countByCreatedAtBefore(Date date) {
         return repository.countByCreatedAtBefore(date);
+    }
+
+    @Override
+    public long countByCreatedAt(Date date) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = dateFormat.format(date);
+        return repository.countByCreatedAt(formattedDate);
+    }
+
+    @Override
+    public long countByCreatedAt(Date date1, Date date2) {
+        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate1 = dateFormat1.format(date1);
+
+        SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate2 = dateFormat2.format(date2);
+        return repository.countByCreatedAt(formattedDate1, formattedDate2);
     }
 
 }

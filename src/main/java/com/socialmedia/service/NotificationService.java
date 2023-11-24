@@ -3,11 +3,13 @@ package com.socialmedia.service;
 import java.util.List;
 
 import com.socialmedia.model.Notifications;
+import com.socialmedia.model.enums.Notification_TYPE;
 
 public interface NotificationService {
+    public Notifications initNotifications(Notification_TYPE type, int userId);
 
-    public Notifications saveNotifications(Notifications not);
+    public List<Notifications> getNotificationsByUser(int userId);
 
-    public List<Notifications> getAllNotifications();
+    public Notifications getById(int id);
 
 }

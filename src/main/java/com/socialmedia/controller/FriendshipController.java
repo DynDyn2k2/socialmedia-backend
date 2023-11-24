@@ -6,8 +6,11 @@ import com.socialmedia.service.UserService;
 import java.util.Optional;
 import com.socialmedia.model.Users;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
+import static org.hibernate.type.SqlTypes.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,43 +51,49 @@ public class FriendshipController {
         Friendships.FriendshipStatus status1 = Friendships.FriendshipStatus.ACCEPTED;
         List<Friendships> list1 = friendshipService.getAllByUser1AndStatus(user1, status1);
         list.addAll(list1);
-//        for (Friendships friendships : list1) {
-//            listUser.add(friendships.getUser2());
-//        }
+
         Optional<Users> optional2 = userService.getUserById(id);
         Users user2 = optional2.get();
         Friendships.FriendshipStatus status2 = Friendships.FriendshipStatus.ACCEPTED;
         List<Friendships> list2 = friendshipService.getAllByUser2AndStatus(user2, status2);
         list.addAll(list2);
-//        for (Friendships friendships : list2) {
-//            listUser.add(friendships.getUser1());
-//        }
 
         return list;
     }
 
     @GetMapping(value = {"/listRequest/{id}"})
     public List<Friendships> listRequest(@PathVariable("id") int id) {
-        List<Friendships> list = new ArrayList<>();
+//        List<Friendships> list = new ArrayList<>();
+
+//        Optional<Users> optional1 = userService.getUserById(id);
+//        Users user1 = optional1.get();
+//        Friendships.FriendshipStatus status1 = Friendships.FriendshipStatus.PENDING;
+//        List<Friendships> list = friendshipService.getAllByUser1AndStatus(user1, status1);
+//        list.addAll(list1);
+        Optional<Users> optional2 = userService.getUserById(id);
+        Users user2 = optional2.get();
+        Friendships.FriendshipStatus status2 = Friendships.FriendshipStatus.PENDING;
+        List<Friendships> list = friendshipService.getAllByUser2AndStatus(user2, status2);
+//        list.addAll(list2);
+
+        return list;
+    }
+
+    @GetMapping(value = {"/listSent/{id}"})
+    public List<Friendships> listSent(@PathVariable("id") int id) {
+//        List<Friendships> list = new ArrayList<>();
 
         Optional<Users> optional1 = userService.getUserById(id);
         Users user1 = optional1.get();
         Friendships.FriendshipStatus status1 = Friendships.FriendshipStatus.PENDING;
-        List<Friendships> list1 = friendshipService.getAllByUser1AndStatus(user1, status1);
-        list.addAll(list1);
-//        for (Friendships friendships : list1) {
-//            listUser.add(friendships.getUser2());
-//        }
+        List<Friendships> list = friendshipService.getAllByUser1AndStatus(user1, status1);
+//        list.addAll(list1);
 
-        Optional<Users> optional2 = userService.getUserById(id);
-        Users user2 = optional2.get();
-        Friendships.FriendshipStatus status2 = Friendships.FriendshipStatus.PENDING;
-        List<Friendships> list2 = friendshipService.getAllByUser2AndStatus(user2, status2);
-        list.addAll(list2);
-//        for (Friendships friendships : list2) {
-//            listUser.add(friendships.getUser1());
-//        }
-
+//        Optional<Users> optional2 = userService.getUserById(id);
+//        Users user2 = optional2.get();
+//        Friendships.FriendshipStatus status2 = Friendships.FriendshipStatus.PENDING;
+//        List<Friendships> list2 = friendshipService.getAllByUser2AndStatus(user2, status2);
+//        list.addAll(list2);
         return list;
     }
 
@@ -94,8 +103,9 @@ public class FriendshipController {
 
         if (optionalFriendship.isPresent()) {
             Friendships currentFriendship = optionalFriendship.get();
+            currentFriendship.setCreated_at(new Date());
             currentFriendship.setStatus(friendship.getStatus());
-            return new ResponseEntity<>(friendshipService.save(friendship), HttpStatus.OK);
+            return new ResponseEntity<>(friendshipService.save(currentFriendship), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -104,12 +114,60 @@ public class FriendshipController {
 
     @PostMapping("/delete/{id}")
     public boolean delete(@PathVariable("id") int id) {
-        Optional<Friendships> optional = friendshipService.getById(id);   
-        if (optional.isPresent()) {         
+        Optional<Friendships> optional = friendshipService.getById(id);
+        if (optional.isPresent()) {
             return friendshipService.delete(id);
         } else {
             return false;
         }
     }
 
+    @PostMapping("/add")
+    public ResponseEntity<Friendships> add(@RequestBody Friendships frienship) {
+        // Đặt thời gian đăng ký
+        frienship.setCreated_at(new Date());
+        return new ResponseEntity<>(friendshipService.save(frienship), HttpStatus.OK);
+    }
+
+    @GetMapping("/checkFriend")
+    public Friendships checkFriend(@RequestParam(name = "id1") Integer id1,
+            @RequestParam(name = "id2") Integer id2) {
+
+        Optional<Users> optional1 = userService.getUserById(id1);
+        Users user1 = optional1.get();
+        Optional<Users> optional2 = userService.getUserById(id2);
+        Users user2 = optional2.get();
+//        Friendships.FriendshipStatus status1 = Friendships.FriendshipStatus.PENDING;
+
+        Friendships friendship1 = friendshipService.getOneByUser1AndUser2(user1, user2);
+        System.out.println("friendship1==============" + friendship1);
+        if (friendship1 != null) {
+            switch (friendship1.getStatus()) {
+                case ACCEPTED -> {
+                    System.out.println("friendship1+ACCEPTED");
+                    return friendship1;
+                }
+                case PENDING -> {
+                    System.out.println("friendship1+PENDING");
+                    return friendship1;
+                }
+            }
+        } else {
+            Friendships friendship2 = friendshipService.getOneByUser1AndUser2(user2, user1);
+            if (friendship2 != null) {
+                switch (friendship2.getStatus()) {
+                    case ACCEPTED -> {
+                        System.out.println("friendship2+ACCEPTED");
+                        return friendship2;
+                    }         
+                    case PENDING -> {
+                        System.out.println("friendship2+PENDING");
+                        return friendship2;
+                    }
+                }
+
+            }
+        }
+        return null;
+    }
 }

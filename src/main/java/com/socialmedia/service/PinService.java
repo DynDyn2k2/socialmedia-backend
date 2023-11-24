@@ -1,11 +1,12 @@
 package com.socialmedia.service;
 
-import com.socialmedia.model.Boards;
-import com.socialmedia.model.Pins;
-import com.socialmedia.model.Users;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import com.socialmedia.model.Pins;
+import com.socialmedia.model.Types;
+import com.socialmedia.model.Users;
 
 public interface PinService {
 
@@ -15,7 +16,7 @@ public interface PinService {
 
     public Optional<Pins> getPinById(int id);
 
-    public List<Pins> getPinsByTypeId(Long param);
+    public List<Pins> getPinsByType(Types type);
 
     public List<Pins> getPinsByUser(Optional<Users> user);
 
@@ -26,5 +27,10 @@ public interface PinService {
     public long countAll();
 
     public long countByCreatedAtBefore(Date date);
+
+    public long countByCreatedAt(Date date);
+
+    public long countByCreatedAt(Date date1, Date date2);
+
 
 }

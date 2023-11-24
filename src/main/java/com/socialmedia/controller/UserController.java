@@ -1,22 +1,26 @@
 package com.socialmedia.controller;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.socialmedia.model.Users;
-import com.socialmedia.service.UserService;
+import com.socialmedia.model.ResultStatistics;
 import java.util.Calendar;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Base64;
-import org.apache.catalina.connector.Response;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.socialmedia.model.Users;
+import com.socialmedia.service.UserService;
 
 @RestController
 @RequestMapping("/users")
@@ -33,9 +37,9 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<Users> login(@RequestBody Map<String, String> request) {
-        String username = request.get("username");
+        String email = request.get("email");
         String password = request.get("password");
-        Users foundUser = service.getUserByUsername(username);
+        Users foundUser = service.getUserByEmail(email);
         if (foundUser != null && foundUser.getPassword().equals(password)) {
             return new ResponseEntity<>(foundUser, HttpStatus.OK);
         } else {
@@ -71,12 +75,12 @@ public class UserController {
         return service.getAllUsers();
     }
 
-    @GetMapping(value = {"/username/{username}"})
+    @GetMapping(value = { "/username/{username}" })
     public Users getUserByUsername(@PathVariable("username") String username) {
         return service.getUserByUsername(username);
     }
 
-    @GetMapping(value = {"/id/{id}"})
+    @GetMapping(value = { "/id/{id}" })
     public ResponseEntity<Users> getUserById(@PathVariable("id") int id) {
         Optional<Users> optional = service.getUserById(id);
         if (optional.isPresent()) {
@@ -117,7 +121,7 @@ public class UserController {
         return percent;
     }
 
-    @GetMapping(value = {"/password/{password}"})
+    @GetMapping(value = { "/password/{password}" })
     public Users getUserByPassword(@PathVariable("password") String password) {
         return service.getUserByPassword(password);
     }
@@ -144,7 +148,7 @@ public class UserController {
 
         try {
             service.changeUserPrivateState(id, currentState);
-            return new ResponseEntity<>("Private State changed successfully", HttpStatus.OK);     
+            return new ResponseEntity<>("Private State changed successfully", HttpStatus.OK);
 
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Failed to change private state " + e.getMessage());
@@ -155,8 +159,7 @@ public class UserController {
     @PutMapping("/id/{id}")
     public ResponseEntity<Users> updateUser(
             @PathVariable("id") int id,
-            @RequestBody Users updateUser
-    ) {
+            @RequestBody Users updateUser) {
         Optional<Users> OptionalUser = service.getUserById(id);
         if (OptionalUser.isPresent()) {
             Users user = OptionalUser.get();
@@ -204,8 +207,7 @@ public class UserController {
     @PutMapping("/id/{id}/birthdate")
     public ResponseEntity<Date> updateBirthday(
             @PathVariable("id") int id,
-            @RequestBody Map<String, Date> request
-    ) {
+            @RequestBody Map<String, Date> request) {
         Date updateDate = request.get("updateBirthday");
         try {
             service.changeUserbirthday(id, updateDate);
@@ -218,14 +220,13 @@ public class UserController {
     @PutMapping("/id/{id}/avatar")
     public ResponseEntity<String> updateAvatar(
             @PathVariable("id") int id,
-            @RequestBody Map<String, String> request
-    ) {
+            @RequestBody Map<String, String> request) {
         try {
-//            Base64.Decoder decoder = Base64.getDecoder();
+            // Base64.Decoder decoder = Base64.getDecoder();
             String base64String = request.get("base64String");
             System.out.println(base64String);
-//            byte[] avatarBytes  = decoder.decode(base64String);
-//            byte[] avatarBytes = Base64.getDecoder() .decode(base64String);
+            // byte[] avatarBytes = decoder.decode(base64String);
+            // byte[] avatarBytes = Base64.getDecoder() .decode(base64String);
             Optional<Users> Optionaluser = service.getUserById(id);
             if (Optionaluser.isPresent()) {
                 Users user = Optionaluser.get();
@@ -239,4 +240,44 @@ public class UserController {
         }
     }
 
+    @GetMapping("/countUserByCreatedAt")
+    public Object countUserByCreatedAt() {
+        Date currentDate = new Date();
+        //Thống kê trong ngày====================================      
+        long countDay = service.countByCreatedAt(currentDate);
+
+        //Thống kê trong tuần====================================
+        // Tạo một đối tượng Calendar và đặt ngày hiện tại
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(currentDate);
+
+        // Điều chỉnh ngày về đầu tuần (Thứ Hai)
+        calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
+
+        // Lấy ngày đầu tiên trong tuần hiện tại
+        Date firstDayOfWeek = calendar.getTime();
+        long countWeek = service.countByCreatedAt(firstDayOfWeek, currentDate);
+
+        //Thống kê trong tháng=============================================
+        // Đặt ngày về ngày đầu tiên trong tháng
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+
+        // Lấy ngày đầu tiên trong tháng hiện tại
+        Date firstDayOfMonth = calendar.getTime();
+        long countMonth = service.countByCreatedAt(firstDayOfMonth, currentDate);
+
+        //Thống kê tất cả=============================================
+        long countAll = service.countAll();
+        
+        //return kết quả
+        ResultStatistics r = new ResultStatistics();
+        r.countDay = countDay;
+        r.countWeek = countWeek;
+        r.countMonth = countMonth;
+        r.countAll = countAll;
+        return r;
+    }
+
 }
+
+

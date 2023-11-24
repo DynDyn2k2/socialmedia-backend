@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.socialmedia.model.Comments;
 import com.socialmedia.model.Pins;
 import com.socialmedia.repository.CommentRepository;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -17,8 +18,13 @@ public class CommentServiceImpl implements CommentService {
     private CommentRepository repository;
 
     @Override
-    public List<Comments> findAllByPin(Pins pin) {
-        return repository.findAllByPin(pin);
+    public List<Comments> getAll() {
+        return repository.findAll();
+    }
+    
+    @Override
+    public Comments saveComment(Comments comment) {
+        return repository.save(comment);
     }
 
     @Override
@@ -43,6 +49,28 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public long countByCreatedAtBefore(Date date) {
         return repository.countByCommentAtBefore(date);
+    }
+
+    @Override
+    public long countByCreatedAt(Date date) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = dateFormat.format(date);
+        return repository.countByCreatedAt(formattedDate);
+    }
+
+    @Override
+    public long countByCreatedAt(Date date1, Date date2) {
+        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate1 = dateFormat1.format(date1);
+
+        SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate2 = dateFormat2.format(date2);
+        return repository.countByCreatedAt(formattedDate1, formattedDate2);
+    }
+
+    @Override
+    public List<Comments> findAllByPin(Pins pin) {
+        return repository.findAllByPin(pin);
     }
 
 }
