@@ -1,9 +1,11 @@
 package com.socialmedia.service;
 
-import com.socialmedia.model.Comments;
-import com.socialmedia.model.Pins;
 import java.util.Date;
 import java.util.List;
+
+import com.socialmedia.model.Comments;
+import com.socialmedia.model.Notifications;
+import com.socialmedia.model.Pins;
 
 public interface CommentService {
 
@@ -14,6 +16,8 @@ public interface CommentService {
     public boolean delete(int cmt_id);
 
     public List<Comments> findAllByPin(Pins pin);
+
+    public Comments getByNotification(Notifications notification);
 
     public long countAll();
 

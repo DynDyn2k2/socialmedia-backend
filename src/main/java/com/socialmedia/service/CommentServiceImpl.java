@@ -1,15 +1,18 @@
 package com.socialmedia.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import com.socialmedia.model.Comments;
-import com.socialmedia.model.Pins;
-import com.socialmedia.repository.CommentRepository;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.stereotype.Service;
+
+import com.socialmedia.model.Comments;
+import com.socialmedia.model.Notifications;
+import com.socialmedia.model.Pins;
+import com.socialmedia.repository.CommentRepository;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -21,7 +24,7 @@ public class CommentServiceImpl implements CommentService {
     public List<Comments> getAll() {
         return repository.findAll();
     }
-    
+
     @Override
     public Comments saveComment(Comments comment) {
         return repository.save(comment);
@@ -71,6 +74,11 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<Comments> findAllByPin(Pins pin) {
         return repository.findAllByPin(pin);
+    }
+
+    @Override
+    public Comments getByNotification(Notifications notification) {
+        return repository.findByNotification(notification);
     }
 
 }

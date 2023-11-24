@@ -1,13 +1,17 @@
 package com.socialmedia.service;
 
-import com.socialmedia.model.Likes;
-import com.socialmedia.model.Pins;
 import java.util.Date;
 import java.util.List;
+
+import com.socialmedia.model.Likes;
+import com.socialmedia.model.Notifications;
+import com.socialmedia.model.Pins;
 
 public interface LikeService {
 
     public List<Likes> findAllByPin(Pins pin);
+
+    public Likes getByNotification(Notifications notification);
 
     public boolean delete(int id);
 

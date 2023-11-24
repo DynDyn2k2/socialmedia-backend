@@ -8,8 +8,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 
 /**
  *
@@ -27,7 +25,6 @@ public class Functions {
     public Functions() {
     }
 
-    
     public int getId() {
         return id;
     }
@@ -43,5 +40,5 @@ public class Functions {
     public void setName(String name) {
         this.name = name;
     }
-    
+
 }

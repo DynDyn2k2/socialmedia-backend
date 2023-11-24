@@ -1,24 +1,33 @@
 package com.socialmedia.controller;
 
-import com.socialmedia.model.Friendships;
-import com.socialmedia.service.FriendshipService;
-import com.socialmedia.service.UserService;
-import java.util.Optional;
-import com.socialmedia.model.Users;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import static org.hibernate.type.SqlTypes.JSON;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.socialmedia.model.Friendships;
+import com.socialmedia.model.Notifications;
+import com.socialmedia.model.Users;
+import com.socialmedia.service.FriendshipService;
+import com.socialmedia.service.NotificationService;
+import com.socialmedia.service.UserService;
 
 @RestController
 @RequestMapping("/friendships")
-@CrossOrigin
+@CrossOrigin("http://localhost:3000/")
 public class FriendshipController {
 
     @Autowired
@@ -27,7 +36,10 @@ public class FriendshipController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = {"/count/{id}"})
+    @Autowired
+    private NotificationService notificationService;
+
+    @GetMapping(value = { "/count/{id}" })
     public int countFriend(@PathVariable("id") int id) {
         Optional<Users> optional1 = userService.getUserById(id);
         Users user1 = optional1.get();
@@ -42,7 +54,7 @@ public class FriendshipController {
         return list1.size() + list2.size();
     }
 
-    @GetMapping(value = {"/listFriend/{id}"})
+    @GetMapping(value = { "/listFriend/{id}" })
     public List<Friendships> listFriend(@PathVariable("id") int id) {
         List<Friendships> list = new ArrayList<>();
 
@@ -61,40 +73,48 @@ public class FriendshipController {
         return list;
     }
 
-    @GetMapping(value = {"/listRequest/{id}"})
+    @GetMapping(value = { "/listRequest/{id}" })
     public List<Friendships> listRequest(@PathVariable("id") int id) {
-//        List<Friendships> list = new ArrayList<>();
+        // List<Friendships> list = new ArrayList<>();
 
-//        Optional<Users> optional1 = userService.getUserById(id);
-//        Users user1 = optional1.get();
-//        Friendships.FriendshipStatus status1 = Friendships.FriendshipStatus.PENDING;
-//        List<Friendships> list = friendshipService.getAllByUser1AndStatus(user1, status1);
-//        list.addAll(list1);
+        // Optional<Users> optional1 = userService.getUserById(id);
+        // Users user1 = optional1.get();
+        // Friendships.FriendshipStatus status1 = Friendships.FriendshipStatus.PENDING;
+        // List<Friendships> list = friendshipService.getAllByUser1AndStatus(user1,
+        // status1);
+        // list.addAll(list1);
         Optional<Users> optional2 = userService.getUserById(id);
         Users user2 = optional2.get();
         Friendships.FriendshipStatus status2 = Friendships.FriendshipStatus.PENDING;
         List<Friendships> list = friendshipService.getAllByUser2AndStatus(user2, status2);
-//        list.addAll(list2);
+        // list.addAll(list2);
 
         return list;
     }
 
-    @GetMapping(value = {"/listSent/{id}"})
+    @GetMapping(value = { "/listSent/{id}" })
     public List<Friendships> listSent(@PathVariable("id") int id) {
-//        List<Friendships> list = new ArrayList<>();
+        // List<Friendships> list = new ArrayList<>();
 
         Optional<Users> optional1 = userService.getUserById(id);
         Users user1 = optional1.get();
         Friendships.FriendshipStatus status1 = Friendships.FriendshipStatus.PENDING;
         List<Friendships> list = friendshipService.getAllByUser1AndStatus(user1, status1);
-//        list.addAll(list1);
+        // list.addAll(list1);
 
-//        Optional<Users> optional2 = userService.getUserById(id);
-//        Users user2 = optional2.get();
-//        Friendships.FriendshipStatus status2 = Friendships.FriendshipStatus.PENDING;
-//        List<Friendships> list2 = friendshipService.getAllByUser2AndStatus(user2, status2);
-//        list.addAll(list2);
+        // Optional<Users> optional2 = userService.getUserById(id);
+        // Users user2 = optional2.get();
+        // Friendships.FriendshipStatus status2 = Friendships.FriendshipStatus.PENDING;
+        // List<Friendships> list2 = friendshipService.getAllByUser2AndStatus(user2,
+        // status2);
+        // list.addAll(list2);
         return list;
+    }
+
+    @GetMapping(value = "/getByNotification/{notificationId}")
+    public Friendships getByNotification(@PathVariable int notificationId) {
+        Notifications not = notificationService.getById(notificationId);
+        return friendshipService.getByNotifications(not);
     }
 
     @PutMapping("/edit/{id}")
@@ -137,7 +157,7 @@ public class FriendshipController {
         Users user1 = optional1.get();
         Optional<Users> optional2 = userService.getUserById(id2);
         Users user2 = optional2.get();
-//        Friendships.FriendshipStatus status1 = Friendships.FriendshipStatus.PENDING;
+        // Friendships.FriendshipStatus status1 = Friendships.FriendshipStatus.PENDING;
 
         Friendships friendship1 = friendshipService.getOneByUser1AndUser2(user1, user2);
         System.out.println("friendship1==============" + friendship1);
@@ -159,7 +179,7 @@ public class FriendshipController {
                     case ACCEPTED -> {
                         System.out.println("friendship2+ACCEPTED");
                         return friendship2;
-                    }         
+                    }
                     case PENDING -> {
                         System.out.println("friendship2+PENDING");
                         return friendship2;

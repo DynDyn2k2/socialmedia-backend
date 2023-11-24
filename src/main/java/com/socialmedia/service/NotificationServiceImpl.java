@@ -21,13 +21,17 @@ public class NotificationServiceImpl implements NotificationService {
     @Autowired
     private UserRepository userRepository;
 
-    private Long prevCount;
-
     @Override
     public List<Notifications> getNotificationsByUser(int userId) {
         // TODO Auto-generated method stub
-        Optional<Users> user = userRepository.findById(userId);
-        return repository.findByUser(user.get());
+        Optional<Users> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isPresent()) {
+            Users user = optionalUser.get();
+            return repository.findByUser(user);
+        } else {
+            System.out.println("Cannot find user's notification");
+            return null;
+        }
     }
 
     @Override
