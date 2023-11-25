@@ -11,7 +11,9 @@ public interface CommentService {
 
     public Comments saveComment(Comments comment);
 
-    public boolean delete(int cmt_id);
+    public boolean delete(Comments comment);
+    
+//    public boolean deleteComment(Comments comment);
 
     public List<Comments> findAllByPin(Pins pin);
 

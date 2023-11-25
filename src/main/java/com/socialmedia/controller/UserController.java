@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.socialmedia.model.Users;
 import com.socialmedia.service.UserService;
+import org.antlr.v4.runtime.misc.Pair;
 
 @RestController
 @RequestMapping("/users")
@@ -36,15 +37,22 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Users> login(@RequestBody Map<String, String> request) {
+    public Pair login(@RequestBody Map<String, String> request) {
         String email = request.get("email");
         String password = request.get("password");
         Users foundUser = service.getUserByEmail(email);
-        if (foundUser != null && foundUser.getPassword().equals(password)) {
-            return new ResponseEntity<>(foundUser, HttpStatus.OK);
+        if (foundUser != null) {
+            if (foundUser.getPassword().equals(password)) {
+                return new Pair(foundUser.getId(), foundUser.getPermission());
+            } else {
+                return new Pair("errorPassword", "");
+            }
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new Pair("errorEmail", "");
         }
+//        if (foundUser != null && foundUser.getPassword().equals(password)) {
+
+//        } 
     }
 
     @PostMapping("/register")
@@ -75,12 +83,12 @@ public class UserController {
         return service.getAllUsers();
     }
 
-    @GetMapping(value = { "/username/{username}" })
+    @GetMapping(value = {"/username/{username}"})
     public Users getUserByUsername(@PathVariable("username") String username) {
         return service.getUserByUsername(username);
     }
 
-    @GetMapping(value = { "/id/{id}" })
+    @GetMapping(value = {"/id/{id}"})
     public ResponseEntity<Users> getUserById(@PathVariable("id") int id) {
         Optional<Users> optional = service.getUserById(id);
         if (optional.isPresent()) {
@@ -121,7 +129,7 @@ public class UserController {
         return percent;
     }
 
-    @GetMapping(value = { "/password/{password}" })
+    @GetMapping(value = {"/password/{password}"})
     public Users getUserByPassword(@PathVariable("password") String password) {
         return service.getUserByPassword(password);
     }
@@ -268,7 +276,7 @@ public class UserController {
 
         //Thống kê tất cả=============================================
         long countAll = service.countAll();
-        
+
         //return kết quả
         ResultStatistics r = new ResultStatistics();
         r.countDay = countDay;
@@ -279,5 +287,3 @@ public class UserController {
     }
 
 }
-
-
