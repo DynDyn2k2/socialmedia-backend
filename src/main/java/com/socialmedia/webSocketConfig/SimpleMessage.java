@@ -14,15 +14,17 @@ public class SimpleMessage {
     private int id;
     private int user_id;
     private int conversation_id;
+    private int pin_id;
     private String content;
     
     public SimpleMessage() {
     }
 
-    public SimpleMessage(int id, int user_id, int conversation_id, String content) {
+    public SimpleMessage(int id, int user_id, int conversation_id, int pin_id, String content) {
         this.id = id;
         this.user_id = user_id;
         this.conversation_id = conversation_id;
+        this.pin_id = pin_id;
         this.content = content;
     }
     
@@ -64,4 +66,13 @@ public class SimpleMessage {
     public void setContent(String content) {
         this.content = content;
     }
+
+    public int getPin_id() {
+        return pin_id;
+    }
+
+    public void setPin_id(int pin_id) {
+        this.pin_id = pin_id;
+    }
+    
 }

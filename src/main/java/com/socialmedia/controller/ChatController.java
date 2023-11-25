@@ -7,6 +7,7 @@ package com.socialmedia.controller;
 import com.socialmedia.model.Messages;
 import com.socialmedia.repository.ConversationRepository;
 import com.socialmedia.repository.MessageRepository;
+import com.socialmedia.repository.PinRepository;
 import com.socialmedia.repository.UserRepository;
 import com.socialmedia.webSocketConfig.SimpleMessage;
 import java.time.LocalDateTime;
@@ -43,6 +44,8 @@ public class ChatController {
     private UserRepository userRepository;
     @Autowired
     private ConversationRepository conversationRepository;
+    @Autowired
+    private PinRepository pinRepository;
     
     @MessageMapping("/chat/conversation_id/{conversation_id}")
     @SendTo("/room/conversation_id/{conversation_id}")
@@ -54,14 +57,20 @@ public class ChatController {
         message.setSend_at(new Date());
         message.setUser(userRepository.findById(sMessage.getUser_id()).get());
         message.setConversation(conversationRepository.findById(sMessage.getConversation_id()).get());
+        if(sMessage.getPin_id() > 1) {
+            message.setPin(pinRepository.findById(sMessage.getPin_id()).get());
+        }
+        else {
+            message.setPin(null);
+        }
         if(roomMap.get(conversation_id) == 1) {
             message.setSeen(false);
         }
         else {
             message.setSeen(true);
         }
-//        return messageRepository.save(message);
-        return message;
+        return messageRepository.save(message);
+//        return message;
     }
     
     @SubscribeMapping("/login/{conversation_id}")

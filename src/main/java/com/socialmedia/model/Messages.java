@@ -27,6 +27,10 @@ public class Messages {
     @ManyToOne
     @JoinColumn(name = "conversationId")
     private Conversations conversation;
+
+    @ManyToOne
+    @JoinColumn(name = "pinId")
+    private Pins pin;
     
     
     public int getId() {
@@ -75,6 +79,14 @@ public class Messages {
 
     public void setSeen(boolean seen) {
         this.seen = seen;
+    }
+
+    public Pins getPin() {
+        return pin;
+    }
+
+    public void setPin(Pins pin) {
+        this.pin = pin;
     }
 
 }

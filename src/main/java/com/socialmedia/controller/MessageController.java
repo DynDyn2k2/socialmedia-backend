@@ -49,7 +49,8 @@ public class MessageController {
             currentMessage.setSend_at(new Date());
             currentMessage.setUser(userService.getUserById(message.getUser().getId()).get());
             currentMessage.setConversation(conversationService.getConversationById(message.getConversation().getId()).get());
-            return new ResponseEntity<>(messageService.saveMessage(message), HttpStatus.OK);
+            currentMessage.setSeen(true);
+            return new ResponseEntity<>(messageService.saveMessage(currentMessage), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
