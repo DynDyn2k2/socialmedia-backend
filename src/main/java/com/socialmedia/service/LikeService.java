@@ -1,4 +1,3 @@
-
 package com.socialmedia.service;
 
 import com.socialmedia.model.Likes;
@@ -20,4 +19,7 @@ public interface LikeService {
     
     public boolean delete(Likes like);
 
+    public long countByCreatedAt(Date date);
+
+    public long countByCreatedAt(Date date1, Date date2);
 }

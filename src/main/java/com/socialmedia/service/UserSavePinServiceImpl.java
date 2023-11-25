@@ -1,17 +1,17 @@
 package com.socialmedia.service;
 
-import com.socialmedia.model.Boards;
-import com.socialmedia.model.Pins;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.socialmedia.model.Boards;
+import com.socialmedia.model.Pins;
 import com.socialmedia.model.UserSavePin;
 import com.socialmedia.model.Users;
 import com.socialmedia.repository.UserSavePinRepository;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
 
 @Service
 public class UserSavePinServiceImpl implements UserSavePinService {
@@ -24,7 +24,6 @@ public class UserSavePinServiceImpl implements UserSavePinService {
         return repository.save(userSavePin);
     }
 
-
     @Override
     public List<UserSavePin> getAllUserSavePin() {
         return repository.findAll();
@@ -34,7 +33,7 @@ public class UserSavePinServiceImpl implements UserSavePinService {
     public List<UserSavePin> findAllByUserAndBoard(Users user, Boards board) {
         return repository.findAllByUserAndBoard(user, board);
     }
-    
+
     @Override
     public List<UserSavePin> findAllByPin(Pins pin) {
         return repository.findAllByPin(pin);
@@ -43,6 +42,11 @@ public class UserSavePinServiceImpl implements UserSavePinService {
     @Override
     public List<UserSavePin> findAllByBoard(Boards board) {
         return repository.findAllByBoard(board);
+    }
+
+    @Override
+    public List<UserSavePin> findAllByUser(Users user) {
+        return repository.findAllByUser(user);
     }
 
     @Override
@@ -59,8 +63,5 @@ public class UserSavePinServiceImpl implements UserSavePinService {
         }
     }
 
-    @Override
-    public List<UserSavePin> findAllByUSer(Users user) {
-        return repository.findAllByUser(user);
-    }
+
 }

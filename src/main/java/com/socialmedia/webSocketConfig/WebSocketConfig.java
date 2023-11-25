@@ -1,3 +1,4 @@
+
 package com.socialmedia.webSocketConfig;
 
 import org.springframework.context.annotation.Configuration;

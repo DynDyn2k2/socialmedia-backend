@@ -1,5 +1,6 @@
 package com.socialmedia.controller;
 
+import com.socialmedia.model.ResultStatistics;
 import com.socialmedia.model.Comments;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,7 +30,7 @@ public class CommentController {
     public List<Comments> getAll() {
         return commentService.getAll();
     }
-    
+
     @GetMapping("/pin_id/{pin_id}")
     public List<Comments> getByPinId(@PathVariable("pin_id") int pin_id) {
         return commentService.findAllByPin(pinService.getPinById(pin_id).get());
@@ -38,12 +39,17 @@ public class CommentController {
     @PostMapping("/add")
     public Comments add(@RequestBody Comments comments){
         return commentService.saveComment(comments);
-//        return "New student is added";
     }
     
-    @GetMapping("/delete/cmt_id/{cmt_id}")
-    public boolean delete(@PathVariable("cmt_id") int cmt_id) {
-        return commentService.delete(cmt_id);
+//    @GetMapping("/delete/cmt_id/{cmt_id}")
+//    public boolean delete(@PathVariable("cmt_id") int cmt_id) {
+//        return commentService.delete(cmt_id);
+//    }
+    
+    @PostMapping("/delete")
+    public boolean deleteComment(@RequestBody Comments comment) {
+        commentService.delete(comment);
+        return true;
     }
     
     @GetMapping("/countAll")
@@ -51,6 +57,7 @@ public class CommentController {
         return commentService.countAll();
     }
     
+
     @GetMapping("/percent7days")
     public double percent7days() {
         Date currentDate = new Date();
@@ -71,4 +78,44 @@ public class CommentController {
 
         return percent;
     }
+
+
+    @GetMapping("/countCommentByCreatedAt")
+    public Object countCommentByCreatedAt() {
+        Date currentDate = new Date();
+        //Thống kê trong ngày====================================      
+        long countDay = commentService.countByCreatedAt(currentDate);
+
+        //Thống kê trong tuần====================================
+        // Tạo một đối tượng Calendar và đặt ngày hiện tại
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(currentDate);
+
+        // Điều chỉnh ngày về đầu tuần (Thứ Hai)
+        calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
+
+        // Lấy ngày đầu tiên trong tuần hiện tại
+        Date firstDayOfWeek = calendar.getTime();
+        long countWeek = commentService.countByCreatedAt(firstDayOfWeek, currentDate);
+
+        //Thống kê trong tháng=============================================
+        // Đặt ngày về ngày đầu tiên trong tháng
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+
+        // Lấy ngày đầu tiên trong tháng hiện tại
+        Date firstDayOfMonth = calendar.getTime();
+        long countMonth = commentService.countByCreatedAt(firstDayOfMonth, currentDate);
+
+        //Thống kê tất cả=============================================
+        long countAll = commentService.countAll();
+
+        //return kết quả
+        ResultStatistics r = new ResultStatistics();
+        r.countDay = countDay;
+        r.countWeek = countWeek;
+        r.countMonth = countMonth;
+        r.countAll = countAll;
+        return r;
+    }
+
 }

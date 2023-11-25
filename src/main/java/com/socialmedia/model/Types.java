@@ -10,12 +10,17 @@ public class Types {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     private String typeName;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getTypeName() {
         return typeName;
     }
@@ -23,5 +28,7 @@ public class Types {
     public void setTypeName(String typeName) {
         this.typeName = typeName;
     }
+
+
 
 }

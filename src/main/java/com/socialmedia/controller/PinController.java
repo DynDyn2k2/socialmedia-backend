@@ -5,6 +5,7 @@ import com.socialmedia.model.Comments;
 import com.socialmedia.model.DetailNotification;
 import com.socialmedia.model.Likes;
 import com.socialmedia.model.Pins;
+import com.socialmedia.model.ResultStatistics;
 import com.socialmedia.model.Users;
 import com.socialmedia.model.UserSavePin;
 import com.socialmedia.service.PinService;
@@ -100,7 +101,7 @@ public class PinController {
             currentPin.setDescription(pin.getDescription());
             currentPin.setLink(pin.getLink());
             currentPin.setType(pin.getType());
-            return new ResponseEntity<>(pinService.save(pin), HttpStatus.OK);
+            return new ResponseEntity<>(pinService.save(currentPin), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -117,7 +118,7 @@ public class PinController {
 //            Xóa comments
             List<Comments> listComment = commentService.findAllByPin(pin);
             for (Comments item : listComment) {
-                boolean deleteComment = commentService.delete(item.getId());
+                boolean deleteComment = commentService.delete(item);
                 if (deleteComment == false) {
                     delete = false;
                 }
@@ -125,7 +126,7 @@ public class PinController {
             //Xóa detail noti
             List<DetailNotification> listDetailNoti = detailNotificationService.findAllByPin(pin);
             for (DetailNotification item : listDetailNoti) {
-                boolean deleteDetailNoti = commentService.delete(item.getId());
+                boolean deleteDetailNoti = detailNotificationService.delete(item.getId());
                 if (deleteDetailNoti == false) {
                     delete = false;
                 }
@@ -160,8 +161,6 @@ public class PinController {
         return new ResponseEntity<>(pinService.save(pin), HttpStatus.OK);
     }
 
-
-
     @GetMapping("/countAll")
     public long countAll() {
         return pinService.countAll();
@@ -186,6 +185,44 @@ public class PinController {
         double percent = Math.round(ratio * 100.0) / 100.0;
 
         return percent;
+    }
+
+    @GetMapping("/countPinByCreatedAt")
+    public Object countPinByCreatedAt() {
+        Date currentDate = new Date();
+        //Thống kê trong ngày====================================      
+        long countDay = pinService.countByCreatedAt(currentDate);
+
+        //Thống kê trong tuần====================================
+        // Tạo một đối tượng Calendar và đặt ngày hiện tại
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(currentDate);
+
+        // Điều chỉnh ngày về đầu tuần (Thứ Hai)
+        calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
+
+        // Lấy ngày đầu tiên trong tuần hiện tại
+        Date firstDayOfWeek = calendar.getTime();
+        long countWeek = pinService.countByCreatedAt(firstDayOfWeek, currentDate);
+
+        //Thống kê trong tháng=============================================
+        // Đặt ngày về ngày đầu tiên trong tháng
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+
+        // Lấy ngày đầu tiên trong tháng hiện tại
+        Date firstDayOfMonth = calendar.getTime();
+        long countMonth = pinService.countByCreatedAt(firstDayOfMonth, currentDate);
+
+        //Thống kê tất cả=============================================
+        long countAll = pinService.countAll();
+        
+        //return kết quả
+        ResultStatistics r = new ResultStatistics();
+        r.countDay = countDay;
+        r.countWeek = countWeek;
+        r.countMonth = countMonth;
+        r.countAll = countAll;
+        return r;
     }
 
 }

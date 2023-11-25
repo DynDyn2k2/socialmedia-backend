@@ -13,4 +13,6 @@ public interface Permission_FunctionService {
     public void deleteAll(List<Permission_Function> permissionFunctions);
 
     public void deleteByPermission(Permissions permission);
+
+
 }
