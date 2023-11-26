@@ -31,7 +31,7 @@ public class RealTimeCommentController {
     @Autowired
     private UserService userService;
     @MessageMapping("/addComment/pin_id/{pin_id}")
-    @SendTo("/topic/comment/pin_id/{pin_id}")
+    @SendTo("/room/comment/pin_id/{pin_id}")
     public Comments addComment(@DestinationVariable("pin_id") int pin_id, SimpleComment sComment) throws Exception{
         Thread.sleep(1000);
         Comments comment = new Comments();

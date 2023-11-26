@@ -1,5 +1,6 @@
 package com.socialmedia.controller;
 
+import com.socialmedia.model.Report_Comments;
 import com.socialmedia.model.ResultReport;
 import com.socialmedia.model.Users;
 import com.socialmedia.repository.Report_CommentRepository;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -27,6 +29,12 @@ public class Report_CommentController {
     @Autowired
     private Report_CommentService reportCommentService;
 
+    @PostMapping("/add")
+    public boolean saveReport(@RequestBody Report_Comments reportComment) {
+        reportCommentService.saveReportComments(reportComment);
+        return true;
+    }
+    
     @GetMapping("/count")
     public Object count() {
         long countAll = reportCommentService.countAll();

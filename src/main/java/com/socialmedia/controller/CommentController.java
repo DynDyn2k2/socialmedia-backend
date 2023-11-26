@@ -51,12 +51,17 @@ public class CommentController {
     @PostMapping("/add")
     public Comments add(@RequestBody Comments comments) {
         return commentService.saveComment(comments);
-        // return "New student is added";
     }
 
-    @PostMapping("/delete/cmt_id/{cmt_id}")
-    public boolean delete(@PathVariable("cmt_id") int cmt_id) {
-        return commentService.delete(cmt_id);
+    // @GetMapping("/delete/cmt_id/{cmt_id}")
+    // public boolean delete(@PathVariable("cmt_id") int cmt_id) {
+    // return commentService.delete(cmt_id);
+    // }
+
+    @PostMapping("/delete")
+    public boolean deleteComment(@RequestBody Comments comment) {
+        commentService.delete(comment);
+        return true;
     }
 
     @GetMapping("/countAll")

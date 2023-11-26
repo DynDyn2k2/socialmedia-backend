@@ -19,21 +19,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/pins")
@@ -69,10 +58,6 @@ public class PinController {
         return list;
     }
 
-    // @GetMapping("/getPinByTypeId/{param}")
-    // public List<Pins> getPinsByTypeId(@RequestParam Long param) {
-    // return pinService.getPinsByType(param);
-    // }
 
     @GetMapping("/id/{id}")
     public Pins getPinById(@PathVariable("id") int id) {
@@ -126,23 +111,23 @@ public class PinController {
         Pins pin;
         if (optionalPin.isPresent()) {
             pin = optionalPin.get();
-            // Xóa comments
+//            Xóa comments
             List<Comments> listComment = commentService.findAllByPin(pin);
             for (Comments item : listComment) {
-                boolean deleteComment = commentService.delete(item.getId());
+                boolean deleteComment = commentService.delete(item);
                 if (deleteComment == false) {
                     delete = false;
                 }
             }
-            // Xóa detail noti
+            //Xóa detail noti
             List<DetailNotification> listDetailNoti = detailNotificationService.findAllByPin(pin);
             for (DetailNotification item : listDetailNoti) {
-                boolean deleteDetailNoti = commentService.delete(item.getId());
+                boolean deleteDetailNoti = detailNotificationService.delete(item.getId());
                 if (deleteDetailNoti == false) {
                     delete = false;
                 }
             }
-            // Xóa likes
+            //Xóa likes
             List<Likes> listLike = likeService.findAllByPin(pin);
             for (Likes item : listLike) {
                 boolean deleteLike = likeService.delete(item.getId());
@@ -151,7 +136,7 @@ public class PinController {
                 }
             }
 
-            // Xóa userSavePin
+            //Xóa userSavePin
             List<UserSavePin> listUserSavePin = userSavePinService.findAllByPin(pin);
             for (UserSavePin item : listUserSavePin) {
                 boolean deleteUserSavePin = userSavePinService.delete(item);

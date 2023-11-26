@@ -14,8 +14,8 @@ import com.socialmedia.model.Pins;
 public interface LikeRepository extends JpaRepository<Likes, Integer> {
 
     public List<Likes> findAllByPin(Pins pin);
-
-    public long countByCreatedAtBefore(Date created_at);
+    
+    public long countByCreatedAtBefore(Date created_at);    
 
     public Likes findByNotification(Notifications notification);
 

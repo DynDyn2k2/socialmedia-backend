@@ -30,19 +30,20 @@ public class CommentServiceImpl implements CommentService {
         return repository.save(comment);
     }
 
-    @Override
-    public boolean delete(int id) {
-        try {
-            repository.deleteById(id);
-            return true;
-        } catch (EmptyResultDataAccessException ex) {
-            System.out.println("Không tìm thấy thực thể để xóa");
-            return false;
-        } catch (DataIntegrityViolationException ex) {
-            System.out.println("Lỗi liên quan đến tính toàn vẹn dữ liệu hoặc ràng buộc khóa ngoại");
-            return false;
-        }
-    }
+    // @Override
+    // public boolean delete(int id) {
+    // try {
+    // repository.deleteById(id);
+    // return true;
+    // } catch (EmptyResultDataAccessException ex) {
+    // System.out.println("Không tìm thấy thực thể để xóa");
+    // return false;
+    // } catch (DataIntegrityViolationException ex) {
+    // System.out.println("Lỗi liên quan đến tính toàn vẹn dữ liệu hoặc ràng buộc
+    // khóa ngoại");
+    // return false;
+    // }
+    // }
 
     @Override
     public long countAll() {
@@ -81,4 +82,16 @@ public class CommentServiceImpl implements CommentService {
         return repository.findByNotification(notification);
     }
 
+    public boolean delete(Comments comment) {
+        try {
+            repository.delete(comment);
+            return true;
+        } catch (EmptyResultDataAccessException ex) {
+            System.out.println("Không tìm thấy thực thể để xóa");
+            return false;
+        } catch (DataIntegrityViolationException ex) {
+            System.out.println("Lỗi liên quan đến tính toàn vẹn dữ liệu hoặc ràng buộc khóa ngoại");
+            return false;
+        }
+    }
 }

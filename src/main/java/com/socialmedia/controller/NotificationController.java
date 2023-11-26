@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.socialmedia.model.Comments;
 import com.socialmedia.model.Friendships;
+import com.socialmedia.model.Likes;
 import com.socialmedia.model.Notifications;
 import com.socialmedia.model.Pins;
 import com.socialmedia.model.SendEntity;
@@ -26,6 +27,7 @@ import com.socialmedia.repository.NotificationRepository;
 import com.socialmedia.service.CommentService;
 import com.socialmedia.service.DetailNotificationService;
 import com.socialmedia.service.FriendshipService;
+import com.socialmedia.service.LikeService;
 import com.socialmedia.service.NotificationService;
 import com.socialmedia.service.PinService;
 import com.socialmedia.service.UserService;
@@ -51,6 +53,9 @@ public class NotificationController {
     private DetailNotificationService detailService;
 
     private CommentService commentService;
+
+    @Autowired
+    private LikeService likeService;
 
     public NotificationController(PinService pinService, NotificationService service, NotificationRepository repository,
             UserService userService, FriendshipService friendshipService, DetailNotificationService detailService,
@@ -114,6 +119,12 @@ public class NotificationController {
 
                 break;
             case Like:
+                Likes likes = variable.getLikes();
+                likes.setCreatedAt(new Date());
+                likes.setPin(pinService.getPinById(likes.getPin().getId()).get());
+                likes.setUser(userService.getUserById(likes.getUser().getId()).get());
+                likes.setNotification(notifications);
+                likeService.saveLike(likes);
                 break;
             default:
                 System.out.println("Cannot initial notifications !!!");

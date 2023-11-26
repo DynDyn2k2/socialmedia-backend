@@ -50,6 +50,24 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
+    public Likes saveLike(Likes like) {
+        return repository.save(like);
+    }
+
+    @Override
+    public boolean delete(Likes like) {
+        try {
+            repository.delete(like);
+            return true;
+        } catch (EmptyResultDataAccessException ex) {
+            System.out.println("Không tìm thấy thực thể để xóa");
+            return false;
+        } catch (DataIntegrityViolationException ex) {
+            System.out.println("Lỗi liên quan đến tính toàn vẹn dữ liệu hoặc ràng buộc khóa ngoại");
+            return false;
+        }
+    }
+
     public long countByCreatedAt(Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = dateFormat.format(date);
