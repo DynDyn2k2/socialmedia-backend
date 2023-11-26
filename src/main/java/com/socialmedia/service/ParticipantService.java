@@ -8,4 +8,5 @@ public interface ParticipantService {
     public List<Participants> getParticipantsByConversationId(int id);
     public List<Participants> getFriendChattingWith(int user_id);
     public List<Participants> getConversationJoinedByUserId(int user_id);
+    public Participants save(Participants participant);
 }

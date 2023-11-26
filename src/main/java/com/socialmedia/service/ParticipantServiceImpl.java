@@ -52,4 +52,9 @@ public class ParticipantServiceImpl implements ParticipantService {
         Users user = userRepository.findById(user_id).get();
         return repository.findByUser(user);
     }
+
+    @Override
+    public Participants save(Participants participant) {
+        return repository.save(participant);
+    }
 }

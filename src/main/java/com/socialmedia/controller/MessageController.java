@@ -35,7 +35,13 @@ public class MessageController {
 
     @GetMapping(value = "/conversation_id/{conversation_id}")
     public List<Messages> getMessagesByConversationId(@PathVariable("conversation_id") int id) {
-        return messageService.getAllMessagesByConversationId(id);
+        List<Messages> tempList = messageService.getAllMessagesByConversationId(id);
+        if(tempList.isEmpty()) {
+            return null;
+        }
+        else {
+            return messageService.getAllMessagesByConversationId(id);   
+        }
     }    
     
     @PutMapping("/edit/{id}")
@@ -54,5 +60,10 @@ public class MessageController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+    
+    @PostMapping("/add")
+    public ResponseEntity<Messages> save(@RequestBody Messages message) {
+        return new ResponseEntity<>(messageService.saveMessage(message), HttpStatus.OK);
     }
 }
