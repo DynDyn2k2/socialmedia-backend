@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/participants")
-
-
+@CrossOrigin(origins = "http://localhost:3000")
 public class ParticipantController {
     @Autowired
     private ParticipantService service;

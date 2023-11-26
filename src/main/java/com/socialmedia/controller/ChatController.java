@@ -68,7 +68,7 @@ public class ChatController {
     
     @SubscribeMapping("/login/{conversation_id}")
     public void initRoom(@DestinationVariable("conversation_id") String conversation_id) throws InterruptedException {
-        Thread.sleep(500); // simulated delay
+        Thread.sleep(1000); // simulated delay
         int userCount = 1;
         if(roomMap.containsKey(conversation_id)) {
             userCount = 2;
@@ -79,7 +79,7 @@ public class ChatController {
     @MessageMapping("/unsubscribe")
     @SendTo("/room/testSubscribe")
     public String handleUnsubscribe(@Payload String conversation_id) throws InterruptedException {
-        Thread.sleep(500); // simulated delay
+        Thread.sleep(1000); // simulated delay
         roomMap.put(conversation_id, 1);
         return "Conversation: " + conversation_id + " === Joined: " + roomMap.get(conversation_id);
     }
