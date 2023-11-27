@@ -1,15 +1,18 @@
 package com.socialmedia.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import com.socialmedia.model.Likes;
-import com.socialmedia.model.Pins;
-import com.socialmedia.repository.LikeRepository;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.stereotype.Service;
+
+import com.socialmedia.model.Likes;
+import com.socialmedia.model.Notifications;
+import com.socialmedia.model.Pins;
+import com.socialmedia.repository.LikeRepository;
 
 @Service
 public class LikeServiceImpl implements LikeService {
@@ -80,4 +83,15 @@ public class LikeServiceImpl implements LikeService {
         String formattedDate2 = dateFormat2.format(date2);
         return repository.countByCreatedAt(formattedDate1, formattedDate2);
     }
+
+    @Override
+    public Likes getByNotification(Notifications notification) {
+        return repository.findByNotification(notification);
+    }
+
+    @Override
+    public List<Likes> getAllByNotification(Notifications notifications) {
+        return repository.findAllByNotification(notifications);
+    }
+
 }

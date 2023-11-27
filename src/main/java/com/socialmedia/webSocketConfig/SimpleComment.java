@@ -15,6 +15,16 @@ public class SimpleComment {
     private int userId;
     private int pinId;
 
+    public int getNotificationId() {
+        return notificationId;
+    }
+
+    public void setNotificationId(int notificationId) {
+        this.notificationId = notificationId;
+    }
+
+    private int notificationId;
+
     public String getContent() {
         return content;
     }
@@ -46,5 +56,5 @@ public class SimpleComment {
     public void setPinId(int pinId) {
         this.pinId = pinId;
     }
-    
+
 }

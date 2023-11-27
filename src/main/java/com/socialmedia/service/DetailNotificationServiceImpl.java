@@ -36,6 +36,11 @@ public class DetailNotificationServiceImpl implements DetailNotificationService 
     public List<DetailNotification> findAllByPin(Pins pin) {
         return repository.findAllByPin(pin);
     }
+    
+     @Override
+    public List<DetailNotification> findAllByNotification(Notifications notification) {
+        return repository.findAllByNotification(notification);
+    }
 
     public Set<Pins> getRelatedPins(List<Pins> pins) {
         Set<Pins> result = new HashSet<>();

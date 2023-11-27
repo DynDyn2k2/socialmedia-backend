@@ -1,16 +1,15 @@
 package com.socialmedia.controller;
 
 import com.socialmedia.model.Friendships;
+import com.socialmedia.model.Notifications;
 import com.socialmedia.service.FriendshipService;
 import com.socialmedia.service.UserService;
 import java.util.Optional;
 import com.socialmedia.model.Users;
+import com.socialmedia.service.NotificationService;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import static org.hibernate.type.SqlTypes.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/friendships")
 @CrossOrigin
+
 public class FriendshipController {
 
     @Autowired
@@ -26,6 +26,9 @@ public class FriendshipController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private NotificationService notificationService;
 
     @GetMapping(value = {"/count/{id}"})
     public int countFriend(@PathVariable("id") int id) {
@@ -63,18 +66,30 @@ public class FriendshipController {
 
     @GetMapping(value = {"/listRequest/{id}"})
     public List<Friendships> listRequest(@PathVariable("id") int id) {
-//        List<Friendships> list = new ArrayList<>();
 
-//        Optional<Users> optional1 = userService.getUserById(id);
-//        Users user1 = optional1.get();
-//        Friendships.FriendshipStatus status1 = Friendships.FriendshipStatus.PENDING;
-//        List<Friendships> list = friendshipService.getAllByUser1AndStatus(user1, status1);
-//        list.addAll(list1);
+        Optional<Users> optional1 = userService.getUserById(id);
+        Users user1 = optional1.get();
+        Friendships.FriendshipStatus status1 = Friendships.FriendshipStatus.ACCEPTED;
+        List<Friendships> list1 = friendshipService.getAllByUser1AndStatus(user1, status1);
+
         Optional<Users> optional2 = userService.getUserById(id);
         Users user2 = optional2.get();
         Friendships.FriendshipStatus status2 = Friendships.FriendshipStatus.PENDING;
-        List<Friendships> list = friendshipService.getAllByUser2AndStatus(user2, status2);
-//        list.addAll(list2);
+        List<Friendships> list2 = friendshipService.getAllByUser2AndStatus(user2, status2);
+
+        List<Friendships> list = new ArrayList<>();
+
+        list.addAll(list1);
+        list.addAll(list2);
+
+        for (Friendships friendships2 : list2) {
+            for (Friendships friendships1 : list1) {
+                if (friendships1.getUser1() == friendships2.getUser2() && friendships1.getUser2() == friendships2.getUser1()) {
+                    list.remove(friendships2);
+                    list.remove(friendships1);
+                }
+            }
+        }
 
         return list;
     }
@@ -97,6 +112,12 @@ public class FriendshipController {
         return list;
     }
 
+    @GetMapping(value = "/getByNotification/{notificationId}")
+    public Friendships getByNotification(@PathVariable int notificationId) {
+        Notifications not = notificationService.getById(notificationId);
+        return friendshipService.getByNotifications(not);
+    }
+
     @PutMapping("/edit/{id}")
     public ResponseEntity<Friendships> update(@PathVariable("id") int id, @RequestBody Friendships friendship) {
         Optional<Friendships> optionalFriendship = friendshipService.getById(id);
@@ -112,14 +133,39 @@ public class FriendshipController {
 
     }
 
-    @PostMapping("/delete/{id}")
-    public boolean delete(@PathVariable("id") int id) {
-        Optional<Friendships> optional = friendshipService.getById(id);
-        if (optional.isPresent()) {
-            return friendshipService.delete(id);
-        } else {
-            return false;
+//    @PostMapping("/delete/{id}")
+//    public boolean delete(@PathVariable("id") int id) {
+//        Optional<Friendships> optional = friendshipService.getById(id);
+//        if (optional.isPresent()) {
+//            return friendshipService.delete(id);
+//        } else {
+//            return false;
+//        }
+//    }
+    @PostMapping("/delete")
+    public boolean delete(@RequestBody Friendships friendship) {
+        if (friendship.getStatus().equals(Friendships.FriendshipStatus.PENDING)) {
+            Friendships friendship2 = friendshipService.getByUser1AndUser2AndStatus(friendship.getUser2(), friendship.getUser1(), Friendships.FriendshipStatus.ACCEPTED);
+            if (friendship2 != null) {
+                friendshipService.delete(friendship2);
+                Notifications noti2 = friendship2.getNotification();
+                notificationService.delete(noti2);
+            }
         }
+        else{
+             Friendships friendship2 = friendshipService.getByUser1AndUser2AndStatus(friendship.getUser2(), friendship.getUser1(), Friendships.FriendshipStatus.PENDING);
+            if (friendship2 != null) {
+                friendshipService.delete(friendship2);
+                Notifications noti2 = friendship2.getNotification();
+                notificationService.delete(noti2);
+            }
+        }
+
+        Notifications noti1 = friendship.getNotification();
+        friendshipService.delete(friendship);
+        notificationService.delete(noti1);
+
+        return true;
     }
 
     @PostMapping("/add")
@@ -159,7 +205,7 @@ public class FriendshipController {
                     case ACCEPTED -> {
                         System.out.println("friendship2+ACCEPTED");
                         return friendship2;
-                    }         
+                    }
                     case PENDING -> {
                         System.out.println("friendship2+PENDING");
                         return friendship2;

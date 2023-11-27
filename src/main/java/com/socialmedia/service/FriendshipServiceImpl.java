@@ -3,6 +3,7 @@ package com.socialmedia.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.socialmedia.model.Friendships;
+import com.socialmedia.model.Notifications;
 import com.socialmedia.model.Pins;
 import com.socialmedia.repository.FriendshipRepository;
 import java.util.List;
@@ -29,6 +30,11 @@ public class FriendshipServiceImpl implements FriendshipService {
     }
 
     @Override
+    public Friendships getByUser1AndUser2AndStatus(Users user1, Users user2, Friendships.FriendshipStatus status) {
+        return repository.findByUser1AndUser2AndStatus(user1, user2, status);
+    }
+
+    @Override
     public List<Friendships> getAllByUser1(Users user) {
         return repository.findAllByUser1(user);
     }
@@ -49,9 +55,9 @@ public class FriendshipServiceImpl implements FriendshipService {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(Friendships friendship) {
         try {
-            repository.deleteById(id);
+            repository.delete(friendship);
             return true;
         } catch (EmptyResultDataAccessException ex) {
             System.out.println("Không tìm thấy thực thể để xóa");
@@ -66,5 +72,15 @@ public class FriendshipServiceImpl implements FriendshipService {
     public Friendships getOneByUser1AndUser2(Users user1, Users user2) {
         return repository.findOneByUser1AndUser2(user1, user2);
     }
-    
+
+    @Override
+    public Friendships getByNotifications(Notifications notifications) {
+        return repository.findByNotification(notifications);
+    }
+
+    @Override
+    public List<Friendships> getAllByNotification(Notifications notifications) {
+        return repository.findAllByNotification(notifications);
+    }
+
 }

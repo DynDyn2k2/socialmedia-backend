@@ -1,8 +1,9 @@
 
 package com.socialmedia.model;
 
-import jakarta.persistence.Column;
 import java.util.Date;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -11,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Friendships {
@@ -36,6 +38,18 @@ public class Friendships {
         PENDING,
         ACCEPTED,
         REJECTED
+    }
+
+    @OneToOne
+    @JoinColumn(name = "notificationId")
+    private Notifications notification;
+
+    public Notifications getNotification() {
+        return notification;
+    }
+
+    public void setNotification(Notifications notification) {
+        this.notification = notification;
     }
 
     public int getId() {
@@ -77,8 +91,5 @@ public class Friendships {
     public void setCreated_at(Date created_at) {
         this.created_at = created_at;
     }
-    
-    
 
 }
-
