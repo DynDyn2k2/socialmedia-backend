@@ -22,10 +22,15 @@ public class Messages {
  
     private String content;
     private Date send_at; 
+    private boolean seen;
 
     @ManyToOne
     @JoinColumn(name = "conversationId")
     private Conversations conversation;
+
+    @ManyToOne
+    @JoinColumn(name = "pinId")
+    private Pins pin;
     
     
     public int getId() {
@@ -68,6 +73,20 @@ public class Messages {
         this.conversation = conversation;
     }
 
-    
+    public boolean isSeen() {
+        return seen;
+    }
+
+    public void setSeen(boolean seen) {
+        this.seen = seen;
+    }
+
+    public Pins getPin() {
+        return pin;
+    }
+
+    public void setPin(Pins pin) {
+        this.pin = pin;
+    }
 
 }

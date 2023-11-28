@@ -5,11 +5,21 @@
 package com.socialmedia.controller;
 
 import com.socialmedia.model.Messages;
+import com.socialmedia.repository.ConversationRepository;
 import com.socialmedia.repository.MessageRepository;
+import com.socialmedia.repository.PinRepository;
+import com.socialmedia.repository.UserRepository;
+import com.socialmedia.config.SimpleMessage;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.stereotype.Controller;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
 /**
  *
@@ -18,14 +28,59 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @Controller
 @CrossOrigin(origins = "http://localhost:3000")
 public class ChatController {
+    
+    private Map<String, Integer> roomMap = new HashMap<>();
+    
     @Autowired
-    private MessageRepository repository;
+    private MessageRepository messageRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private ConversationRepository conversationRepository;
+    @Autowired
+    private PinRepository pinRepository;
     
     @MessageMapping("/chat/conversation_id/{conversation_id}")
     @SendTo("/room/conversation_id/{conversation_id}")
-    public Messages greeting(Messages message) throws Exception {
-        Thread.sleep(1000); // simulated delay 
-//        return repository.save(message);
-        return message;
-   }
+    public Messages chatting(SimpleMessage sMessage, @DestinationVariable("conversation_id") String conversation_id) throws Exception {
+        Thread.sleep(1000); // simulated delay
+        Messages message = new Messages();
+        message.setContent(sMessage.getContent());
+        message.setId(sMessage.getId());
+        message.setSend_at(new Date());
+        message.setUser(userRepository.findById(sMessage.getUser_id()).get());
+        message.setConversation(conversationRepository.findById(sMessage.getConversation_id()).get());
+        if(sMessage.getPin_id() > 1) {
+            message.setPin(pinRepository.findById(sMessage.getPin_id()).get());
+        }
+        else {
+            message.setPin(null);
+        }
+        if(roomMap.get(conversation_id) == 1) {
+            message.setSeen(false);
+        }
+        else {
+            message.setSeen(true);
+        }
+        return messageRepository.save(message);
+//        return message;
+    }
+    
+    @SubscribeMapping("/login/{conversation_id}")
+    public void initRoom(@DestinationVariable("conversation_id") String conversation_id) throws InterruptedException {
+        Thread.sleep(1000); // simulated delay
+        int userCount = 1;
+        if(roomMap.containsKey(conversation_id)) {
+            userCount = 2;
+        }
+        roomMap.put(conversation_id, userCount);
+    }
+    
+    @MessageMapping("/unsubscribe")
+    @SendTo("/room/testSubscribe")
+    public String handleUnsubscribe(@Payload String conversation_id) throws InterruptedException {
+        Thread.sleep(1000); // simulated delay
+        roomMap.put(conversation_id, 1);
+        return "Conversation: " + conversation_id + " === Joined: " + roomMap.get(conversation_id);
+    }
 }
