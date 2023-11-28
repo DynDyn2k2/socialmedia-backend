@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.socialmedia.model.Users;
 import com.socialmedia.service.UserService;
 import org.antlr.v4.runtime.misc.Pair;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/users")
@@ -50,9 +51,12 @@ public class UserController {
         } else {
             return new Pair("errorEmail", "");
         }
-//        if (foundUser != null && foundUser.getPassword().equals(password)) {
 
-//        } 
+    }
+    
+    @GetMapping(value = {"/checkEmail"})
+    public int getUserByEmail(@RequestParam(name = "email") String email) {        
+        return service.getAllUserByEmail(email).size();
     }
 
     @PostMapping("/register")
@@ -62,18 +66,15 @@ public class UserController {
         if (existingUser != null) {
             System.out.println(existingUser);
             return new ResponseEntity<>("User already exists", HttpStatus.BAD_REQUEST);
-        }
-        System.out.println("=========:" + user);
+        }    
         // Đặt thời gian đăng ký
         user.setCreatedAt(new Date());
         // Lưu người dùng mới vào cơ sở dữ liệu
         Users registeredUser = service.saveUser(user);
 
         if (registeredUser != null) {
-            System.out.println(registeredUser);
             return new ResponseEntity<>("Registration successful", HttpStatus.OK);
         } else {
-            System.out.println(registeredUser);
             return new ResponseEntity<>("Registration failed", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -285,5 +286,6 @@ public class UserController {
         r.countAll = countAll;
         return r;
     }
+
 
 }
