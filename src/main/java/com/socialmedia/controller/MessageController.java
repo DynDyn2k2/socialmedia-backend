@@ -56,6 +56,7 @@ public class MessageController {
             currentMessage.setUser(userService.getUserById(message.getUser().getId()).get());
             currentMessage.setConversation(conversationService.getConversationById(message.getConversation().getId()).get());
             currentMessage.setSeen(true);
+            currentMessage.setPin(message.getPin());
             return new ResponseEntity<>(messageService.saveMessage(currentMessage), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
