@@ -63,5 +63,13 @@ public class UserSavePinServiceImpl implements UserSavePinService {
         }
     }
 
+    @Override
+    public UserSavePin findByPinAndUser(Pins pin, Users user) {
+        return repository.findByPinAndUser(pin,user);
+    }
 
+       @Override
+    public UserSavePin findByPinAndUserAndBoard(Pins pin, Users user, Boards board) {
+        return repository.findByPinAndUserAndBoard(pin,user, board);
+    }
 }

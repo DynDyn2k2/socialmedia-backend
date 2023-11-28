@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.socialmedia.webSocketConfig;
+package com.socialmedia.config;
 
 /**
  *
@@ -14,6 +14,16 @@ public class SimpleComment {
     private int commentId;
     private int userId;
     private int pinId;
+
+    public int getNotificationId() {
+        return notificationId;
+    }
+
+    public void setNotificationId(int notificationId) {
+        this.notificationId = notificationId;
+    }
+
+    private int notificationId;
 
     public String getContent() {
         return content;
@@ -46,5 +56,5 @@ public class SimpleComment {
     public void setPinId(int pinId) {
         this.pinId = pinId;
     }
-    
+
 }

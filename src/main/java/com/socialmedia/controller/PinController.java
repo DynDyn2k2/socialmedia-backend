@@ -58,10 +58,6 @@ public class PinController {
         return list;
     }
 
-    @GetMapping("/getPinByTypeId/{param}")
-    public List<Pins> getPinsByTypeId(@RequestParam Long param) {
-        return pinService.getPinsByTypeId(param);
-    }
 
     @GetMapping("/id/{id}")
     public Pins getPinById(@PathVariable("id") int id) {
@@ -118,7 +114,7 @@ public class PinController {
 //            Xóa comments
             List<Comments> listComment = commentService.findAllByPin(pin);
             for (Comments item : listComment) {
-                boolean deleteComment = commentService.delete(item.getId());
+                boolean deleteComment = commentService.delete(item);
                 if (deleteComment == false) {
                     delete = false;
                 }
@@ -126,7 +122,7 @@ public class PinController {
             //Xóa detail noti
             List<DetailNotification> listDetailNoti = detailNotificationService.findAllByPin(pin);
             for (DetailNotification item : listDetailNoti) {
-                boolean deleteDetailNoti = commentService.delete(item.getId());
+                boolean deleteDetailNoti = detailNotificationService.delete(item.getId());
                 if (deleteDetailNoti == false) {
                     delete = false;
                 }

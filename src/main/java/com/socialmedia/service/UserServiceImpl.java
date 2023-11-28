@@ -11,10 +11,6 @@ import java.util.Optional;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import jakarta.persistence.EntityNotFoundException;
-import static jakarta.persistence.GenerationType.UUID;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,6 +33,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public Users getUserByUsername(String username) {
         return repository.findOneByUsername(username);
+    }
+    
+    
+    @Override
+    public Users getUserByEmail(String email) {
+        return repository.findOneByEmail(email);
+    }
+
+     @Override
+    public List<Users> getAllUserByEmail(String email) {
+      return repository.findByEmail(email);
     }
 
     @Override
@@ -91,6 +98,7 @@ public class UserServiceImpl implements UserService {
         return repository.countByCreatedAt(formattedDate1, formattedDate2);
     }
 
+    @Override
     public void updateAvatar(Integer id, MultipartFile avatarfile) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
@@ -148,10 +156,11 @@ public class UserServiceImpl implements UserService {
             } catch (Exception e) {
                 System.out.println(e.toString());
             }
-
         } else {
             throw new EntityNotFoundException("user not found to set birthday");
         }
     }
+
+   
 
 }

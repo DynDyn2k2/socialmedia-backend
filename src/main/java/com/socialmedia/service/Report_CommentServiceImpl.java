@@ -18,6 +18,11 @@ public class Report_CommentServiceImpl implements Report_CommentService {
     public long countAll() {
         return repository.count();
     }
+    
+    @Override
+    public Report_Comments saveReportComments(Report_Comments reportComment) {
+        return repository.save(reportComment);
+    }
 
     @Override
     public long countByUserRatify(Users userRatify) {

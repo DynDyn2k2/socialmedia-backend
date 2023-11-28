@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface Report_CommentRepository extends JpaRepository<Report_Comments, Integer> {
-
+    
     public long countByUserRatify(Users userRatify);
 
     public long countByApprove(boolean approve);

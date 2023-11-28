@@ -1,16 +1,18 @@
 package com.socialmedia.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import com.socialmedia.model.Pins;
-import com.socialmedia.model.Users;
-import com.socialmedia.repository.PinRepository;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.stereotype.Service;
+import com.socialmedia.model.Pins;
+import com.socialmedia.model.Types;
+import com.socialmedia.model.Users;
+import com.socialmedia.repository.PinRepository;
+
 
 @Service
 public class PinServiceImpl implements PinService {
@@ -24,8 +26,8 @@ public class PinServiceImpl implements PinService {
     }
 
     @Override
-    public List<Pins> getPinsByTypeId(Long typeId) {
-        return repository.findPinsByTypeId(typeId);
+    public List<Pins> getPinsByType(Types type) {
+        return repository.findByType(type);
     }
 
     @Override

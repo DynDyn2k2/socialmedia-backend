@@ -8,7 +8,7 @@ import com.socialmedia.model.Comments;
 import com.socialmedia.service.CommentService;
 import com.socialmedia.service.PinService;
 import com.socialmedia.service.UserService;
-import com.socialmedia.webSocketConfig.SimpleComment;
+import com.socialmedia.config.SimpleComment;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -31,7 +31,7 @@ public class RealTimeCommentController {
     @Autowired
     private UserService userService;
     @MessageMapping("/addComment/pin_id/{pin_id}")
-    @SendTo("/topic/comment/pin_id/{pin_id}")
+    @SendTo("/room/comment/pin_id/{pin_id}")
     public Comments addComment(@DestinationVariable("pin_id") int pin_id, SimpleComment sComment) throws Exception{
         Thread.sleep(1000);
         Comments comment = new Comments();

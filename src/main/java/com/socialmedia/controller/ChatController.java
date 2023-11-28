@@ -9,7 +9,7 @@ import com.socialmedia.repository.ConversationRepository;
 import com.socialmedia.repository.MessageRepository;
 import com.socialmedia.repository.PinRepository;
 import com.socialmedia.repository.UserRepository;
-import com.socialmedia.webSocketConfig.SimpleMessage;
+import com.socialmedia.config.SimpleMessage;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;

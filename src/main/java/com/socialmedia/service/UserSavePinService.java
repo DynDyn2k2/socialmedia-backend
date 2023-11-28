@@ -22,5 +22,9 @@ public interface UserSavePinService {
     public List<UserSavePin> findAllByUser(Users user);
 
     public boolean delete(UserSavePin userSavePin);
+    
+    public UserSavePin findByPinAndUser(Pins pin, Users user);
+    
+    public UserSavePin findByPinAndUserAndBoard(Pins pin, Users user, Boards board);
 
 }

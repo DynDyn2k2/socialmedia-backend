@@ -14,6 +14,11 @@ public interface UserService {
     public List<Users> getAllUsers();
 
     public Users getUserByUsername(String username);
+    
+    public Users getUserByEmail(String email);
+    
+     public List<Users> getAllUserByEmail(String email);
+
 
     public Optional<Users> getUserById(int id);
 
