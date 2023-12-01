@@ -15,7 +15,6 @@ public interface CommentService {
 
     public boolean delete(Comments comment);
 
-//    public boolean deleteComment(Comments comment);
     public List<Comments> findAllByPin(Pins pin);
 
     public Comments getByNotification(Notifications notification);
