@@ -53,6 +53,9 @@ public class ChatController {
         if(sMessage.getPin_id() > -1) {
             message.setPin(pinRepository.findById(sMessage.getPin_id()).get());
         }
+        if(sMessage.getSharedUserId() > -1) {
+            message.setSharedUser(userRepository.findById(sMessage.getSharedUserId()).get());
+        }
         if(roomMap.get(conversation_id) < 2) {
             message.setSeen(false);
         }
@@ -67,11 +70,13 @@ public class ChatController {
     @MessageMapping("/login")
     public void initRoom(@Payload String conversation_id) throws InterruptedException {
 //        Thread.sleep(1000); // simulated delay
-        int userCount = 1;
-        if(roomMap.containsKey(conversation_id)) {
-            userCount = 2;
+        if(!conversation_id.equals("")) {
+            int userCount = 1;
+            if(roomMap.containsKey(conversation_id)) {
+                userCount = 2;
+            }
+            roomMap.put(conversation_id, userCount);
         }
-        roomMap.put(conversation_id, userCount);
     }
     
     @MessageMapping("/unsubscribe")

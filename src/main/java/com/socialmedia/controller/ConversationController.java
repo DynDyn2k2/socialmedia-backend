@@ -36,7 +36,7 @@ public class ConversationController {
     }
     
     @PostMapping("/add")
-    public ResponseEntity<Conversations> save(@RequestBody Conversations conv) {
-        return new ResponseEntity<>(service.saveConversation(conv), HttpStatus.OK);
+    public Conversations save(@RequestBody Conversations conv) {
+        return service.saveConversation(conv);
     }
 }
