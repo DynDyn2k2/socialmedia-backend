@@ -89,4 +89,9 @@ public class LikeServiceImpl implements LikeService {
         return repository.findByNotification(notification);
     }
 
+    @Override
+    public List<Likes> getAllByNotification(Notifications notifications) {
+        return repository.findAllByNotification(notifications);
+    }
+
 }

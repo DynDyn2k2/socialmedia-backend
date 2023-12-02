@@ -1,4 +1,5 @@
-package com.socialmedia.webSocketConfig;
+
+package com.socialmedia.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -7,12 +8,15 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketTransportRegistration;
 
+
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
+
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
+         config.enableSimpleBroker("/topic");
         config.enableSimpleBroker("/room");
         config.setApplicationDestinationPrefixes("/app").setCacheLimit(1500000);
     }
@@ -30,5 +34,10 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry.setSendBufferSizeLimit(150000000)
                 .setMessageSizeLimit(150000000);
     }
+
+
+
+
+
 
 }

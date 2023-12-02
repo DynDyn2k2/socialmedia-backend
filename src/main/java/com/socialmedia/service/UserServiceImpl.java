@@ -11,10 +11,6 @@ import java.util.Optional;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import jakarta.persistence.EntityNotFoundException;
-import static jakarta.persistence.GenerationType.UUID;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -45,6 +41,10 @@ public class UserServiceImpl implements UserService {
         return repository.findOneByEmail(email);
     }
 
+     @Override
+    public List<Users> getAllUserByEmail(String email) {
+      return repository.findByEmail(email);
+    }
 
     @Override
     public Optional<Users> getUserById(int id) {
@@ -160,5 +160,7 @@ public class UserServiceImpl implements UserService {
             throw new EntityNotFoundException("user not found to set birthday");
         }
     }
+
+   
 
 }

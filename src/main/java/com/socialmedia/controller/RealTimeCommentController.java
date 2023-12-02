@@ -8,7 +8,7 @@ import com.socialmedia.model.Comments;
 import com.socialmedia.service.CommentService;
 import com.socialmedia.service.PinService;
 import com.socialmedia.service.UserService;
-import com.socialmedia.webSocketConfig.SimpleComment;
+import com.socialmedia.config.SimpleComment;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;

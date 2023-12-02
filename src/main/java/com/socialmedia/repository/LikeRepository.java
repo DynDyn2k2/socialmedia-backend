@@ -14,8 +14,8 @@ import com.socialmedia.model.Pins;
 public interface LikeRepository extends JpaRepository<Likes, Integer> {
 
     public List<Likes> findAllByPin(Pins pin);
-    
-    public long countByCreatedAtBefore(Date created_at);    
+
+    public long countByCreatedAtBefore(Date created_at);
 
     public Likes findByNotification(Notifications notification);
 
@@ -24,4 +24,6 @@ public interface LikeRepository extends JpaRepository<Likes, Integer> {
 
     @Query("SELECT COUNT(e) FROM Likes e WHERE DATE_FORMAT(e.createdAt, '%Y-%m-%d') >= :date1 AND DATE_FORMAT(e.createdAt, '%Y-%m-%d') <= :date2")
     long countByCreatedAt(@Param("date1") String date1, @Param("date2") String date2);
+
+    public List<Likes> findAllByNotification(Notifications notification);
 }

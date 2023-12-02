@@ -23,6 +23,9 @@ import com.socialmedia.service.BoardService;
 import com.socialmedia.service.PinService;
 import com.socialmedia.service.UserSavePinService;
 import com.socialmedia.service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("/userSavePin")
@@ -44,7 +47,7 @@ public class UserSavePinController {
     }
 
     @GetMapping("getPinByUser/{userId}")
-    public List<UserSavePin> getPinByUserId(@PathVariable("id") int id) {
+    public List<UserSavePin> getPinByUserId(@PathVariable("userId") int id) {
         Optional<Users> optionalUser = userService.getUserById(id);
         if (optionalUser.isPresent()) {
             Users user = optionalUser.get();
@@ -54,7 +57,7 @@ public class UserSavePinController {
             return null;
         }
     }
-    
+
     @GetMapping("getPin/{username}/{boardId}")
     public List<Pins> getPinByUserIdAndBoardId(@PathVariable("username") String username,
             @PathVariable("boardId") int boardId) {
@@ -115,8 +118,17 @@ public class UserSavePinController {
 
     @PostMapping("/delete")
     public boolean delete(@RequestBody UserSavePin userSavePin) {
-        userSavePinservice.delete(userSavePin);
-        return true;
+        UserSavePin usersavepinDelete = userSavePinservice.findByPinAndUserAndBoard(userSavePin.getPin(), userSavePin.getUser(), userSavePin.getBoard());
+        return userSavePinservice.delete(usersavepinDelete);
+    }
+
+    @PutMapping("/edit")
+    public ResponseEntity<UserSavePin> update(@RequestBody UserSavePin usersavepin) {
+        UserSavePin usersavepinCurrent = userSavePinservice.findByPinAndUser(usersavepin.getPin(), usersavepin.getUser());
+
+        usersavepinCurrent.setBoard(usersavepin.getBoard());
+        return new ResponseEntity<>(userSavePinservice.saveUserSavePin(usersavepinCurrent), HttpStatus.OK);
+
     }
 
 }

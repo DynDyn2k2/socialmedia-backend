@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.socialmedia.model.Comments;
+import com.socialmedia.model.DetailNotification;
 import com.socialmedia.model.Friendships;
 import com.socialmedia.model.Likes;
 import com.socialmedia.model.Notifications;
@@ -101,6 +102,7 @@ public class NotificationController {
                     friendships.setNotification(notifications);
                     friendships.setUser1(userService.getUserById(variable.getFriendships().getUser1().getId()).get());
                     friendships.setUser2(userService.getUserById(variable.getFriendships().getUser2().getId()).get());
+                    friendships.setStatus(variable.getFriendships().getStatus());
                     friendshipService.save(friendships);
                 }
                 break;
@@ -137,7 +139,38 @@ public class NotificationController {
 
     @PostMapping("/deleted/{id}")
     public void delete(@PathVariable("id") int id) {
-        repository.deleteById(id);
-    }
+        boolean delete = true;
+        Notifications notification = service.getById(id);
+        if (notification != null) {
+            // Xóa detail noti
+            List<DetailNotification> listDetailNoti = detailService.findAllByNotification(notification);
+            for (DetailNotification item : listDetailNoti) {
+                boolean deleteDetailNoti = detailService.delete(item.getId());
+                if (deleteDetailNoti == false) {
+                    delete = false;
+                }
+            }
+            // set notification của friendship null
+            List<Friendships> listFriendship = friendshipService.getAllByNotification(notification);
+            for (Friendships item : listFriendship) {
+                item.setNotification(null);
+            }
 
+            // set notification của like null
+            List<Likes> listLike = likeService.getAllByNotification(notification);
+            for (Likes item : listLike) {
+                item.setNotification(null);
+            }
+
+            // set notification của comment null
+            List<Comments> listcomment = commentService.getAllByNotification(notification);
+            for (Comments item : listcomment) {
+                item.setNotification(null);
+            }
+
+        }
+        if (delete) {
+            repository.deleteById(id);
+        }
+    }
 }

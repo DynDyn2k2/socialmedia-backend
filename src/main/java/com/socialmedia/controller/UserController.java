@@ -1,12 +1,13 @@
 package com.socialmedia.controller;
 
-import com.socialmedia.model.ResultStatistics;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.antlr.v4.runtime.misc.Pair;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +18,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.socialmedia.model.ResultStatistics;
 import com.socialmedia.model.Users;
 import com.socialmedia.service.UserService;
-import org.antlr.v4.runtime.misc.Pair;
 
 @RestController
 @RequestMapping("/users")
@@ -42,7 +44,7 @@ public class UserController {
         String password = request.get("password");
         Users foundUser = service.getUserByEmail(email);
         if (foundUser != null) {
-            if (foundUser.getPassword().equals(password)) {
+            if (BCrypt.checkpw(password, foundUser.getPassword())) {
                 return new Pair(foundUser.getId(), foundUser.getPermission());
             } else {
                 return new Pair("errorPassword", "");
@@ -50,9 +52,12 @@ public class UserController {
         } else {
             return new Pair("errorEmail", "");
         }
-//        if (foundUser != null && foundUser.getPassword().equals(password)) {
 
-//        } 
+    }
+
+    @GetMapping(value = { "/checkEmail" })
+    public int getUserByEmail(@RequestParam(name = "email") String email) {
+        return service.getAllUserByEmail(email).size();
     }
 
     @PostMapping("/register")
@@ -63,17 +68,15 @@ public class UserController {
             System.out.println(existingUser);
             return new ResponseEntity<>("User already exists", HttpStatus.BAD_REQUEST);
         }
-        System.out.println("=========:" + user);
         // Đặt thời gian đăng ký
         user.setCreatedAt(new Date());
+        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
         // Lưu người dùng mới vào cơ sở dữ liệu
         Users registeredUser = service.saveUser(user);
 
         if (registeredUser != null) {
-            System.out.println(registeredUser);
             return new ResponseEntity<>("Registration successful", HttpStatus.OK);
         } else {
-            System.out.println(registeredUser);
             return new ResponseEntity<>("Registration failed", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -83,12 +86,12 @@ public class UserController {
         return service.getAllUsers();
     }
 
-    @GetMapping(value = {"/username/{username}"})
+    @GetMapping(value = { "/username/{username}" })
     public Users getUserByUsername(@PathVariable("username") String username) {
         return service.getUserByUsername(username);
     }
 
-    @GetMapping(value = {"/id/{id}"})
+    @GetMapping(value = { "/id/{id}" })
     public ResponseEntity<Users> getUserById(@PathVariable("id") int id) {
         Optional<Users> optional = service.getUserById(id);
         if (optional.isPresent()) {
@@ -129,7 +132,7 @@ public class UserController {
         return percent;
     }
 
-    @GetMapping(value = {"/password/{password}"})
+    @GetMapping(value = { "/password/{password}" })
     public Users getUserByPassword(@PathVariable("password") String password) {
         return service.getUserByPassword(password);
     }
@@ -251,10 +254,10 @@ public class UserController {
     @GetMapping("/countUserByCreatedAt")
     public Object countUserByCreatedAt() {
         Date currentDate = new Date();
-        //Thống kê trong ngày====================================      
+        // Thống kê trong ngày====================================
         long countDay = service.countByCreatedAt(currentDate);
 
-        //Thống kê trong tuần====================================
+        // Thống kê trong tuần====================================
         // Tạo một đối tượng Calendar và đặt ngày hiện tại
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(currentDate);
@@ -266,7 +269,7 @@ public class UserController {
         Date firstDayOfWeek = calendar.getTime();
         long countWeek = service.countByCreatedAt(firstDayOfWeek, currentDate);
 
-        //Thống kê trong tháng=============================================
+        // Thống kê trong tháng=============================================
         // Đặt ngày về ngày đầu tiên trong tháng
         calendar.set(Calendar.DAY_OF_MONTH, 1);
 
@@ -274,10 +277,10 @@ public class UserController {
         Date firstDayOfMonth = calendar.getTime();
         long countMonth = service.countByCreatedAt(firstDayOfMonth, currentDate);
 
-        //Thống kê tất cả=============================================
+        // Thống kê tất cả=============================================
         long countAll = service.countAll();
 
-        //return kết quả
+        // return kết quả
         ResultStatistics r = new ResultStatistics();
         r.countDay = countDay;
         r.countWeek = countWeek;

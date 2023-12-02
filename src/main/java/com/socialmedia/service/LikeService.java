@@ -26,4 +26,6 @@ public interface LikeService {
     public long countByCreatedAt(Date date);
 
     public long countByCreatedAt(Date date1, Date date2);
+    
+     public List<Likes> getAllByNotification(Notifications notification);
 }

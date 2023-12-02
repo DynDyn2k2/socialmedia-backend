@@ -22,11 +22,19 @@ public class Messages {
  
     private String content;
     private Date send_at; 
+    private boolean seen;
 
     @ManyToOne
     @JoinColumn(name = "conversationId")
     private Conversations conversation;
+
+    @ManyToOne
+    @JoinColumn(name = "pinId")
+    private Pins pin;
     
+    @ManyToOne
+    @JoinColumn(name="sharedUser")  
+    private Users sharedUser;
     
     public int getId() {
         return id;
@@ -68,6 +76,28 @@ public class Messages {
         this.conversation = conversation;
     }
 
-    
+    public boolean isSeen() {
+        return seen;
+    }
+
+    public void setSeen(boolean seen) {
+        this.seen = seen;
+    }
+
+    public Pins getPin() {
+        return pin;
+    }
+
+    public void setPin(Pins pin) {
+        this.pin = pin;
+    }
+
+    public Users getSharedUser() {
+        return sharedUser;
+    }
+
+    public void setSharedUser(Users sharedUser) {
+        this.sharedUser = sharedUser;
+    }
 
 }

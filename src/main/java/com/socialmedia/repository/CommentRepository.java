@@ -13,6 +13,7 @@ import com.socialmedia.model.Pins;
 
 public interface CommentRepository extends JpaRepository<Comments, Integer> {
 
+    @Query("SELECT c FROM Comments c WHERE NOT EXISTS (SELECT 1 FROM Report_Comments rc WHERE rc.comment.id = c.id) AND c.pin = :pin")
     public List<Comments> findAllByPin(Pins pin);
 
     public List<Comments> findByPinId(int pin_id);
@@ -27,4 +28,5 @@ public interface CommentRepository extends JpaRepository<Comments, Integer> {
     @Query("SELECT COUNT(e) FROM Comments e WHERE DATE_FORMAT(e.commentAt, '%Y-%m-%d') >= :date1 AND DATE_FORMAT(e.commentAt, '%Y-%m-%d') <= :date2")
     long countByCreatedAt(@Param("date1") String date1, @Param("date2") String date2);
 
+    public List<Comments> findAllByNotification(Notifications notification);
 }

@@ -27,7 +27,7 @@ import com.socialmedia.service.UserService;
 
 @RestController
 @RequestMapping("/friendships")
-@CrossOrigin("http://localhost:3000/")
+@CrossOrigin
 public class FriendshipController {
 
     @Autowired
@@ -132,14 +132,40 @@ public class FriendshipController {
 
     }
 
-    @PostMapping("/delete/{id}")
-    public boolean delete(@PathVariable("id") int id) {
-        Optional<Friendships> optional = friendshipService.getById(id);
-        if (optional.isPresent()) {
-            return friendshipService.delete(id);
+    // @PostMapping("/delete/{id}")
+    // public boolean delete(@PathVariable("id") int id) {
+    // Optional<Friendships> optional = friendshipService.getById(id);
+    // if (optional.isPresent()) {
+    // return friendshipService.delete(id);
+    // } else {
+    // return false;
+    // }
+    // }
+    @PostMapping("/delete")
+    public boolean delete(@RequestBody Friendships friendship) {
+        if (friendship.getStatus().equals(Friendships.FriendshipStatus.PENDING)) {
+            Friendships friendship2 = friendshipService.getByUser1AndUser2AndStatus(friendship.getUser2(),
+                    friendship.getUser1(), Friendships.FriendshipStatus.ACCEPTED);
+            if (friendship2 != null) {
+                friendshipService.delete(friendship2);
+                Notifications noti2 = friendship2.getNotification();
+                notificationService.delete(noti2);
+            }
         } else {
-            return false;
+            Friendships friendship2 = friendshipService.getByUser1AndUser2AndStatus(friendship.getUser2(),
+                    friendship.getUser1(), Friendships.FriendshipStatus.PENDING);
+            if (friendship2 != null) {
+                friendshipService.delete(friendship2);
+                Notifications noti2 = friendship2.getNotification();
+                notificationService.delete(noti2);
+            }
         }
+
+        Notifications noti1 = friendship.getNotification();
+        friendshipService.delete(friendship);
+        notificationService.delete(noti1);
+
+        return true;
     }
 
     @PostMapping("/add")

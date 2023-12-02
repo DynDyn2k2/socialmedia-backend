@@ -12,6 +12,8 @@ import com.socialmedia.model.Users;
 import com.socialmedia.model.enums.Notification_TYPE;
 import com.socialmedia.repository.NotificationRepository;
 import com.socialmedia.repository.UserRepository;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 @Service
 public class NotificationServiceImpl implements NotificationService {
@@ -56,4 +58,18 @@ public class NotificationServiceImpl implements NotificationService {
         return null;
     }
 
+    
+     @Override
+    public boolean delete(Notifications noti) {
+        try {
+            repository.delete(noti);
+            return true;
+        } catch (EmptyResultDataAccessException ex) {
+            System.out.println("Không tìm thấy thực thể để xóa");
+            return false;
+        } catch (DataIntegrityViolationException ex) {
+            System.out.println("Lỗi liên quan đến tính toàn vẹn dữ liệu hoặc ràng buộc khóa ngoại");
+            return false;
+        }
+    }
 }
