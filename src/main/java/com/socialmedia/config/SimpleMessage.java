@@ -16,23 +16,18 @@ public class SimpleMessage {
     private int conversation_id;
     private int pin_id;
     private String content;
+    private int sharedUserId;
     
     public SimpleMessage() {
     }
 
-    public SimpleMessage(int id, int user_id, int conversation_id, int pin_id, String content) {
+    public SimpleMessage(int id, int user_id, int conversation_id, int pin_id, String content, int sharedUserId) {
         this.id = id;
         this.user_id = user_id;
         this.conversation_id = conversation_id;
         this.pin_id = pin_id;
         this.content = content;
-    }
-    
-    public SimpleMessage(SimpleMessage message) {
-        this.id = message.getId();
-        this.user_id = message.getUser_id();
-        this.conversation_id = message.getConversation_id();
-        this.content = message.getContent();
+        this.sharedUserId = sharedUserId;
     }
     
     public int getId() {
@@ -73,6 +68,14 @@ public class SimpleMessage {
 
     public void setPin_id(int pin_id) {
         this.pin_id = pin_id;
+    }
+
+    public int getSharedUserId() {
+        return sharedUserId;
+    }
+
+    public void setSharedUserId(int sharedUserId) {
+        this.sharedUserId = sharedUserId;
     }
     
 }

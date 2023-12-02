@@ -32,6 +32,9 @@ public class Messages {
     @JoinColumn(name = "pinId")
     private Pins pin;
     
+    @ManyToOne
+    @JoinColumn(name="sharedUser")  
+    private Users sharedUser;
     
     public int getId() {
         return id;
@@ -87,6 +90,14 @@ public class Messages {
 
     public void setPin(Pins pin) {
         this.pin = pin;
+    }
+
+    public Users getSharedUser() {
+        return sharedUser;
+    }
+
+    public void setSharedUser(Users sharedUser) {
+        this.sharedUser = sharedUser;
     }
 
 }

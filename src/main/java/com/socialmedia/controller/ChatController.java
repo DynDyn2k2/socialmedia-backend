@@ -42,7 +42,7 @@ public class ChatController {
     
     @MessageMapping("/chat/conversation_id/{conversation_id}")
     @SendTo("/room/conversation_id/{conversation_id}")
-    public Messages chatting(SimpleMessage sMessage, @DestinationVariable("conversation_id") String conversation_id) throws Exception {
+    public Messages chatting(@Payload SimpleMessage sMessage, @DestinationVariable("conversation_id") String conversation_id) throws Exception {
         Thread.sleep(1000); // simulated delay
         Messages message = new Messages();
         message.setContent(sMessage.getContent());
@@ -50,37 +50,43 @@ public class ChatController {
         message.setSend_at(new Date());
         message.setUser(userRepository.findById(sMessage.getUser_id()).get());
         message.setConversation(conversationRepository.findById(sMessage.getConversation_id()).get());
-        if(sMessage.getPin_id() > 1) {
+        if(sMessage.getPin_id() > -1) {
             message.setPin(pinRepository.findById(sMessage.getPin_id()).get());
         }
-        else {
-            message.setPin(null);
+        if(sMessage.getSharedUserId() > -1) {
+            message.setSharedUser(userRepository.findById(sMessage.getSharedUserId()).get());
         }
-        if(roomMap.get(conversation_id) == 1) {
+        if(roomMap.get(conversation_id) < 2) {
             message.setSeen(false);
         }
         else {
             message.setSeen(true);
         }
-        return messageRepository.save(message);
+        message = messageRepository.save(message);
+        return message;
 //        return message;
     }
     
-    @SubscribeMapping("/login/{conversation_id}")
-    public void initRoom(@DestinationVariable("conversation_id") String conversation_id) throws InterruptedException {
-        Thread.sleep(1000); // simulated delay
-        int userCount = 1;
-        if(roomMap.containsKey(conversation_id)) {
-            userCount = 2;
+    @MessageMapping("/login")
+    public void initRoom(@Payload String conversation_id) throws InterruptedException {
+//        Thread.sleep(1000); // simulated delay
+        if(!conversation_id.equals("")) {
+            int userCount = 1;
+            if(roomMap.containsKey(conversation_id)) {
+                userCount = 2;
+            }
+            roomMap.put(conversation_id, userCount);
         }
-        roomMap.put(conversation_id, userCount);
     }
     
     @MessageMapping("/unsubscribe")
-    @SendTo("/room/testSubscribe")
-    public String handleUnsubscribe(@Payload String conversation_id) throws InterruptedException {
-        Thread.sleep(1000); // simulated delay
+    public void handleUnsubscribe(@Payload String conversation_id) throws InterruptedException {
         roomMap.put(conversation_id, 1);
-        return "Conversation: " + conversation_id + " === Joined: " + roomMap.get(conversation_id);
+    }
+    
+    @MessageMapping("/reload")
+    @SendTo("/room/reload")
+    public boolean handleReload() {
+        return true;
     }
 }
