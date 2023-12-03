@@ -29,7 +29,7 @@ public class NotificationServiceImpl implements NotificationService {
         Optional<Users> optionalUser = userRepository.findById(userId);
         if (optionalUser.isPresent()) {
             Users user = optionalUser.get();
-            return repository.findByUser(user);
+            return repository.findByUserOrderByIdDesc(user);
         } else {
             System.out.println("Cannot find user's notification");
             return null;

@@ -9,5 +9,6 @@ import com.socialmedia.model.Users;
 
 public interface NotificationRepository extends JpaRepository<Notifications, Integer> {
 
-    public List<Notifications> findByUser(Users user);
+    public List<Notifications> findByUserOrderByIdDesc(Users user);
+    
 }

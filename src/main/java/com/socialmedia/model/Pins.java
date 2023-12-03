@@ -9,6 +9,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 public class Pins {
@@ -31,9 +32,27 @@ public class Pins {
     @ManyToOne
     @JoinColumn(name = "typeId")
     private Types type;
-    
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Pins pins = (Pins) o;
+        return id == pins.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
     public Pins() {
     }
+
     public int getId() {
         return id;
     }
@@ -43,13 +62,13 @@ public class Pins {
     }
 
     public String getImage() {
-           return image;
-       }
+        return image;
+    }
 
     public void setImage(String image) {
         this.image = image;
     }
-    
+
     public Users getUser() {
         return user;
     }
@@ -89,7 +108,7 @@ public class Pins {
     public void setType(Types type) {
         this.type = type;
     }
-    
+
     public Date getCreatedAt() {
         return createdAt;
     }

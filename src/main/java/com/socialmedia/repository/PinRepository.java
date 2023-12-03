@@ -16,7 +16,7 @@ public interface PinRepository extends JpaRepository<Pins, Integer> {
 
     public List<Pins> findByUserOrderByIdAsc(Users user);
 
-    List<Pins> findByType(Types type);
+    public List<Pins> findByType(Types type);
 
     public List<Pins> findByUser(Optional<Users> user);
 

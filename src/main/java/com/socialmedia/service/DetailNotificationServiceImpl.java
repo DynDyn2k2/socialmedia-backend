@@ -16,6 +16,7 @@ import com.socialmedia.model.Pins;
 import com.socialmedia.repository.DetailNotificationRepository;
 import com.socialmedia.repository.NotificationRepository;
 import com.socialmedia.repository.PinRepository;
+import java.util.ArrayList;
 
 @Service
 public class DetailNotificationServiceImpl implements DetailNotificationService {
@@ -36,27 +37,36 @@ public class DetailNotificationServiceImpl implements DetailNotificationService 
     public List<DetailNotification> findAllByPin(Pins pin) {
         return repository.findAllByPin(pin);
     }
-    
-     @Override
+
+    @Override
     public List<DetailNotification> findAllByNotification(Notifications notification) {
         return repository.findAllByNotification(notification);
     }
 
-    public Set<Pins> getRelatedPins(List<Pins> pins) {
-        Set<Pins> result = new HashSet<>();
-        pins.forEach(e -> {
-            // if (e.getType() != null) {
-            result.addAll(pinRepository.findByType(e.getType()));
-            // }
-        });
-        // Bỏ những bài đăng đã lưu
-        result.removeAll(pins);
+    public List<Pins> getRelatedPins(List<Pins> pins) {
+        List<Pins> result = new ArrayList<Pins>();
 
-        return result;
+        pins.forEach(e -> {
+            if (e.getType() != null) {
+                result.addAll(pinRepository.findByType(e.getType()));
+            }
+
+        });
+
+        // Bỏ những bài đăng đã lưu    
+//        result.removeAll(pins);
+        result.removeIf(pins::contains);
+
+        if (result.isEmpty()) {
+            return null;
+        } else {
+            return result;
+        }
     }
 
     public void initDetailNotifications(Notifications notifications, List<Pins> pins, int userId) {
-        Set<Pins> result = getRelatedPins(pins);
+        List<Pins> result = getRelatedPins(pins);
+
         if (!result.isEmpty()) {
             result.forEach(e -> {
                 DetailNotification res = new DetailNotification();

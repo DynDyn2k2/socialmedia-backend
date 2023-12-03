@@ -133,7 +133,9 @@ public class NotificationController {
                 break;
         }
         System.out.println("Init " + notifications.getNotificationType() + " notification success !!!");
+
         variable.setNotifications(notifications);
+
         return variable;
     }
 
