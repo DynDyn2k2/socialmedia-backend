@@ -21,8 +21,8 @@ public class PinServiceImpl implements PinService {
     private PinRepository repository;
 
     @Override
-    public List<Pins> findByUserOrderByIdAsc(Users user) {
-        return repository.findByUserOrderByIdAsc(user);
+    public List<Pins> findByUserOrderByIdDesc(Users user) {
+        return repository.findByUserOrderByIdDesc(user);
     }
 
     @Override

@@ -53,7 +53,7 @@ public class PinController {
     @GetMapping("/username/{username}")
     public List<Pins> findByUserIdOrderByPinIdAsc(@PathVariable("username") String username) {
         Users user = userService.getUserByUsername(username);
-        List<Pins> list = pinService.findByUserOrderByIdAsc(user);
+        List<Pins> list = pinService.findByUserOrderByIdDesc(user);
 
         return list;
     }

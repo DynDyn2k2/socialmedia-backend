@@ -10,7 +10,7 @@ import com.socialmedia.model.Users;
 
 public interface PinService {
 
-    public List<Pins> findByUserOrderByIdAsc(Users user);
+    public List<Pins> findByUserOrderByIdDesc(Users user);
 
     public List<Pins> getAllPins();
 

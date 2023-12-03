@@ -14,7 +14,7 @@ import com.socialmedia.model.Users;
 
 public interface PinRepository extends JpaRepository<Pins, Integer> {
 
-    public List<Pins> findByUserOrderByIdAsc(Users user);
+    public List<Pins> findByUserOrderByIdDesc(Users user);
 
     public List<Pins> findByType(Types type);
 
