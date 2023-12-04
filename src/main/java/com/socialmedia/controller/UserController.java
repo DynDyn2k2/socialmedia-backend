@@ -55,7 +55,7 @@ public class UserController {
 
     }
 
-    @GetMapping(value = { "/checkEmail" })
+    @GetMapping(value = {"/checkEmail"})
     public int getUserByEmail(@RequestParam(name = "email") String email) {
         return service.getAllUserByEmail(email).size();
     }
@@ -86,12 +86,12 @@ public class UserController {
         return service.getAllUsers();
     }
 
-    @GetMapping(value = { "/username/{username}" })
+    @GetMapping(value = {"/username/{username}"})
     public Users getUserByUsername(@PathVariable("username") String username) {
         return service.getUserByUsername(username);
     }
 
-    @GetMapping(value = { "/id/{id}" })
+    @GetMapping(value = {"/id/{id}"})
     public ResponseEntity<Users> getUserById(@PathVariable("id") int id) {
         Optional<Users> optional = service.getUserById(id);
         if (optional.isPresent()) {
@@ -132,7 +132,7 @@ public class UserController {
         return percent;
     }
 
-    @GetMapping(value = { "/password/{password}" })
+    @GetMapping(value = {"/password/{password}"})
     public Users getUserByPassword(@PathVariable("password") String password) {
         return service.getUserByPassword(password);
     }
@@ -141,8 +141,10 @@ public class UserController {
     public ResponseEntity<String> changeUserPassword(
             @PathVariable("id") int id,
             @RequestBody Map<String, String> request) {
-        String currentPassword = request.get("currentPassword");
-        String newPassword = request.get("newPassword");
+
+        String currentPassword = BCrypt.hashpw(request.get("currentPassword"), BCrypt.gensalt());
+        System.out.println("=============:" + currentPassword);
+        String newPassword = BCrypt.hashpw(request.get("newPassword"), BCrypt.gensalt());
 
         try {
             service.changeUserPassword(id, currentPassword, newPassword);

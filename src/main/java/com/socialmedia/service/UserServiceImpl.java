@@ -12,6 +12,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import jakarta.persistence.EntityNotFoundException;
 import java.text.SimpleDateFormat;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -34,16 +35,15 @@ public class UserServiceImpl implements UserService {
     public Users getUserByUsername(String username) {
         return repository.findOneByUsername(username);
     }
-    
-    
+
     @Override
     public Users getUserByEmail(String email) {
         return repository.findOneByEmail(email);
     }
 
-     @Override
+    @Override
     public List<Users> getAllUserByEmail(String email) {
-      return repository.findByEmail(email);
+        return repository.findByEmail(email);
     }
 
     @Override
@@ -108,16 +108,9 @@ public class UserServiceImpl implements UserService {
         Optional<Users> optional = repository.findById(id);
         if (optional.isPresent()) {
             Users user = optional.get();
-            System.out.println("user pass +" + user.getPassword());
-            System.out.println("current pass : " + currentPassword);
-            System.out.println("new pass: " + newPassword);
-            // thưc hien kiem tra mat khau cu
-            if (user.getPassword().equals(currentPassword)) {
-                user.setPassword(newPassword);
-                repository.save(user);
-            } else {
-                System.out.println("current password is not correct");
-            }
+
+            user.setPassword(newPassword);
+            repository.save(user);
 
         } else {
             throw new EntityNotFoundException("user not found");
@@ -160,7 +153,5 @@ public class UserServiceImpl implements UserService {
             throw new EntityNotFoundException("user not found to set birthday");
         }
     }
-
-   
 
 }
