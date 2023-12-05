@@ -14,7 +14,11 @@ import com.socialmedia.model.Users;
 
 public interface PinRepository extends JpaRepository<Pins, Integer> {
 
+    @Query("SELECT p FROM Pins p WHERE NOT EXISTS (SELECT 1 FROM Report_Pins rp WHERE rp.pin.id = p.id) AND p.user = :user")
     public List<Pins> findByUserOrderByIdDesc(Users user);
+    
+    @Query("SELECT p FROM Pins p WHERE NOT EXISTS (SELECT 1 FROM Report_Pins rp WHERE rp.pin.id = p.id)")
+    public List<Pins> getAll();
 
     public List<Pins> findByType(Types type);
 

@@ -32,7 +32,7 @@ public class PinServiceImpl implements PinService {
 
     @Override
     public List<Pins> getAllPins() {
-        return repository.findAll();
+        return repository.getAll();
     }
 
     @Override
